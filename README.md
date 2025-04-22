@@ -20,7 +20,7 @@
  > * Why is it important or interesting to you?
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  > * What will be the input/output of your project?
- > * What are the features that the project provides?
+ > * What are the features that the project provides? **Features include saved inputs to save game progress when a player dies so they don’t restart the game. We’ll create a concise, engaging narrative with a clear goal or questline. Along with it we hope to be able to create a simple interface messenger look still remaining text based to immerse the user better. There will be characters created that will need to have their own dialogue.**
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
  > 
  > You also need to set up an empty project board using GitHub projects (board view with columns for a scrum board). Make sure you add the board under your project repository. You should also add a `Product Backlog` and an `In testing` column. Please also rename the `TODO` column to `Sprint Backlog` and the `In Progress` column to `In Development`. All columns should be in the right order.
