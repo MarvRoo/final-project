@@ -18,9 +18,11 @@
 ## Project Description
  > Your project description should summarize the project you are proposing. Be sure to include:
  > * Why is it important or interesting to you?
+>  * We choose the text-based role-playing game for our project because we wanted to gain hands on experience of what’s it’s like to create a game and to understand the complexities that comes along with it. Making a PRG project will allow us to enhance our current understanding of C++ concepts such as polymorphism, inheritance, and classes and how to apply it to a real-life programming situation. We also like that it’s a throwback to a horror style game that became popular a couple of years ago in 2015-2017. So it would be fun and interesting to create a story of our own.
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  > * What will be the input/output of your project?
- > * What are the features that the project provides? **Features include saved inputs to save game progress when a player dies so they don’t restart the game. We’ll create a concise, engaging narrative with a clear goal or questline. Along with it we hope to be able to create a simple interface messenger look still remaining text based to immerse the user better. There will be characters created that will need to have their own dialogue.**
+ > * What are the features that the project provides?
+>  * **Features include saved inputs to save game progress when a player dies so they don’t restart the game. We’ll create a concise, engaging narrative with a clear goal or questline. Along with it we hope to be able to create a simple interface messenger look still remaining text based to immerse the user better. There will be characters created that will need to have their own dialogue.**
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
  > 
  > You also need to set up an empty project board using GitHub projects (board view with columns for a scrum board). Make sure you add the board under your project repository. You should also add a `Product Backlog` and an `In testing` column. Please also rename the `TODO` column to `Sprint Backlog` and the `In Progress` column to `In Development`. All columns should be in the right order.
