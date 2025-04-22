@@ -26,10 +26,7 @@
  > * What are the features that the project provides?
 >      **Features include saved inputs to save game progress when a player dies so they don’t restart the game. We’ll create a concise, engaging narrative with a clear goal or questline. Along with it we hope to be able to create a simple interface messenger look still remaining text based to immerse the user better. There will be characters created that will need to have their own dialogue.**
  
- > 
- > You also need to set up an empty project board using GitHub projects (board view with columns for a scrum board). Make sure you add the board under your project repository. You should also add a `Product Backlog` and an `In testing` column. Please also rename the `TODO` column to `Sprint Backlog` and the `In Progress` column to `In Development`. All columns should be in the right order.
-> 
-> Finally, one member from your team needs to submit the Project Group Signups form (link available on Canvas) to provide a link to your team's project repository before the deadline for this porposal phase.
+
  > ## Phase II
  > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
  > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
