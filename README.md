@@ -35,7 +35,8 @@
  > Include a navigation diagram for your screens and the layout of each of those screens as desribed below. For all the layouts/diagrams, you can use any tool such as PowerPoint or a drawing program. (Specification requirement is adapted from the User Interface Design Document Template of CMSC 345 at the University of Maryland Global Campus)
 
 ### Navigation Diagram
-![Murder Mystery Navigation Diagram](https://github.com/user-attachments/files/20052717/Untitled.document.pdf)
+!![Murder Mystery Navigation Diagram](https://github.com/user-attachments/assets/2a1255e9-ff58-4eb1-b2ad-f77d90cef110)
+
 
 
 ### Screen Layouts
