@@ -20,20 +20,7 @@
  
 
  > ## Phase II
- > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
- > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
- > * Complete your first *sprint planning* meeting to plan out the next 7 days of work.``
- >   * Break down the "Epics" into smaller actionable user stories. Convert them into issues and assign them to team members. Place these in the `Sprint Backlog` column.
- >   * These cards should represent roughly 7 days worth of development time for your team. Then, once the sprint is over you should be repeating these steps to plan a new sprint, taking you until your second scrum meeting with the reader in phase III.
- > * Each team member needs to submit the Peer Evaluation Form on Canvas for this phase. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for phase  II, and a description of their contributions. Remember that each team member should submit the form individually.
- > * Schedule two check-ins using Calendly. Both time slots should be during your lab on week 6. Your entire team must be present for both check-ins.
- >   * The first check-in needs to be scheduled with your lab TA. During that meeting, you will discuss your project design/class diagram from phase II.
- >   * The second check-in should be scheduled with a reader. During that meeting you will discuss:
- >     * The tasks you are planning for the first sprint
- >     * How work will be divided between the team members
-## User Interface Specification
- > Include a navigation diagram for your screens and the layout of each of those screens as desribed below. For all the layouts/diagrams, you can use any tool such as PowerPoint or a drawing program. (Specification requirement is adapted from the User Interface Design Document Template of CMSC 345 at the University of Maryland Global Campus)
-
+> 
 ### Navigation Diagram
 !![Murder Mystery Navigation Diagram](https://github.com/user-attachments/assets/2a1255e9-ff58-4eb1-b2ad-f77d90cef110)
 
