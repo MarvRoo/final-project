@@ -22,7 +22,7 @@
  > ## Phase II
 > 
 ### Navigation Diagram
-!![Murder Mystery Navigation Diagram](https://github.com/user-attachments/assets/2a1255e9-ff58-4eb1-b2ad-f77d90cef110)
+![Murder Mystery Navigation Diagram](https://github.com/user-attachments/assets/2a1255e9-ff58-4eb1-b2ad-f77d90cef110)
 
 
 
