@@ -20,16 +20,12 @@
 ### Screen Layouts
 > The layout of the project will be text based where the user will be expected to give input, expect output (from character testimonials for example), and recieve character insights to help solve the game via dialogue on the screen. Because it is text based, players are able to interact with this game using the linux or VS Code terminal. During the start of each day, the screen will output some context of the main occurrence that has happened. Players are able to search for clues in the locations given by inputing 'c'  and move in different locations by inputing the specific location. As the player moves to a certain location, the screen will then output where the player is currently is. Players are also given the option to interview potential suspects by being prompted with a question on the screen if they want to interview them. In addition, users are also able conduct analysis about who the suspect could be after being prompted with the character's dialogue when selecting the choice of speaking to them or when choosing who they think the suspect is. At the end of each day, players will be given a recap of all the clues they have garnered and will be expected to input a character to interview the next day. 
 
-Screen Layout for Introduction
 <img width="719" alt="Image" src="https://github.com/user-attachments/assets/a0e0a9d5-11e1-48cb-adca-3601d41f0956" />
 
-Screen Layout for Room (ex. shed)
 <img width="374" alt="Image" src="https://github.com/user-attachments/assets/e70ffb8d-db70-4a19-8ef2-c74e83b74cf5" />
 
-Screen Layout for Nighttime Suspect Choice
 <img width="630" alt="Image" src="https://github.com/user-attachments/assets/cc4cc4bc-a900-4e8e-9d6e-ced7fa8f3a46" />
 
-[Screen Layout for Day((morning time)
 <img width="1111" alt="Image" src="https://github.com/user-attachments/assets/06a882f3-d3d0-4b07-a163-4d7a74f05a73" />
 
 
