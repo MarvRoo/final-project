@@ -30,7 +30,8 @@
 
 
 ## Class Diagram
-![Murder Mystery UML Class diagram (1)](https://github.com/user-attachments/assets/920c4b46-29c5-44c2-9976-40efca5f3104)
+![Murder Mystery UML Class diagram (3)](https://github.com/user-attachments/assets/1fcbabb6-094c-44a6-b7c0-0650751f62ca)
+
 
 
 
