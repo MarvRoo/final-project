@@ -11,15 +11,16 @@ private:
     bool hasFingerPrint;
     string bloodType;
     string itemLocation;
+    string itemDescription; //added this
+    bool isFound; //added this to check item has been found
+
 
 public:
     Item();
-    Item(const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation);
+    Item(int clueID, const string& name, bool hasBlood, bool fingerPrint, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound);
 
-    void SetItem(const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation);
-    void SetItemDescript(const string& desc);
+    //void SetItemDescript(const string& desc);
     bool itemFound(bool found);
-    bool beingInspected(bool Inspected);
 };
 
 #endif
