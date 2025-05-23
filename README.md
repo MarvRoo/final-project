@@ -34,8 +34,9 @@
 
  
  > ## Phase III
-> Applied Solid Principles Class Diagram:
-![Murder Mystery UML Class diagram(Improved Further) (1)](https://github.com/user-attachments/assets/41d01555-c56e-4b30-b731-e7e2042f4b6a)
+> Applied Solid Principles Class:
+> ![Murder Mystery UML Class diagram(Improved Further) (2)](https://github.com/user-attachments/assets/32ff2140-74f6-44e4-b2d3-e1de62bcb3f9)
+
 
 > BEFORE the meeting you should do the following:
  > * Update your class diagram from Phase II to include any feedback you received from your TA/grader.
