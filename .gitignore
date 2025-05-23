@@ -1,0 +1,10 @@
+# CMake-generated files and folders
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Compiled object files and executables
+*.o
+*.out
+*.exe

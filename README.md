@@ -17,6 +17,7 @@
 
 
 
+
 ### Screen Layouts
 > The layout of the project will be text based where the user will be expected to give input, expect output (from character testimonials for example), and recieve character insights to help solve the game via dialogue on the screen. Because it is text based, players are able to interact with this game using the linux or VS Code terminal. During the start of each day, the screen will output some context of the main occurrence that has happened. Players are able to search for clues in the locations given by inputing 'c'  and move in different locations by inputing the specific location. As the player moves to a certain location, the screen will then output where the player is currently is. Players are also given the option to interview potential suspects by being prompted with a question on the screen if they want to interview them. In addition, users are also able conduct analysis about who the suspect could be after being prompted with the character's dialogue when selecting the choice of speaking to them or when choosing who they think the suspect is. At the end of each day, players will be given a recap of all the clues they have garnered and will be expected to input a character to interview the next day. 
 
@@ -30,33 +31,34 @@
 
 
 ## Class Diagram
-![Murder Mystery UML Class diagram (3)](https://github.com/user-attachments/assets/1fcbabb6-094c-44a6-b7c0-0650751f62ca)
-
-
-
-
+> Old:
+![Murder Mystery UML Class diagram](https://github.com/user-attachments/assets/c468d84c-2d05-4538-985b-521f732c746c)
  
  > ## Phase III
- > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on week 8 during lab time.
- 
- > BEFORE the meeting you should do the following:
- > * Update your class diagram from Phase II to include any feedback you received from your TA/grader.
- > * Considering the SOLID design principles, reflect back on your class diagram and think about how you can use the SOLID principles to improve your design. You should then update the README.md file by adding the following:
- >   * A new class diagram incorporating your changes after considering the SOLID principles.
- >   * For each update in your class diagram, you must explain in 3-4 sentences:
- >     * What SOLID principle(s) did you apply?
- >     * How did you apply it? i.e. describe the change.
- >     * How did this change help you write better code?
- > * Perform a new sprint plan like you did in Phase II.
- > * Make sure that your README file (and Project board) are up-to-date reflecting the current status of your project and the most recent class diagram. Previous versions of the README file should still be visible through your commit history.
->  * Each team member should also submit the Peer Evaluation Form on Canvas for phase III. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for phase III, and a description of their contributions. Remember that each team member should submit the form individually.
- 
-> During the meeting with your reader you will discuss: 
- > * How effective your last sprint was (each member should talk about what they did)
- > * Any tasks that did not get completed last sprint, and how you took them into consideration for this sprint
- > * Any bugs you've identified and created issues for during the sprint. Do you plan on fixing them in the next sprint or are they lower priority?
- > * What tasks you are planning for this next sprint.
+> Updated Class Diagram:
+![Murder Mystery UML Class diagram (5)](https://github.com/user-attachments/assets/6d9d7e03-ccda-4f75-acb3-50ed5a5151c6)
+> Applied Solid Principles Class Diagram:
+![Murder Mystery UML Class diagram(Improved Further) (4)](https://github.com/user-attachments/assets/6d8444e6-a8df-420f-8540-88c933025ed5)
+>
 
+> 1. We applied the SRP (Single responsibility principle) to the Person class. We applied this by dividing it further into an Autopsy class. This change helped reduce the complexity in the person class and allowed us to > simplify our implementation to be more efficient.
+
+>
+> 2. In order to follow the SRP and OCP from the SOLID design principles, we decided to separate the original Dialogue class, which was handling both character dialogue and player choices. We chose to split this into creating an abstract base class (DialogueUnit), and split the functionality into two subclasses, Dialogue and Choice, handling their respective actions. Each class is now clear and no longer cluttered, following the SRP and if new dialogue behaviors are ever to be added, it won’t alter existing code (won’t violate OCP).
+>
+
+>
+>3. In order to incorporate DIP principle, we decided it would be best to make dialogue a subclass and create another subclass called choice that varies from regular dialogue under the polymorphism class DialogueUnit. In order to store their deep copies in the same vector pointer we made the class DialogueUnit is a base that allows high level components like gameloop and printer to work and access different dialogue types without having to know the concrete sub-classes. It helped us right better code by avoiding object slicing.
+>
+
+>
+>4. The SRP principle was applied to the Dialogue Class which created the gameloader class and ending class. 
+Before, the dialogue class had the responsibility to load the dialogue and endings, locations , and clues.
+The gameloader class now handles the responsibilities of loading the dialogue, locations, and clues, while the 
+ending class has the responsibility of generating different endings based on the point system. The dialogue
+class now handles the responsibility of setting the dialogue and is able to print out the dialogue when
+an object calls the print function in the dialogue class.  This change helps us reduce the number of code for writing the responsibilities for the dialogue class as we create the ending and gameloader classes to handle the other 
+responsibilities the dialogue class was responsible for before.
  
  > ## Final deliverable
  > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 

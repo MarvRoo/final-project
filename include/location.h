@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "Item.h"
-#include "Clue.h"
+#include "item.h"
+#include "clue.h"
 using namespace std;
 
 class Location {
@@ -41,5 +41,6 @@ public:
     bool isLockedStatus() const {return isLocked;}
     bool hasKeyItemBeenFound() const {return keyItemFound;}
     bool setKeyItemFound(bool found) {keyItemFound = found;}
+
 };
 #endif

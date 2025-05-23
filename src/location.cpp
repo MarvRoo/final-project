@@ -1,8 +1,8 @@
 #include "location.h"
 #include <string>
 #include <vector>
-#include "Item.h"
-#include "Clue.h"
+#include "item.h"
+#include "clue.h"
 using namespace std;
 
 // Constructors
@@ -60,7 +60,3 @@ bool Location::setKeyItemFound(bool found) {
     keyItemFound = found;
     return keyItemFound;
 }
-
-
-
-

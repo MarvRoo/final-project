@@ -13,8 +13,6 @@ protected:
 public:
     Clue();
     Clue(int id, const string& name, bool inspected);
-
-    void setClue(int id, const string& name, bool inspected);
     string getName() const;
     bool isInspected() const;
     int getClueID() const;
