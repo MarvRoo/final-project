@@ -45,6 +45,13 @@
  >     * How did you apply it? i.e. describe the change.
  >     * How did this change help you write better code?
  > * Perform a new sprint plan like you did in Phase II.
+>
+
+> 1. We applied the SRP (Single responsibility principle) to the Person class. We applied this by dividing it further into an Autopsy class. This change helped reduce the complexity in the person class and allowed us to > simplify our implementation to be more efficient.
+
+>
+> 2. In order to follow the SRP and OCP from the SOLID design principles, we decided to separate the original Dialogue class, which was handling both character dialogue and player choices. We chose to split this into creating an abstract base class (DialogueUnit), and split the functionality into two subclasses, Dialogue and Choice, handling their respective actions. Each class is now clear and no longer cluttered, following the SRP and if new dialogue behaviors are ever to be added, it won’t alter existing code (won’t violate OCP).
+> 
 
  
  > ## Final deliverable
