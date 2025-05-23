@@ -51,7 +51,11 @@
 
 >
 > 2. In order to follow the SRP and OCP from the SOLID design principles, we decided to separate the original Dialogue class, which was handling both character dialogue and player choices. We chose to split this into creating an abstract base class (DialogueUnit), and split the functionality into two subclasses, Dialogue and Choice, handling their respective actions. Each class is now clear and no longer cluttered, following the SRP and if new dialogue behaviors are ever to be added, it won’t alter existing code (won’t violate OCP).
-> 
+>
+
+>
+>3. In order to incorporate DIP principle, we decided it would be best to make dialogue a subclass and create another subclass called choice that varies from regular dialogue under the polymorphism class DialogueUnit. In order to store their deep copies in the same vector pointer we made the class DialogueUnit is a base that allows high level components like gameloop and printer to work and access different dialogue types without having to know the concrete sub-classes. It helped us right better code by avoiding object slicing.
+>
 
  
  > ## Final deliverable
