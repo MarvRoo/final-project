@@ -1,4 +1,4 @@
-#include "Item.h"
+#include "item.h"
 
 //default constructor
 Item::Item() {
@@ -11,7 +11,7 @@ Item::Item() {
 }
 
 //initialize Item object
-Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound); 
+/*Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound); 
     : ClueID(clueID), 
       name(name), 
       hasBlood(hasBlood), 
@@ -20,9 +20,9 @@ Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodTyp
       inspected(inspected), 
       itemLocation(itemLocation), 
       itemDescription(itemDescrip),
-      isFound(itemFound)  {}
+      isFound(itemFound)  {}*/
 
 //checks if the item has been found yet
-bool Item::itemFound(bool found) {
+/*bool Item::itemFound(bool found) {
     return isFound;
-}
+}*/

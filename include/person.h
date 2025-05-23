@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "Item.h"
+#include "item.h"
 using namespace std;
 
 class Person{
@@ -27,4 +27,4 @@ public:
     bool findAutopsies(const vector<Item*>& items, bool hasAutopsy);
 };
 
-
+#endif

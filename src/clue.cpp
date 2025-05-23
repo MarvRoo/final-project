@@ -1,4 +1,4 @@
-#include "Clue.h"
+#include "clue.h"
 
 //default clue constructor
 Clue::Clue() {

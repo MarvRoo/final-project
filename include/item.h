@@ -1,7 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "Clue.h"
+#include "clue.h"
 #include <string>
 using namespace std;
 

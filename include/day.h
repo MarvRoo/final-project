@@ -3,9 +3,9 @@
 
 #include <string>
 #include <vector>
-#include "Item.h"
-#include "Clue.h"
-#include "Player.h"
+#include "item.h"
+#include "clue.h"
+#include "player.h"
 using namespace std;
 
 class Day{
@@ -13,7 +13,7 @@ public:
     bool Night;
     bool Evening;
     bool Morning;
-    int Day;
+    int Daynum;
     vector<Clue*> nextDayUnlock;
 
     Day();
@@ -28,4 +28,4 @@ public:
     bool CheckDayComplete(vector<Clue*> ClueList) const;
 };
 
-
+#endif

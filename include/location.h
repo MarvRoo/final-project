@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 using namespace std;
-#include "Item.h"
+#include "item.h"
 
 class Location {
 protected:
