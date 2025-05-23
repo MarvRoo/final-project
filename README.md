@@ -13,7 +13,8 @@
  > ## Phase II
 > 
 ### Navigation Diagram
-![Murder Mystery Navigation Diagram](https://github.com/user-attachments/assets/2a1255e9-ff58-4eb1-b2ad-f77d90cef110)
+![Murder Mystery UML Class diagram(Improved Further) (3)](https://github.com/user-attachments/assets/4a94ae18-2392-4363-abb8-082b4a612439)
+
 
 
 
