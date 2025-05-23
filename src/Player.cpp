@@ -40,7 +40,7 @@ void Player::nextRoom(int roomId){
         cout << "------------------------------------------" << endl;
 }
 
-void Player::ReviewClues(){
+void Player::printReviewClues(){
     cout << "\n--- Reviewing Clues ---" << endl;
     if(ClueList.empty()){
         cout << "You haven't found any clues yet." << endl;
