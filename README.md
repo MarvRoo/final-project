@@ -35,7 +35,7 @@
  
  > ## Phase III
 > Applied Solid Principles Class:
-> ![Murder Mystery UML Class diagram(Improved Further) (2)](https://github.com/user-attachments/assets/32ff2140-74f6-44e4-b2d3-e1de62bcb3f9
+> ![Murder Mystery UML Class diagram(Improved Further) (2)]
 
 > 1. We applied the SRP (Single responsibility principle) to the Person class. We applied this by dividing it further into an Autopsy class. This change helped reduce the complexity in the person class and allowed us to > simplify our implementation to be more efficient.
 
