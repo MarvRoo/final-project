@@ -7,8 +7,10 @@
 
 
 Class Interview : public Clue {
-	public:
-		void SetInterview(const std::string name, int valueID, const std::string& fileName);
+	private:
 		std::vector<std::string> InterviewFacts;
+	public:
+		void interview(const std::string& interviewClueString, int clueID);
+		void printInterviewFacts();
 };
 #endif
