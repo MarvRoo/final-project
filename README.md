@@ -35,19 +35,7 @@
  
  > ## Phase III
 > Applied Solid Principles Class:
-> ![Murder Mystery UML Class diagram(Improved Further) (2)](https://github.com/user-attachments/assets/32ff2140-74f6-44e4-b2d3-e1de62bcb3f9)
-
-
-> BEFORE the meeting you should do the following:
- > * Update your class diagram from Phase II to include any feedback you received from your TA/grader.
- > * Considering the SOLID design principles, reflect back on your class diagram and think about how you can use the SOLID principles to improve your design. You should then update the README.md file by adding the following:
- >   * A new class diagram incorporating your changes after considering the SOLID principles.
- >   * For each update in your class diagram, you must explain in 3-4 sentences:
- >     * What SOLID principle(s) did you apply?
- >     * How did you apply it? i.e. describe the change.
- >     * How did this change help you write better code?
- > * Perform a new sprint plan like you did in Phase II.
->
+> ![Murder Mystery UML Class diagram(Improved Further) (2)](https://github.com/user-attachments/assets/32ff2140-74f6-44e4-b2d3-e1de62bcb3f9
 
 > 1. We applied the SRP (Single responsibility principle) to the Person class. We applied this by dividing it further into an Autopsy class. This change helped reduce the complexity in the person class and allowed us to > simplify our implementation to be more efficient.
 
