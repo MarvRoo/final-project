@@ -30,15 +30,13 @@
 
 
 ## Class Diagram
-![Murder Mystery UML Class diagram (3)](https://github.com/user-attachments/assets/1fcbabb6-094c-44a6-b7c0-0650751f62ca)
-
-
-
+![Murder Mystery UML Class diagram (5)](https://github.com/user-attachments/assets/6d9d7e03-ccda-4f75-acb3-50ed5a5151c6)
 
  
  > ## Phase III
-
- > BEFORE the meeting you should do the following:
+> Applied Solid Principles Class Diagram:
+![Murder Mystery UML Class diagram(Improved Further)](https://github.com/user-attachments/assets/1346a03f-a06f-4c40-a9f4-883fc4f278b3)
+> BEFORE the meeting you should do the following:
  > * Update your class diagram from Phase II to include any feedback you received from your TA/grader.
  > * Considering the SOLID design principles, reflect back on your class diagram and think about how you can use the SOLID principles to improve your design. You should then update the README.md file by adding the following:
  >   * A new class diagram incorporating your changes after considering the SOLID principles.
