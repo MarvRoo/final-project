@@ -49,6 +49,14 @@
 >3. In order to incorporate DIP principle, we decided it would be best to make dialogue a subclass and create another subclass called choice that varies from regular dialogue under the polymorphism class DialogueUnit. In order to store their deep copies in the same vector pointer we made the class DialogueUnit is a base that allows high level components like gameloop and printer to work and access different dialogue types without having to know the concrete sub-classes. It helped us right better code by avoiding object slicing.
 >
 
+>
+>4. The SRP principle was applied to the Dialogue Class which created the gameloader class and ending class. 
+Before, the dialogue class had the responsibility to load the dialogue and endings, locations , and clues.
+The gameloader class now handles the responsibilities of loading the dialogue, locations, and clues, while the 
+ending class has the responsibility of generating different endings based on the point system. The dialogue
+class now handles the responsibility of setting the dialogue and is able to print out the dialogue when
+an object calls the print function in the dialogue class.  This change helps us reduce the number of code for writing the responsibilities for the dialogue class as we create the ending and gameloader classes to handle the other 
+responsibilities the dialogue class was responsible for before.
  
  > ## Final deliverable
  > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
