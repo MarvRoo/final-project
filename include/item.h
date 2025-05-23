@@ -18,8 +18,6 @@ private:
 public:
     Item();
     Item(int clueID, const string& name, bool hasBlood, bool fingerPrint, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound);
-
-    //void SetItemDescript(const string& desc);
     bool itemFound(bool found);
 };
 

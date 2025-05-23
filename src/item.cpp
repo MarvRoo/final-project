@@ -11,7 +11,7 @@ Item::Item() {
 }
 
 //initialize Item object
-Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation) 
+Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound); 
     : ClueID(clueID), 
       name(name), 
       hasBlood(hasBlood), 
@@ -21,11 +21,6 @@ Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodTyp
       itemLocation(itemLocation), 
       itemDescription(itemDescrip),
       isFound(itemFound)  {}
-
-//set the item description
-// void Item::SetItemDescript(const string& desc) {
-//     itemDescription = desc;
-// }
 
 //checks if the item has been found yet
 bool Item::itemFound(bool found) {
