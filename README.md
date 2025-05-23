@@ -35,6 +35,7 @@
 
  
  > ## Phase III
+> Updated Class Diagram:
 > Applied Solid Principles Class Diagram:
 ![Murder Mystery UML Class diagram(Improved Further) (4)](https://github.com/user-attachments/assets/6d8444e6-a8df-420f-8540-88c933025ed5)
 >
