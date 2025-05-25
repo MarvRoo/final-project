@@ -5,6 +5,7 @@
 #include <string>
 #include "gamedata.h"
 #include "dialogue.h"
+#include "person.h"
 using namespace std;
 
 //A class full of pure reader functions
@@ -17,7 +18,7 @@ public:
     vector<Dialogue> loadDialogue(const vector<string>& DialogueFiles);
     //vector<Day> loadDays(const string& filename);
     //vector<Interviews> loadInterviews(const string& filename);
-    //vector<Person> loadCharacters(const string& filename);
+    vector<Person> loadCharacters(const string& filename);
 };
 
 GameData LoadFiles();

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "gameloader.h"
+#include "gameLoader.h"
 using namespace std;
 
 
