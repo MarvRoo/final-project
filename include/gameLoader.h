@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "gamedata.h"
-
+#include "dialogue.h"
 using namespace std;
 
 //A class full of pure reader functions
