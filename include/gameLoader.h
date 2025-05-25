@@ -3,22 +3,27 @@
 
 #include <vector>
 #include <string>
+#include <memory>
+
 #include "gamedata.h"
-#include "dialogue.h"
-#include "person.h"
+
 using namespace std;
 
 //A class full of pure reader functions
 //how it learns it (from files).
 class GameLoader {
+private:
+    vector<string> checkpoints = {"+player","+clue", "+interview","+choice", "+person", "+end"};
+    //list is used primarily in dialogue 
+    //but will be used in person.txt
 public:
     vector<Location> loadLocations(const string& filename);
-    //vector<Item> loadItems(const string& filename);
-    vector<Clue> loadClues(const string& filename);
-    vector<Dialogue> loadDialogue(const vector<string>& DialogueFiles);
-    //vector<Day> loadDays(const string& filename);
-    //vector<Interviews> loadInterviews(const string& filename);
+    vector<unique_ptr<Clue>> loadClues (const string& filename);
+    map<string, vector<unique_ptr<DialogueUnit>>> loadDialogue(const vector<string>& DialogueFiles);
+    vector<Day> loadDays(const string& filename);
     vector<Person> loadCharacters(const string& filename);
+    vector<Autopsy> loadAutopies(const string& filename);
+    vector<Ending> loadendings(const string& filename);
 };
 
 GameData LoadFiles();
