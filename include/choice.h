@@ -4,8 +4,10 @@
 #include <vector>
 using namespace std;
 
+#include "dialogueunit.h"
 
-class Choice {
+
+class Choice : public DialogueUnit {
 
 };
 

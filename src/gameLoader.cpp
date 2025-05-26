@@ -52,16 +52,95 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(const vec
 
 vector<Day> GameLoader::loadDays(const string& filename){
     vector<Day> days;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        // Remove trailing whitespace (optional, helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+
+        if (line.find("+player") != string::npos) {
+            // Process clue line
+        } else if (line.find("+clue") != string::npos) {
+            // Process interview line
+        } else if (line.find("+end") != string::npos) {
+            // Process end line
+        }
+    }
+
+    inFile.close();
     return days;
 }
 
 vector<Person> GameLoader::loadCharacters(const string& filename){
     vector<Person> people;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        // Remove trailing whitespace (optional, helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+
+        if (line.find("+player") != string::npos) {
+            // Read player info (4 lines total, +end ignored)
+            string name, bloodType, item, description;
+            getline(inFile, name);
+            getline(inFile, bloodType);
+            getline(inFile, item);
+            getline(inFile, description);
+            getline(inFile, line); 
+            // skip +end
+            vector<Player> players;
+
+            players = loadplayers(name, bloodType item,description);
+
+
+        }else{
+            //non people texts 
+            string name, bloodType, item, description;
+            bool isDead, hasAutopsy;
+
+            getline(inFile, name);
+            getline(inFile, bloodType);
+            getline(inFile, item);
+
+            //how to read these in theyre proper value?
+            //getline(inFile, isDead);
+            //getline(inFile, hasAutopsy);
+
+            getline(inFile, description);
+            getline(inFile, line); // skip
+        }
+    }
+
+    inFile.close();
     return people;
 }
 
-vector<Autopsy> GameLoader::loadAutopies(const string& filename){
+vector<Player> loadplayers(string name, string bloodType, string item,string description){
+    vector<Player> players;
+    Player player(name, bloodType, item, description);
+    players.push_back(player);
 
+    return players;
+}
+
+vector<Autopsy> GameLoader::loadAutopies(const string& filename){
+    
 }
 
 vector<Ending> GameLoader::loadendings(const string& filename){

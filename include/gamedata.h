@@ -13,6 +13,7 @@
 #include "dialogueunit.h"
 #include "day.h"
 #include "person.h"
+#include "player.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ struct GameData {
     vector<Ending> endingsLibrary; 
     vector<Day> dayLibrary;
     vector<Person> personLibrary;
+    vector<Player> playerLibrary;
     map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue;
     //A collection of Dialogue objects
 };

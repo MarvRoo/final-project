@@ -24,6 +24,7 @@ public:
     vector<Person> loadCharacters(const string& filename);
     vector<Autopsy> loadAutopies(const string& filename);
     vector<Ending> loadendings(const string& filename);
+    vector<Player> loadplayers(string name, string bloodType, string item,string description);
 };
 
 GameData LoadFiles();
