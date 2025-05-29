@@ -6,14 +6,15 @@
 #include <memory>
 
 
-#include "location.h"
+#include "dialogueunit.h"
 #include "dialogue.h"
+#include "choice.h"
 #include "autopsy.h"
 #include "ending.h"
-#include "dialogueunit.h"
 #include "day.h"
 #include "person.h"
 #include "player.h"
+#include "location.h"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ struct GameData {
     vector<Person> personLibrary;
     vector<Player> playerLibrary;
     map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue;
-    //A collection of Dialogue objects
+    //A collection of Dialogue objects mapped by a key word
 };
 
 #endif

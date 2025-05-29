@@ -7,14 +7,15 @@
 using namespace std;
 
 vector<Location> GameLoader::loadLocations(const string& filename){
-
+//easy
 }
-//"vector<Item> GameLoader::loadItems(const string& filename);
+
+//Tank works the same as dialogue but no mapping
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& filename){
 
 }
 
-map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(const vector<string>& DialogueFiles){
+map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles){
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
     for (const string& file : DialogueFiles) {
@@ -79,7 +80,9 @@ vector<Day> GameLoader::loadDays(const string& filename){
     return days;
 }
 
-vector<Person> GameLoader::loadCharacters(const string& filename){
+//checkpoints +player and +end used in txt file
+//read from the same text file
+vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player> &players){
     vector<Person> people;
     ifstream inFile("src/game_text_files/" + filename);
 
@@ -90,13 +93,14 @@ vector<Person> GameLoader::loadCharacters(const string& filename){
 
     string line;
     while (getline(inFile, line)) {
-        // Remove trailing whitespace (optional, helps match +tags better)
+        //Remove trailing whitespace (helps match +tags better)
         if (!line.empty()) {
             line.erase(line.find_last_not_of(" \t\r\n") + 1);
         }
+        //we don't push white lines, it's just text file formatting
 
         if (line.find("+player") != string::npos) {
-            // Read player info (4 lines total, +end ignored)
+            //Read player info (4 lines total, +end ignored)
             string name, bloodType, item, description;
             getline(inFile, name);
             getline(inFile, bloodType);
@@ -104,14 +108,13 @@ vector<Person> GameLoader::loadCharacters(const string& filename){
             getline(inFile, description);
             getline(inFile, line); 
             // skip +end
-            vector<Player> players;
 
-            players = loadplayers(name, bloodType item,description);
-
+            //call the functon to make a player object and push the return
+            players.push_back(makePlayer(name, bloodType, item ,description));
 
         }else{
-            //non people texts 
-            string name, bloodType, item, description;
+            //non player
+            string name, bloodType, isDeadStr, hasAutopsyStr, item, description;
             bool isDead, hasAutopsy;
 
             getline(inFile, name);
@@ -119,11 +122,18 @@ vector<Person> GameLoader::loadCharacters(const string& filename){
             getline(inFile, item);
 
             //how to read these in theyre proper value?
-            //getline(inFile, isDead);
-            //getline(inFile, hasAutopsy);
+            getline(inFile, isDeadStr);
+            getline(inFile, hasAutopsyStr);
+            //formatting may vary depending on writer but overall format followed
+            isDead = (isDeadStr == "true" || isDeadStr == "1");
+            hasAutopsy = (hasAutopsyStr == "true" || hasAutopsyStr == "1");
 
             getline(inFile, description);
             getline(inFile, line); // skip
+
+            //make object 
+
+            //push object
         }
     }
 
@@ -131,27 +141,28 @@ vector<Person> GameLoader::loadCharacters(const string& filename){
     return people;
 }
 
-vector<Player> loadplayers(string name, string bloodType, string item,string description){
-    vector<Player> players;
+Player GameLoader::makePlayer(const string name,const string bloodType,const string item,const string description){
+    //create an object and return 
     Player player(name, bloodType, item, description);
-    players.push_back(player);
-
-    return players;
+    //push to player vector in function called from
+    return player;
 }
 
 vector<Autopsy> GameLoader::loadAutopies(const string& filename){
-    
+//easy
 }
 
 vector<Ending> GameLoader::loadendings(const string& filename){
-    
+//easy
 
 }
 
-// Similar methods for loadItems and loadClues
+//Loader Central
 GameData LoadFiles() {
     GameLoader DropDead;
     GameData data;
+
+    vector<Player> players;
 
     vector<string> DialogueFiles = {"Day1Morning.txt", "Day1Evening.txt","Day1Night.txt", 
     "Day2Morning.txt", "Day2Evening.txt", "Day2Night.txt", "Day3Morning.txt", "Day3Evening.txt",
@@ -165,7 +176,11 @@ GameData LoadFiles() {
     data.autopsyLibrary = DropDead.loadAutopies("src/autopsies.txt");
     data.dayLibrary = DropDead.loadDays("src/days.txt");
     data.endingsLibrary = DropDead.loadendings("src/endings.txt");
-    data.personLibrary = DropDead.loadCharacters("src/person.txt");
+
+    data.personLibrary = DropDead.loadCharacters("src/person.txt", players);
+    data.playerLibrary = players;
+
+
 
     return data;
 }
