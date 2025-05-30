@@ -13,7 +13,8 @@ class Autopsy {
     public: 
 
     Autopsy(string charName, const string& descript);
-    Autopsy findAutopsies(string personName); 
+    Autopsy findAutopsies(string personName);
+    ~Autopsy();
 };
 
 

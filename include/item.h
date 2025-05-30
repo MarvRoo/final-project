@@ -10,16 +10,24 @@ private:
     bool hasBlood;
     bool hasFingerPrint;
     string bloodType;
+    string whoseFingerprint;
     string itemLocation;
-    string itemDescription; //added this
-    bool isFound; //added this to check item has been found
+    bool itemFound; 
+    string itemDescription;
+
 
 
 public:
     Item();
-    Item(int clueID, const string& name, bool hasBlood, bool fingerPrint, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound);
+    Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, 
+        const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, 
+        bool itemFound, int clueID);
 
-    //void SetItemDescript(const string& desc);
+    bool isItemFound();
+    void print();
+    Item(const Item&) = delete; //delete copy constructor
+    Item& operator=(const Item&) = delete; //delete copy assignment operator
+    ~Item();
 };
 
 #endif
