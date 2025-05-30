@@ -6,35 +6,70 @@
 
 using namespace std;
 
-vector<Location> GameLoader::loadLocations(const string& filename){
+//marked red because location class constructor isnt fixed 
+vector<Location> GameLoader::loadLocations(const string& filename) {
     vector<Location> locations;
     ifstream inFile("src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
-        //debug error if file is not open
         throw runtime_error("Failed to open dialogue file: " + filename);
     }
 
-     string line;
-    while (getline(inFile, line)) {
-        //Remove trailing whitespace (helps match +tags better)
-        if (!line.empty()) {
-            line.erase(line.find_last_not_of(" \t\r\n") + 1);
-        }
-        //we don't push white lines, it's just text file formatting
+    string line, descript, name, ifLocked, itemFound, keyItem;
+    bool isLocked, isFound;
 
-        string name, bloodType, item, description;
-        if (line.find("+player") != string::npos) {
+    while (getline(inFile, line)) {
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1); // trim trailing
+        }
+
+        if (line.find("+multi-item") != string::npos) {
+            vector<string> clues;
+            string clue;
+
+            // Read clues until "+end"
+            while (getline(inFile, clue)) {
+                if (clue == "+end") break;
+                clues.push_back(clue);
+            }
+
+            getline(inFile, descript);
+            getline(inFile, name);
+            getline(inFile, ifLocked);
+            getline(inFile, itemFound);
+            getline(inFile, keyItem);
+            getline(inFile, line); //read empty line
+
+            isLocked = (ifLocked == "true" || ifLocked == "1");
+            isFound = (itemFound == "true" || itemFound == "1");
+
+            Location place(name, descript, clues, isLocked, isFound, keyItem);
+            locations.push_back(place);
+        } else {
+            //Fallback to normal item
+            getline(inFile, descript);
+            getline(inFile, name);
+            getline(inFile, ifLocked);
+            getline(inFile, itemFound);
+            getline(inFile, keyItem);
+            getline(inFile, line); // read empty line
+
+            isLocked = (ifLocked == "true" || ifLocked == "1");
+            isFound = (itemFound == "true" || itemFound == "1");
+
+            Location place(name, descript, isLocked, isFound, keyItem);
+            locations.push_back(place);
         }
     }
+
     inFile.close();
     return locations;
-
-    
 }
+
 
 //Tank works the same as dialogue but no mapping
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& filename){
+    
 
 }
 

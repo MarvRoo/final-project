@@ -1,5 +1,22 @@
-true
-Tarp Mallet "Blood behind her head"
++multi-item
+Tarp
+Mallet
++end
 The shed walls hold up neat rows of tools. One big item noticeably missing. It doesn't take long...a bloody mallet against the wall near Lana, the sitter's body. She's face down sprawled on a tarp that covers the whole floor with her hands beneath her. The back of her head matted with crusted blood.
-Shed 
-true false Mallet
+Shed
+true
+false
+Mallet
+
++multi-item
+Sitter Bracelet
+Brother Keys
++end
+The walls are painted a pale yellow and drawers and cupboards white. Looks pretty clean and well kept as far as you can tell. Nothing out of place it seems.
+Kitchen
+true
+false
+Brother Keys
+
+The flowers are lively 
+Garden
