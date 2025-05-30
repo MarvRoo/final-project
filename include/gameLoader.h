@@ -24,6 +24,7 @@ public:
 
     vector<unique_ptr<Clue>> loadClues (const string& filename);
     unique_ptr<Item> makeItem(); //return pointer of item
+    //unique_ptr<clue> makeClue();//return pointer of clue
     //unique_ptr<Interview> makeInterview(); in progress i do not have the class yet
 
     //incomplete

@@ -7,7 +7,30 @@
 using namespace std;
 
 vector<Location> GameLoader::loadLocations(const string& filename){
-//easy
+    vector<Location> locations;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+     string line;
+    while (getline(inFile, line)) {
+        //Remove trailing whitespace (helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+        //we don't push white lines, it's just text file formatting
+
+        string name, bloodType, item, description;
+        if (line.find("+player") != string::npos) {
+        }
+    }
+    inFile.close();
+    return locations;
+
+    
 }
 
 //Tank works the same as dialogue but no mapping
@@ -99,9 +122,9 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
         }
         //we don't push white lines, it's just text file formatting
 
+        string name, bloodType, item, description;
         if (line.find("+player") != string::npos) {
             //Read player info (4 lines total, +end ignored)
-            string name, bloodType, item, description;
             getline(inFile, name);
             getline(inFile, bloodType);
             getline(inFile, item);
@@ -114,7 +137,7 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
 
         }else{
             //non player
-            string name, bloodType, isDeadStr, hasAutopsyStr, item, description;
+            string isDeadStr, hasAutopsyStr;
             bool isDead, hasAutopsy;
 
             getline(inFile, name);
@@ -130,10 +153,10 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
 
             getline(inFile, description);
             getline(inFile, line); // skip
-
             //make object 
-
+            Person character(name, bloodType, item, isDead, hasAutopsy, description);
             //push object
+            people.push_back(character);
         }
     }
 
@@ -149,11 +172,68 @@ Player GameLoader::makePlayer(const string name,const string bloodType,const str
 }
 
 vector<Autopsy> GameLoader::loadAutopies(const string& filename){
-//easy
+    vector<Autopsy>  autopsyReports;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        //Remove trailing whitespace (helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+     
+        string name, descript;
+       
+        getline(inFile, name);
+        getline(inFile, descript);
+        getline(inFile, line);
+        //empty line read
+        Autopsy autopsyReport(name, descript);
+        autopsyReports.push_back(autopsyReport);
+
+    }
+
+    inFile.close();
+    return autopsyReports;
 }
 
 vector<Ending> GameLoader::loadendings(const string& filename){
-//easy
+    vector<Ending>  storyEndings;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        //Remove trailing whitespace (helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+        //we don't push white lines, it's just text file formatting
+        string name, text, hp;
+        int hpCap;
+
+        getline(inFile, name);
+        getline(inFile, text);
+        getline(inFile, hp);
+        getline(inFile, line);
+        //empty line read
+
+        Ending Ending(name, text, hpCap);
+        storyEndings.push_back(Ending);
+
+    }
+
+    inFile.close();
+    return storyEndings;
 
 }
 
