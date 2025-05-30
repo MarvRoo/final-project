@@ -40,3 +40,9 @@ false
 false
 Mother to both Ally and Jacob. Well-known pathologist and always appears serious.
 
++player
+Ally
+A+
+Phone
+Just returned from Barbados. She has long brown hair and is 5'3. She is a smart, independent person.
++end

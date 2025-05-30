@@ -1,0 +1,370 @@
+#include "gameLoader.h"
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+//marked red because location class constructor isnt fixed 
+vector<Location> GameLoader::loadLocations(const string& filename) {
+    vector<Location> locations;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line, descript, name, ifLocked, itemFound, keyItem;
+    bool isLocked, isFound;
+
+    while (getline(inFile, line)) {
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1); // trim trailing
+        }
+
+        if (line.find("+multi-item") != string::npos) {
+            vector<string> clues;
+            string clue;
+
+            // Read clues until "+end"
+            while (getline(inFile, clue)) {
+                if (clue == "+end") break;
+                clues.push_back(clue);
+            }
+
+            getline(inFile, descript);
+            getline(inFile, name);
+            getline(inFile, ifLocked);
+            getline(inFile, itemFound);
+            getline(inFile, keyItem);
+            getline(inFile, line); //read empty line
+
+            isLocked = (ifLocked == "true" || ifLocked == "1");
+            isFound = (itemFound == "true" || itemFound == "1");
+
+            //uncomment when classes merged
+            //Location place(name, descript, clues, isLocked, isFound, keyItem);
+            //locations.push_back(place);
+        } else {
+            //Fallback to normal item
+            getline(inFile, descript);
+            getline(inFile, name);
+            getline(inFile, ifLocked);
+            getline(inFile, itemFound);
+            getline(inFile, keyItem);
+            getline(inFile, line); // read empty line
+
+            isLocked = (ifLocked == "true" || ifLocked == "1");
+            isFound = (itemFound == "true" || itemFound == "1");
+
+            //uncomment when classes merged
+            //Location place(name, descript, isLocked, isFound, keyItem);
+            //locations.push_back(place);
+        }
+    }
+
+    inFile.close();
+    return locations;
+}
+
+//uncomment when classes merged
+//classes are not compeleted
+//Tank works the same as dialogue but no mapping
+/*vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
+    //seperated files since formatting varies greatly between string clues and item clues
+    vector<unique_ptr<Clue>> clues;
+
+    // Load item clues
+    ifstream itemFile("src/game_text_files/" + fileItems);
+    if (!itemFile.is_open()) {
+        throw runtime_error("Failed to open item clue file: " + fileItems);
+    }
+
+    string line;
+    while (getline(itemFile, line)) {
+        string name = line;
+
+        string isLockedStr, keyItem, isFoundStr, foundBy, locationFound, description, clueID;
+
+        getline(itemFile, isLockedStr);
+        getline(itemFile, keyItem);
+        getline(itemFile, isFoundStr);
+        getline(itemFile, foundBy);
+        getline(itemFile, locationFound);
+        getline(itemFile, description);
+        getline(itemFile, clueID); // #clueID line (can be stored or parsed if needed)
+
+        // Construct item and wrap in unique_ptr
+        unique_ptr<Item> item = makeItem(name, isLockedStr, keyItem, isFoundStr, foundBy, locationFound, description);
+
+        // Add to the clues vector
+        clues.push_back(std::move(item));
+    }
+
+    itemFile.close();
+
+    // Load string clues
+    ifstream clueFile("src/game_text_files/" + fileClues);
+    if (!clueFile.is_open()) {
+        throw runtime_error("Failed to open clue text file: " + fileClues);
+    }
+
+    while (getline(clueFile, line)) {
+        if (line == "+Clue") {
+            string clueText, clueID;
+
+            getline(clueFile, clueText);     // the clue string
+            getline(clueFile, clueID);       // #number or similar
+            getline(clueFile, line);         // +end
+
+            if (line != "+end") {
+                throw runtime_error("Expected +end after clue text");
+            }
+
+            // Construct basic clue
+            unique_ptr<Clue> clue = makeClue(clueText);
+            clues.push_back(std::move(clue));
+        }
+    }
+
+    clueFile.close();
+
+    return clues;
+
+}
+
+unique_ptr<Item> GameLoader::makeItem(){}//return pointer of item
+unique_ptr<clue> GameLoader::makeClue(){}//return pointer of clue
+unique_ptr<Interview> GameLoader::makeInterview(){}*/
+
+//text file not ready 
+map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles){
+    map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
+
+    for (const string& file : DialogueFiles) {
+        //specify where files are located
+        ifstream inFile("src/game_text_files/" + file);
+
+        if (!inFile.is_open()) {
+            //debug error if file is not open
+            throw runtime_error("Failed to open dialogue file: " + file);
+        }
+
+        string line;
+        while (getline(inFile, line)) {
+            // Remove trailing whitespace (optional, helps match +tags better)
+            if (!line.empty()) {
+                line.erase(line.find_last_not_of(" \t\r\n") + 1);
+            }
+
+            if (line.find("+clue") != string::npos) {
+                // Process clue line
+            } else if (line.find("+interview") != string::npos) {
+                // Process interview line
+            } else if (line.find("+choice") != string::npos) {
+                // Process choice line
+            } else if (line.find("+end") != string::npos) {
+                // Process end line
+            }
+        }
+
+        inFile.close();
+    }
+    return dialogueMap;
+
+}
+
+vector<Day> GameLoader::loadDays(const string& filename){
+    vector<Day> days;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        // Remove trailing whitespace (optional, helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+
+        if (line.find("+player") != string::npos) {
+            // Process clue line
+        } else if (line.find("+clue") != string::npos) {
+            // Process interview line
+        } else if (line.find("+end") != string::npos) {
+            // Process end line
+        }
+    }
+
+    inFile.close();
+    return days;
+}
+
+//checkpoints +player and +end used in txt file
+//read from the same text file
+vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player> &players){
+    vector<Person> people;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        //Remove trailing whitespace (helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+        //we don't push white lines, it's just text file formatting
+
+        string name, bloodType, item, description;
+        if (line.find("+player") != string::npos) {
+            //Read player info (4 lines total, +end ignored)
+            getline(inFile, name);
+            getline(inFile, bloodType);
+            getline(inFile, item);
+            getline(inFile, description);
+            getline(inFile, line); 
+            // skip +end
+
+            //call the functon to make a player object and push the return
+            players.push_back(makePlayer(name, bloodType, item ,description));
+
+        }else{
+            //non player
+            string isDeadStr, hasAutopsyStr;
+            bool isDead, hasAutopsy;
+
+            getline(inFile, name);
+            getline(inFile, bloodType);
+            getline(inFile, item);
+
+            //how to read these in theyre proper value?
+            getline(inFile, isDeadStr);
+            getline(inFile, hasAutopsyStr);
+            //formatting may vary depending on writer but overall format followed
+            isDead = (isDeadStr == "true" || isDeadStr == "1");
+            hasAutopsy = (hasAutopsyStr == "true" || hasAutopsyStr == "1");
+
+            getline(inFile, description);
+            getline(inFile, line); // skip
+            //make object 
+            Person character(name, bloodType, item, isDead, hasAutopsy, description);
+            //push object
+            people.push_back(character);
+        }
+    }
+
+    inFile.close();
+    return people;
+}
+
+Player GameLoader::makePlayer(const string name,const string bloodType,const string item,const string description){
+    //create an object and return 
+    Player player(name, bloodType, item, description);
+    //push to player vector in function called from
+    return player;
+}
+
+vector<Autopsy> GameLoader::loadAutopies(const string& filename){
+    vector<Autopsy>  autopsyReports;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        //Remove trailing whitespace (helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+     
+        string name, descript;
+       
+        getline(inFile, name);
+        getline(inFile, descript);
+        getline(inFile, line);
+        //empty line read
+        Autopsy autopsyReport(name, descript);
+        autopsyReports.push_back(autopsyReport);
+
+    }
+
+    inFile.close();
+    return autopsyReports;
+}
+
+vector<Ending> GameLoader::loadendings(const string& filename){
+    vector<Ending>  storyEndings;
+    ifstream inFile("src/game_text_files/" + filename);
+
+    if (!inFile.is_open()) {
+        //debug error if file is not open
+        throw runtime_error("Failed to open dialogue file: " + filename);
+    }
+
+    string line;
+    while (getline(inFile, line)) {
+        //Remove trailing whitespace (helps match +tags better)
+        if (!line.empty()) {
+            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+        }
+        //we don't push white lines, it's just text file formatting
+        string name, text, hp;
+        int hpCap;
+
+        getline(inFile, name);
+        getline(inFile, text);
+        getline(inFile, hp);
+        getline(inFile, line);
+        //empty line read
+
+        Ending Ending(name, text, hpCap);
+        storyEndings.push_back(Ending);
+
+    }
+
+    inFile.close();
+    return storyEndings;
+
+}
+
+//Loader Central
+GameData LoadFiles() {
+    GameLoader DropDead;
+    GameData data;
+
+    vector<Player> players;
+
+    vector<string> DialogueFiles = {"Day1Morning.txt", "Day1Evening.txt","Day1Night.txt", 
+    "Day2Morning.txt", "Day2Evening.txt", "Day2Night.txt", "Day3Morning.txt", "Day3Evening.txt",
+    "Day3Night.txt"};
+    //read all file names and push contents to DialogueFiles
+    
+
+    data.locationLibrary = DropDead.loadLocations("src/locations.txt");
+    //double file reader
+    data.clueLibrary = DropDead.loadClues("src/items.txt","src/clue.txt" );
+    //multi-file reader +2
+    data.gameDialogue = DropDead.loadDialogue(DialogueFiles);
+    data.autopsyLibrary = DropDead.loadAutopies("src/autopsies.txt");
+    data.dayLibrary = DropDead.loadDays("src/days.txt");
+    data.endingsLibrary = DropDead.loadendings("src/endings.txt");
+
+    //reference vector
+    data.personLibrary = DropDead.loadCharacters("src/person.txt", players);
+    data.playerLibrary = players;
+
+
+
+    return data;
+}

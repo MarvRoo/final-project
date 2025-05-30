@@ -1,0 +1,17 @@
++Clue
+"Blood at the back of her head"
+#number
++end
+
++Clue
+""
+#number
++end
+
++Interview
+"I went on a lunch break at 11pm"
+"He called saying his truck broke down on the way to work"
++end
+#number
+
+//clues are meant to be string statement, like observations
