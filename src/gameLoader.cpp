@@ -190,13 +190,18 @@ vector<Day> GameLoader::loadDays(const string& filename){
         if (!line.empty()) {
             line.erase(line.find_last_not_of(" \t\r\n") + 1);
         }
+        Day day;
+        vector<int> clues;
+        /*+ Day(int Day, bool Night,bool Evening, bool Morning, vector<int> dayClues): void*/
+        //we're loading in clueID's
+        if (line.find("+clues") != string::npos) {
+            // Process getlines into strings until we seed +end
+            // Read clues until "+end"
+            while (getline(inFile, line)) {
+                if (line == "+end") break;
+            }
 
-        if (line.find("+player") != string::npos) {
-            // Process clue line
-        } else if (line.find("+clue") != string::npos) {
-            // Process interview line
-        } else if (line.find("+end") != string::npos) {
-            // Process end line
+            //pushback day segment 
         }
     }
 

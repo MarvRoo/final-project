@@ -1,0 +1,25 @@
+//Interface for where to go 
+Marked in dialogue by +goToLocation
+
++goToLocation
+//Actual interface stuff below as a Function return Location object string name
+
+Enter the number of where you want to go:
+[Pull players function shareRoomListPtr() to get the pointer 
+to the players string vector of listed rooms and print them out by index+1]
+[After the name is checked you also have to check that keyItemFound is true, if true then even though room is because...
+    Thoughts and explanation:
+    Location after keyitemfound becomes true but the room is not locked since its been unlocked by game progress
+    If a location is locked and keyItemfound is false then that means that location has not come up in the story
+    If location us unlocked and keyItemfound is false then that means the location hasn't been visited]
+[Include edge cases for invalid input of vector index.]
+Enter :
+[When the player enters a number you have to -1 whatever number 
+they entered to know which index they picked. Then the string they picked compare to Locationlibrary
+to find the right location checking the location object name variable.]
+
+You go to...
+    [location name pulled from vector]
+    [Print room fixed descript string from location object]
+    [Add location clues found to Player]
+    [Mark keyItemFound as true]
