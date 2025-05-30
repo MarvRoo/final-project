@@ -13,9 +13,10 @@ protected:
 public:
     Clue();
     Clue(int id, const string& name, bool inspected);
-    string getName() const;
-    bool isInspected() const;
-    int getClueID() const;
+    virtual void print();
+    virtual ~Clue();
+    Clue(const Clue&) = delete; //delete copy constructor
+    Clue& operator=(const Clue&) = delete; //delete copy assignment operator
 };
 
 #endif
