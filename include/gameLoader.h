@@ -22,10 +22,11 @@ private:
 public:
     vector<Location> loadLocations(const string& filename);
 
-    vector<unique_ptr<Clue>> loadClues (const string& filename);
-    unique_ptr<Item> makeItem(); //return pointer of item
-    //unique_ptr<clue> makeClue();//return pointer of clue
-    //unique_ptr<Interview> makeInterview(); in progress i do not have the class yet
+    vector<unique_ptr<Clue>> loadClues (const string& filename, const string& filename2);
+    //uncomment when classes merged
+    /*unique_ptr<Item> makeItem(); //return pointer of item
+    unique_ptr<clue> makeClue();//return pointer of clue
+    unique_ptr<Interview> makeInterview();*/
 
     //incomplete
     map<string, vector<unique_ptr<DialogueUnit>>> loadDialogue(vector<string>& DialogueFiles);

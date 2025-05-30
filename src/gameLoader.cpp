@@ -43,8 +43,9 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             isLocked = (ifLocked == "true" || ifLocked == "1");
             isFound = (itemFound == "true" || itemFound == "1");
 
-            Location place(name, descript, clues, isLocked, isFound, keyItem);
-            locations.push_back(place);
+            //uncomment when classes merged
+            //Location place(name, descript, clues, isLocked, isFound, keyItem);
+            //locations.push_back(place);
         } else {
             //Fallback to normal item
             getline(inFile, descript);
@@ -57,8 +58,9 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             isLocked = (ifLocked == "true" || ifLocked == "1");
             isFound = (itemFound == "true" || itemFound == "1");
 
-            Location place(name, descript, isLocked, isFound, keyItem);
-            locations.push_back(place);
+            //uncomment when classes merged
+            //Location place(name, descript, isLocked, isFound, keyItem);
+            //locations.push_back(place);
         }
     }
 
@@ -66,13 +68,77 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     return locations;
 }
 
-
+//uncomment when classes merged
+//classes are not compeleted
 //Tank works the same as dialogue but no mapping
-vector<unique_ptr<Clue>> GameLoader::loadClues(const string& filename){
-    
+/*vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
+    //seperated files since formatting varies greatly between string clues and item clues
+    vector<unique_ptr<Clue>> clues;
+
+    // Load item clues
+    ifstream itemFile("src/game_text_files/" + fileItems);
+    if (!itemFile.is_open()) {
+        throw runtime_error("Failed to open item clue file: " + fileItems);
+    }
+
+    string line;
+    while (getline(itemFile, line)) {
+        string name = line;
+
+        string isLockedStr, keyItem, isFoundStr, foundBy, locationFound, description, clueID;
+
+        getline(itemFile, isLockedStr);
+        getline(itemFile, keyItem);
+        getline(itemFile, isFoundStr);
+        getline(itemFile, foundBy);
+        getline(itemFile, locationFound);
+        getline(itemFile, description);
+        getline(itemFile, clueID); // #clueID line (can be stored or parsed if needed)
+
+        // Construct item and wrap in unique_ptr
+        unique_ptr<Item> item = makeItem(name, isLockedStr, keyItem, isFoundStr, foundBy, locationFound, description);
+
+        // Add to the clues vector
+        clues.push_back(std::move(item));
+    }
+
+    itemFile.close();
+
+    // Load string clues
+    ifstream clueFile("src/game_text_files/" + fileClues);
+    if (!clueFile.is_open()) {
+        throw runtime_error("Failed to open clue text file: " + fileClues);
+    }
+
+    while (getline(clueFile, line)) {
+        if (line == "+Clue") {
+            string clueText, clueID;
+
+            getline(clueFile, clueText);     // the clue string
+            getline(clueFile, clueID);       // #number or similar
+            getline(clueFile, line);         // +end
+
+            if (line != "+end") {
+                throw runtime_error("Expected +end after clue text");
+            }
+
+            // Construct basic clue
+            unique_ptr<Clue> clue = makeClue(clueText);
+            clues.push_back(std::move(clue));
+        }
+    }
+
+    clueFile.close();
+
+    return clues;
 
 }
 
+unique_ptr<Item> GameLoader::makeItem(){}//return pointer of item
+unique_ptr<clue> GameLoader::makeClue(){}//return pointer of clue
+unique_ptr<Interview> GameLoader::makeInterview(){}*/
+
+//text file not ready 
 map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles){
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
@@ -285,13 +351,16 @@ GameData LoadFiles() {
     //read all file names and push contents to DialogueFiles
     
 
-    data.locationLibrary = DropDead.loadLocations("src/Locations.txt");
-    data.clueLibrary = DropDead.loadClues("src/Items.txt");
+    data.locationLibrary = DropDead.loadLocations("src/locations.txt");
+    //double file reader
+    data.clueLibrary = DropDead.loadClues("src/items.txt","src/clue.txt" );
+    //multi-file reader +2
     data.gameDialogue = DropDead.loadDialogue(DialogueFiles);
     data.autopsyLibrary = DropDead.loadAutopies("src/autopsies.txt");
     data.dayLibrary = DropDead.loadDays("src/days.txt");
     data.endingsLibrary = DropDead.loadendings("src/endings.txt");
 
+    //reference vector
     data.personLibrary = DropDead.loadCharacters("src/person.txt", players);
     data.playerLibrary = players;
 

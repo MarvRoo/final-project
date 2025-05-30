@@ -1,27 +1,17 @@
-Tarp
-1101
-true
++Clue
+"Blood at the back of her head"
+#number
++end
 
-Gun
-1102
-true
++Clue
+""
+#number
++end
 
-Grass
-1103
-true
++Interview
+"I went on a lunch break at 11pm"
+"He called saying his truck broke down on the way to work"
++end
+#number
 
-Pool Noodle
-1104
-true
-
-Hair Brush
-1105
-false
-
-Bracelet
-1106
-false
-
-Car Keys
-1107
-false
+//clues are meant to be string statement, like observations
