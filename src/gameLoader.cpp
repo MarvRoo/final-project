@@ -15,7 +15,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         throw runtime_error("Failed to open dialogue file: " + filename);
     }
 
-    string line, descript, name, ifLocked, itemFound, keyItem;
+    string line, descript, name, ifLocked, itemFound, keyClue;
     bool isLocked, isFound;
 
     while (getline(inFile, line)) {
@@ -24,6 +24,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         }
 
         if (line.find("+multi-item") != string::npos) {
+            bool multiClue = true;
             vector<string> clues;
             string clue;
 
@@ -36,29 +37,29 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             getline(inFile, descript);
             getline(inFile, name);
             getline(inFile, ifLocked);
-            getline(inFile, itemFound);
-            getline(inFile, keyItem);
+            getline(inFile, keyClue);
             getline(inFile, line); //read empty line
 
             isLocked = (ifLocked == "true" || ifLocked == "1");
             isFound = (itemFound == "true" || itemFound == "1");
 
-            Location place(name, descript, clues, isLocked, isFound, keyItem);
+            Location place(name, descript, clues, isLocked, multiClue, keyClue);
+            //const string& name, const string& description, vector <string> clueList, bool accessible, bool multiple, string keyClue
             locations.push_back(place);
         } else {
             //Fallback to normal item
+            bool multiClue = false;
             getline(inFile, descript);
             getline(inFile, name);
             getline(inFile, ifLocked);
-            getline(inFile, itemFound);
-            getline(inFile, keyItem);
+            getline(inFile, keyClue);
             getline(inFile, line); // read empty line
 
             isLocked = (ifLocked == "true" || ifLocked == "1");
             isFound = (itemFound == "true" || itemFound == "1");
 
             //uncomment when classes merged
-            Location place(name, descript, isLocked, isFound, keyItem);
+            Location place(name, descript, isLocked, multiClue, keyClue);
             locations.push_back(place);
         }
     }
