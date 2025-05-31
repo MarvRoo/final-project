@@ -4,7 +4,7 @@
 +end
 
 +Clue
-""
+"Trail of blood"
 #number
 +end
 
