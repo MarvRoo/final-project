@@ -3,7 +3,7 @@
 Day::Day() : Night(false), Evening(false), Morning(false), Day(0) {}
 
 Day::Day(int Day, vector<Clue*> unlockClues, bool Night, bool Evening, bool Morning)
-    : Day(day), Night(night), Evening(evening), Morning(morning), nextDayUnlock(unlockClues) {}
+    : Day(Day), Night(Night), Evening(Evening), Morning(Morning), nextDayUnlock(unlockClues) {}
 
 Day::~Day();
 
