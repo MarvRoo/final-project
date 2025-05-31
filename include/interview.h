@@ -11,7 +11,10 @@ class Interview : public Clue {
 		std::vector<std::string> InterviewFacts;
 	public:
 		void interview(const std::string& interviewClueString, int clueID);
-		void printInterviewFacts();
+		void print();
+		~Interview();
+		Interview(const Interview&) = delete; //delete copy constructor
+        Interview& operator=(const Interview&) = delete; //delete copy assignment operator
 };
 
 #endif

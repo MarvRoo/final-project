@@ -9,11 +9,13 @@
 using namespace std;
 
 class Day{
-public:
+private:
     bool Night;
     bool Evening;
     bool Morning;
-    int Daynum;
+    int Day;
+
+public:
     vector<Clue*> nextDayUnlock;
 
     Day();

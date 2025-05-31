@@ -6,37 +6,21 @@
 using namespace std;
 
 class Location {
-protected:
-    string name;
-    string description; 
-    bool islocked;
-    bool keyItemFound;
-    int keyitem;
+private:
+   bool isAccessible;
+   string name;
+   string description;
+   bool hasMultipleClues;
+   bool keyItemFound;
+   int keyItemID;
+   vector<string> itemsList;
 
 public:
     // Constructors
-    Location();
-    //my edits to make sure gameloader communicates
-    Location(const string& name, const string& description, bool locked, bool keyFound, string key);
-    Location(const string& name, const string& description, vector<string> multiclues, bool locked, bool keyFound, string key);
-    ~Location();
+    Location(const string& name, const string& description, vector <string> ItemClues, bool accessible, bool multiple, string keyItem);
+    Location(const string& name, const string& description, bool accessible, bool multiple, string keyItem);
 
-    // SetRoom variants
-    void SetRoom(const string& name, const string& description, const vector<Item>& items);
-    void SetRoom(const string& name, const string& description, Item* Key);
-    void SetRoom(const string& name, const string& description, bool locked, Item* Key);
-    void SetRequiredClues(const vector<Clue*>& Clues);
-
-    // Other methods
-    bool checkUnlock(bool KeyItemFound) const;
-    void addItem(Item* item);
-    //const vector<Item*>& getItemList() const {return itemList;}
-    //Item* getKeyItem() const {return keyItem;}
-    string getName() const {return name;}
-    string getDescription() const {return description;}
-    bool isLockedStatus() const {return islocked;}
-    bool hasKeyItemBeenFound() const {return keyItemFound;}
-    bool setKeyItemFound(bool found) {keyItemFound = found;}
-
+    bool checkUnlock();
+    bool checkMultiItems();
 };
 #endif

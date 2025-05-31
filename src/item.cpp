@@ -1,28 +1,52 @@
 #include "item.h"
+#include<iostream>
+
+using std::cout;
+using std::endl;
+using std::string;
 
 //default constructor
 Item::Item() {
     hasBlood = false;
+    bloodType = "N/A";
     hasFingerPrint = false;
-    bloodType = "";
-    itemLocation = "";
-    itemDescription = "";
-    isFound = false;
+    bloodType = "N/A";
+    whoseFingerprint = "N/A";
+    itemLocation = "N/A";
+    itemDescription = "N/A";
+    itemFound = false;
 }
 
 //initialize Item object
-/*Item::Item(int clueID, const string& name, bool hasBlood, const string& bloodType, bool inspected, const string& itemLocation, const string& itemDescrip, bool itemFound); 
-    : ClueID(clueID), 
-      name(name), 
-      hasBlood(hasBlood), 
+Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
+    : hasBlood(hasBlood), 
+      bloodType(bloodType),
       hasFingerPrint(fingerPrint), 
-      bloodType(bloodType), 
-      inspected(inspected), 
+      whoseFingerprint(whoseFingerprint),
       itemLocation(itemLocation), 
       itemDescription(itemDescrip),
-      isFound(itemFound)  {}*/
+      itemFound(itemFound)
+      {
+    this->name = name;
+    this->ClueID = clueID;
+      }
+
+Item::~Item() {}
 
 //checks if the item has been found yet
-/*bool Item::itemFound(bool found) {
-    return isFound;
-}*/
+bool Item::isItemFound() {return this->itemFound;}
+
+void Item::print() {
+    cout << "Item name: " << this->name << endl;
+    if(this->hasBlood == true) cout << "The item has blood on it." << endl;
+    if(this->bloodType != "N/A") cout << "Blood type found on the item: " << this->bloodType << "." << endl;
+    if(this->hasFingerPrint == true) {
+        cout << "The fingerprint that's found on the ";
+        cout << this->name << " belongs to " << this->whoseFingerprint << "." << endl;
+    }
+    if(this->itemLocation != "N/A") {
+        cout << "Location where " << this->name << " has been found: ";
+        cout << this->itemLocation << "." << endl; 
+    }
+    cout << "Item description: " << this->itemDescription << "." << endl;
+}

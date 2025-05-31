@@ -1,4 +1,5 @@
 #include "autopsy.h"
+#include <iostream>
 
 using namespace std;
 
@@ -6,5 +7,8 @@ using namespace std;
 Autopsy::Autopsy(string charName, const string& descript) : characterName(charName), autopsyDescription(descript) {}
 
 Autopsy Autopsy::findAutopsies(string personName) {
-    return Autopsy(personName, this->autopsyDescription);
+    if(this->characterName == personName) {
+        cout << this->autopsyDescription << endl;
+    }
 }
+Autopsy::~Autopsy(){}
