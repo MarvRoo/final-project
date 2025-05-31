@@ -16,8 +16,9 @@ protected:
 public:
     // Constructors
     Location();
-    Location(const string& name, const string& description, bool locked = false, bool keyFound = false, Item* key = nullptr);
-    Location(const string& name, const string& description, const vector<Clue*>&  requiredClues, bool locked = false, bool keyFound = false, Item* key = nullptr);
+    //my edits to make sure gameloader communicates
+    Location(const string& name, const string& description, bool locked, bool keyFound, string key);
+    Location(const string& name, const string& description, vector<string> multiclues, bool locked, bool keyFound, string key);
     ~Location();
 
     // SetRoom variants

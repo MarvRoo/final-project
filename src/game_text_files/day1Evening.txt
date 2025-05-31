@@ -1,0 +1,30 @@
++mappingName
+Day 1 Evening
+
+Morning has passed. Now that we found the sitter's why don't we help the sheiff conduct some interviews?
+
+Sheiff: "Ehh I'd do it myself but...ya know.."
+He gestures to everyone seeing in the living room.
++Choice{
+"Isn't this your job?"
+10
+"Sure, I'll interview everyone."
+0
+"For a sheriff your not very helpful..."
+5
+
+Enter # choice: 
++end}
+
++CheckChoice{
+
+Sheiff: "I'll keep an eye on them while you interview them individually."
++end}
+
++interview{
+
++end}
+
++clues{
+
++end}
