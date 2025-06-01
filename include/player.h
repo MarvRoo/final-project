@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "item.h"
+#include "person.h"
 
 using namespace std;
 

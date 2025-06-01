@@ -239,32 +239,44 @@ vector<Day> GameLoader::loadDays(const string& filename){
     ifstream inFile("src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
-        //debug error if file is not open
         throw runtime_error("Failed to open dialogue file: " + filename);
     }
 
-    string line;
-    while (getline(inFile, line)) {
-        // Remove trailing whitespace (optional, helps match +tags better)
-        if (!line.empty()) {
-            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+    string line, dayNum, night, evening, morning, isLocked, allCluesFound, clue;
+    while (getline(inFile, dayNum)) {
+        // Skip empty lines
+        if (dayNum.empty()) continue;
+
+        getline(inFile, morning);
+        getline(inFile, evening);
+        getline(inFile, night);
+        getline(inFile, isLocked);
+        getline(inFile, allCluesFound);
+
+        // Expect +clues line next
+        while (getline(inFile, line) && line != "+clues") {
+            if (line.empty()) continue;
         }
-        Day day;
+
         vector<int> clues;
-        if (line.find("+clues") != string::npos) {
-            // Process getlines into strings until we see +end
-            // Read clues until "+end"
-            while (getline(inFile, line)) {
-                if (line == "+end") break;
+        while (getline(inFile, clue)) {
+            if (clue == "+end") break;
+            if (!clue.empty()) {
+                clues.push_back(stoi(clue));
             }
-            //convert getlines of numbers to actual int using static I think
-            
-
-            //then create day 
-            Day day;
-            //pushback day segment
-
         }
+
+        // Convert required values
+        int dayNumber = stoi(dayNum);
+        bool nightBool = (night == "true");
+        bool eveningBool = (evening == "true");
+        bool morningBool = (morning == "true");
+
+        // You can also use isLocked and allCluesFound as needed
+        // e.g., bool isLockedBool = (isLocked == "true");
+
+        Day day(dayNumber, nightBool, eveningBool, morningBool, clues);
+        days.push_back(day);
     }
 
     inFile.close();
