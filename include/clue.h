@@ -12,7 +12,7 @@ protected:
 
 public:
     Clue();
-    Clue(int id, const string& name, bool inspected);
+    Clue(int id, const string& name);
     virtual void print();
     virtual ~Clue();
     Clue(const Clue&) = delete; //delete copy constructor

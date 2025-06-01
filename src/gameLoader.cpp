@@ -109,7 +109,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
     itemFile.close();
 
-    string line, clueText, clueID;
+    string clueText;
     // Load string clues
     ifstream clueFile("src/game_text_files/" + fileClues);
     if (!clueFile.is_open()) {
@@ -118,17 +118,17 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
     while (getline(clueFile, line)) {
         if (line == "+Clue") {
-            string clueText, clueID;
 
             getline(clueFile, clueText); // The clue string
-            getline(clueFile, clueID);   // #clueID
+            getline(clueFile, itemID);   // #clueID
             getline(clueFile, line);     // +end
 
             if (line != "+end") {
                 throw runtime_error("Expected +end after clue text");
             }
-
-            auto clue = make_unique<Clue>(clueText, clueID);
+            //convert clueID
+            clueID = stoi(itemID);
+            auto clue = make_unique<Clue>(clueID, clueText);
             clues.push_back(std::move(clue));
         }
 
@@ -141,8 +141,8 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             }
 
             // After +end, get the clue ID
-            string clueID;
-            getline(clueFile, clueID); // #clueID
+            getline(clueFile, itemID); // #clueID
+            clueID = stoi(itemID);
 
             // Construct interview
             auto interview = make_unique<Interview>(lines, clueID);
