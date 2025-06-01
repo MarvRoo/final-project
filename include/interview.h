@@ -13,7 +13,7 @@ class Interview : public Clue {
 		Interview(){}
 		Interview(const vector<string>& interviewClueString, int clueID);
 
-		~Interview();
+		~Interview() override;
 		void print();
 };
 
