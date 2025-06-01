@@ -8,13 +8,13 @@ using namespace std;
 
 class Ending {
 private:
-    string name;
-    string storyDescript;
+    string sceneName;
+    string storyDescription;
     int hpcap;
 
 public:
     Ending();
-    Ending(string, string, int);
+    Ending(string name, string storyDescript, int hp);
     
 };
 
