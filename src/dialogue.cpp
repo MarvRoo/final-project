@@ -10,8 +10,7 @@ Dialogue::Dialogue(vector<string> dialogueStrings){
 }
 
 void Dialogue::print() const {
-    //tbd
-    //has to ccount for programming checkpoints
-    //checkpoint functions implements in gameloop. Game loop calls to print and shares it's
-    //functions with dialogue print so it prints properly
+    //prints all strings but can return a checkpoint string to conduct code in gameloop and then continue printing
+    //call go to location example
+    //continues reading until another checkpoint
 }

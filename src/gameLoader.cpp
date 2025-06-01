@@ -79,24 +79,37 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
         throw runtime_error("Failed to open item clue file: " + fileItems);
     }
 
-    string line;
-    while (getline(itemFile, line)) {
-        string name = line;
+    //loop for reading item text file first 
+    string line, name, hasBlood, bloodType, hasfingerPrints, whoTouched, location, descrip, isFound, itemID;
+    int clueID;
+    bool ifBlood, ifFingerPrints, ifFound;
+    while (getline(itemFile, name)) {
+        getline(itemFile, hasBlood);
+        getline(itemFile, bloodType);
+        getline(itemFile, hasfingerPrints);
+        getline(itemFile, whoTouched);
+        getline(itemFile, location);
+        getline(itemFile, descrip);
+        getline(itemFile, isFound);
+        getline(itemFile, itemID);
+        //empty line
+        getline(itemFile, line);
 
-        string clueText;
-        getline(itemFile, clueText); // The clue text
-
-        string clueID;
-        getline(itemFile, clueID);   // #clueID line
+        // Convert required values
+        int clueID = stoi(itemID);
+        bool ifBlood = (hasBlood == "true");
+        bool ifFingerPrints = (hasfingerPrints == "true");
+        bool ifFound = (isFound == "true");
 
         // Construct item (assumes Item inherits from Clue and has appropriate constructor)
         //Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
-        auto item = make_unique<Item>(name, clueText, clueID);
+        auto item = make_unique<Item>(name, ifBlood, bloodType, ifFingerPrints, whoTouched, location, descrip, ifFound, clueID);
         clues.push_back(std::move(item));
     }
 
     itemFile.close();
 
+    string line, clueText, clueID;
     // Load string clues
     ifstream clueFile("src/game_text_files/" + fileClues);
     if (!clueFile.is_open()) {
