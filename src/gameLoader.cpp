@@ -447,7 +447,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
         getline(inFile, line);
         //empty line read
 
-
+        //
         Ending Ending(name, text, hpCap);
         storyEndings.push_back(Ending);
 
