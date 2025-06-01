@@ -3,9 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "item.h"
-#include "clue.h"
-#include "player.h"
+
 using namespace std;
 
 class Day{
@@ -13,21 +11,20 @@ private:
     bool Night;
     bool Evening;
     bool Morning;
-    int Day;
+    int numDay = 0;
+    vector<int> allDayClues;
 
 public:
-    vector<Clue*> nextDayUnlock;
 
     Day();
-    Day(int Day, bool Night, bool Evening, bool Morning, const vector<Clue*>& unlockClues);
-    ~Day();
+    Day(int numDay, bool Night, bool Evening, bool Morning, const vector<int>& unlockClues);
    
-    void setDay(int Day, vector<Clue*> unlockClues, bool isNight, bool isEvening, bool isMorning);
     bool isNight(int Day);
     bool isMorning(int Day);
     bool isEvening(int Day);
-    bool isDayComplete() const;
-    bool CheckDayComplete(vector<Clue*> ClueList) const;
+
+    bool isDayComplete(const vector<int>& playerClueList) const;
+    bool isDayComplete(const vector<int>& playerClueList) const;
 };
 
 #endif

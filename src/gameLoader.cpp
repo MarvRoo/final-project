@@ -222,13 +222,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
                 getline(inFile, line); // +end}
             }
-
-            // All other +tags and regular lines: treat as Dialogue
-            else {
-                if (currentDialogueList) {
-                    currentDialogueList->emplace_back(make_unique<Dialogue>(line));
-                }
-            }
+            // All other +tags and regular lines pushed as strings
         }
 
         inFile.close();
@@ -263,10 +257,12 @@ vector<Day> GameLoader::loadDays(const string& filename){
             while (getline(inFile, line)) {
                 if (line == "+end") break;
             }
-            //convert getlines of numbers to actual int using static i think 
+            //convert getlines of numbers to actual int using static I think
+            
+
             //then create day 
-            Day day
-            //pushback day segment 
+            Day day;
+            //pushback day segment
 
         }
     }

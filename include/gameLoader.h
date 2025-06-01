@@ -12,13 +12,6 @@ using namespace std;
 //A class full of pure reader functions
 //how it learns it (from files).
 class GameLoader {
-private:
-    //remove this after these are the checkpoint used in this code
-    vector<string> checkpoints = {"+player","+clue", "+interview","+choice", "+person", "+end"};
-    //list is used primarily in dialogue 
-    //but will be used in person.txt
-
-
 public:
     vector<Location> loadLocations(const string& filename);
 

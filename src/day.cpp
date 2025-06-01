@@ -1,59 +1,28 @@
 #include "day.h"
 
-Day::Day() : Night(false), Evening(false), Morning(false), Day(0) {}
-
-Day::Day(int Day, vector<Clue*> unlockClues, bool Night, bool Evening, bool Morning)
-    : Day(Day), Night(Night), Evening(Evening), Morning(Morning), nextDayUnlock(unlockClues) {}
-
-Day::~Day();
-
-void Day::setDay(int dayNum, vector<Clue*> unlockClues, bool isNight, bool isEvening, bool isMorning){
-    Day = dayNum;
-    nextDayUnlock = unlockClues;
-    Night = isNight;
-    Evening = isEvening;
-    Morning = isMorning;
+Day::Day(int numDay, bool Night, bool Evening, bool Morning, const vector<int>& unlockClues){
+    this->numDay = numDay;
+    this->Night = Night;
+    this->Evening = Evening;
+    this->Morning = Morning;
+    this->allDayClues = unlockClues;
+    
 }
 
 bool Day::isNight(int Day){
-    return Day == dayNum && Night;
+    //no other logic needed besides returning the value of the priavte variable Night
+    return Night;
 }
 
 bool Day::isMorning(int Day){
-    return Day == dayNum && Morning;
+    return Morning;
 }
 
 bool Day::isEvening(int Day){
-    return Day == dayNum && Evening;
+    return Evening;
 }
 
-bool Day::isDayComplete(const vector<Clue*>& playerClueList) const{
-    if(Night){
-        return CheckDayComplete(playerClueList);
-    }
-    else{
-        return false;
-    }
-}
-
-bool Day::CheckDayComplete(const vector<Clue*>& clueList) const{
-    for(int i = 0; i < nextDayUnlock.size(); i++){
-        Clue* unlockClue = nextDayUnlock[i];
-        bool found = false;
-
-        if(unlockClue != nullptr){
-            for(int j = 0; j < ClueList.size(); j++){
-                Clue* playerCLue = clueList[j];
-
-                if(playerClue != nullptr && unlockClue->getClueID() == playerClue->getClueId()){
-                    found = true;
-                    break;
-                }
-            }
-            if(!found && !nextDayUnlock.empty()){
-                return false;
-            }
-        }
-    }
-    return true;
+bool Day::isDayComplete(const vector<int>& playerClueList) const{
+    if (playerClueList == this->allDayClues) return true;
+    return false;
 }
