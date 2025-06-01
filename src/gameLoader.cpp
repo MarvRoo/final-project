@@ -215,7 +215,8 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
                     //call choice constructor 
                     //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
-                    //we should already have the mapping name associated to this push 
+                    //we should already have the mapping name associated to this push
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options)); 
 
                 }
                 //end of reading a choice object
@@ -242,6 +243,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                     //call choice constructor 
                     //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
                     //we should already have the mapping name associated to this push
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options));
                     
                 }
                 //end of reading a choice object
