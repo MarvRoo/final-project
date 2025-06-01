@@ -2,6 +2,7 @@
 #define DIALOGUE_H
 
 #include <vector>
+#include <string>
 using namespace std;
 #include "dialogueunit.h"
 

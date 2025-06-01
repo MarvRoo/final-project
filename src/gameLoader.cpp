@@ -68,9 +68,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     return locations;
 }
 
-//uncomment when classes merged
-//classes are not compeleted
-//Tank works the same as dialogue but no mapping
+//Incomplete loadClues
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
     //seperated files since formatting varies greatly between string clues and item clues
     vector<unique_ptr<Clue>> clues;
@@ -92,6 +90,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
         getline(itemFile, clueID);   // #clueID line
 
         // Construct item (assumes Item inherits from Clue and has appropriate constructor)
+        //Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
         auto item = make_unique<Item>(name, clueText, clueID);
         clues.push_back(std::move(item));
     }
@@ -137,10 +136,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             clues.push_back(std::move(interview));
         }
     }
-    //After the file loop ends, push any remaining dialogue lines
-
-
-
+    
     clueFile.close();
 
     return clues;
