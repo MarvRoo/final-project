@@ -68,9 +68,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     return locations;
 }
 
-//uncomment when classes merged
-//classes are not compeleted
-//Tank works the same as dialogue but no mapping
+//Incomplete loadClues
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
     //seperated files since formatting varies greatly between string clues and item clues
     vector<unique_ptr<Clue>> clues;
@@ -81,23 +79,37 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
         throw runtime_error("Failed to open item clue file: " + fileItems);
     }
 
-    string line;
-    while (getline(itemFile, line)) {
-        string name = line;
+    //loop for reading item text file first 
+    string line, name, hasBlood, bloodType, hasfingerPrints, whoTouched, location, descrip, isFound, itemID;
+    int clueID;
+    bool ifBlood, ifFingerPrints, ifFound;
+    while (getline(itemFile, name)) {
+        getline(itemFile, hasBlood);
+        getline(itemFile, bloodType);
+        getline(itemFile, hasfingerPrints);
+        getline(itemFile, whoTouched);
+        getline(itemFile, location);
+        getline(itemFile, descrip);
+        getline(itemFile, isFound);
+        getline(itemFile, itemID);
+        //empty line
+        getline(itemFile, line);
 
-        string clueText;
-        getline(itemFile, clueText); // The clue text
-
-        string clueID;
-        getline(itemFile, clueID);   // #clueID line
+        // Convert required values
+        int clueID = stoi(itemID);
+        bool ifBlood = (hasBlood == "true");
+        bool ifFingerPrints = (hasfingerPrints == "true");
+        bool ifFound = (isFound == "true");
 
         // Construct item (assumes Item inherits from Clue and has appropriate constructor)
-        auto item = make_unique<Item>(name, clueText, clueID);
+        //Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
+        auto item = make_unique<Item>(name, ifBlood, bloodType, ifFingerPrints, whoTouched, location, descrip, ifFound, clueID);
         clues.push_back(std::move(item));
     }
 
     itemFile.close();
 
+    string clueText;
     // Load string clues
     ifstream clueFile("src/game_text_files/" + fileClues);
     if (!clueFile.is_open()) {
@@ -106,17 +118,17 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
     while (getline(clueFile, line)) {
         if (line == "+Clue") {
-            string clueText, clueID;
 
             getline(clueFile, clueText); // The clue string
-            getline(clueFile, clueID);   // #clueID
+            getline(clueFile, itemID);   // #clueID
             getline(clueFile, line);     // +end
 
             if (line != "+end") {
                 throw runtime_error("Expected +end after clue text");
             }
-
-            auto clue = make_unique<Clue>(clueText, clueID);
+            //convert clueID
+            clueID = stoi(itemID);
+            auto clue = make_unique<Clue>(clueID, clueText);
             clues.push_back(std::move(clue));
         }
 
@@ -129,18 +141,15 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             }
 
             // After +end, get the clue ID
-            string clueID;
-            getline(clueFile, clueID); // #clueID
+            getline(clueFile, itemID); // #clueID
+            clueID = stoi(itemID);
 
             // Construct interview
             auto interview = make_unique<Interview>(lines, clueID);
             clues.push_back(std::move(interview));
         }
     }
-    //After the file loop ends, push any remaining dialogue lines
-
-
-
+    
     clueFile.close();
 
     return clues;
@@ -339,6 +348,8 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
             getline(inFile, line); 
             // skip +end
 
+            //conversion
+
             //call the functon to make a player object and push the return
             players.push_back(makePlayer(name, bloodType, item ,description));
 
@@ -436,7 +447,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
         getline(inFile, line);
         //empty line read
 
-
+        //
         Ending Ending(name, text, hpCap);
         storyEndings.push_back(Ending);
 

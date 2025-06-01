@@ -23,8 +23,7 @@ public:
     bool isMorning(int Day);
     bool isEvening(int Day);
 
-    bool isDayComplete(const vector<int>& playerClueList) const;
-    bool isDayComplete(const vector<int>& playerClueList) const;
+    bool isDayComplete(const vector<int>& playerClueList);
 };
 
 #endif

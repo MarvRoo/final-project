@@ -1,14 +1,15 @@
 #include "interview.h"
 #include<iostream>
 
-using std::cout;
-using std::endl;
-using std::string;
 using namespace std;
 
-void Interview::interview(const std::string& interviewClueString, int clueID) {
+Interview::Interview(const vector<string>& interviewClueString, int clueID) {
     this->ClueID = clueID;
-    InterviewFacts.push_back(interviewClueString);
+    this->InterviewFacts = interviewClueString;
+}
+
+Interview::~Interview() {
+    // vector<string> InterviewFacts automatically cleans itself up
 }
 
 void Interview::print() {
@@ -16,5 +17,3 @@ void Interview::print() {
         cout << InterviewFacts.at(i) << endl;
     }
 }
-
-Interview::~Interview() {}

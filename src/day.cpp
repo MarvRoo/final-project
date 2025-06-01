@@ -22,7 +22,7 @@ bool Day::isEvening(int Day){
     return Evening;
 }
 
-bool Day::isDayComplete(const vector<int>& playerClueList) const{
+bool Day::isDayComplete(const vector<int>& playerClueList) {
     if (playerClueList == this->allDayClues) return true;
     return false;
 }

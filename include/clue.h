@@ -2,6 +2,7 @@
 #define CLUE_H
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 class Clue {
@@ -12,8 +13,8 @@ protected:
 
 public:
     Clue();
-    Clue(int id, const string& name, bool inspected);
-    virtual void print();
+    Clue(int id, const string& name);
+    virtual void print(){ cout << name;}
     virtual ~Clue();
     Clue(const Clue&) = delete; //delete copy constructor
     Clue& operator=(const Clue&) = delete; //delete copy assignment operator

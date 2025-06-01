@@ -1,5 +1,8 @@
 #include "player.h"
 
+Player::Player(){
+    //empty 
+}
 
 Player::Player(string name, string bloodType, string item,string description) {
     this->name = name;
