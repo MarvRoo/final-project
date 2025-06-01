@@ -8,13 +8,11 @@
 
 class Interview : public Clue {
 	private:
-		std::vector<std::string> InterviewFacts;
+		vector<string> InterviewFacts;
 	public:
-		void interview(const std::string& interviewClueString, int clueID);
+		Interview(){}
+		Interview(const vector<string>& interviewClueString, int clueID);
 		void print();
-		~Interview();
-		Interview(const Interview&) = delete; //delete copy constructor
-        Interview& operator=(const Interview&) = delete; //delete copy assignment operator
 };
 
 #endif

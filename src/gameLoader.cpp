@@ -348,6 +348,8 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
             getline(inFile, line); 
             // skip +end
 
+            //conversion
+
             //call the functon to make a player object and push the return
             players.push_back(makePlayer(name, bloodType, item ,description));
 
