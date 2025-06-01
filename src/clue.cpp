@@ -8,3 +8,8 @@ Clue::Clue() {
 }
 
 Clue::Clue(int id, const string& name) : ClueID(id), name(name), inspected(false) {}
+
+Clue::~Clue() {
+    // No manual cleanup needed
+    // included for standard practice 
+}

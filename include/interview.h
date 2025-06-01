@@ -12,6 +12,8 @@ class Interview : public Clue {
 	public:
 		Interview(){}
 		Interview(const vector<string>& interviewClueString, int clueID);
+
+		~Interview();
 		void print();
 };
 
