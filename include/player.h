@@ -22,7 +22,7 @@ public:
     Player(string name, string bloodType, string item,string description);
 
     void setSuspect(string const suspectName){declaredSuspect = suspectName;}
-     vector<string>* shareClueListPtr() {return &clueList;}
+    vector<string>* shareClueListPtr() {return &clueList;}
     vector<string>* shareRoomListPtr() {return &roomList;}
     void upDateHp(int newHP) {hp = newHP;}
 };
