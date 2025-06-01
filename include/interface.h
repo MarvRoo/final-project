@@ -8,8 +8,13 @@ using namespace std;
 
 class Interface {
 
-public:
-    void viewClueInterface();
+    private:
+        const GameData* gameDataPtr;
+
+    public:
+        void viewClueInterface();
+        void viewLocationInterface();
+        void setGameData(const GameData& data){ gameDataPtr = &data;}
 };
 
 #endif
