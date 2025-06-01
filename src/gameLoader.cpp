@@ -137,6 +137,9 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             clues.push_back(std::move(interview));
         }
     }
+    //After the file loop ends, push any remaining dialogue lines
+
+
 
     clueFile.close();
 
@@ -144,7 +147,6 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
 }
 
-//text file not ready 
 map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles){
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
@@ -156,28 +158,48 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
         string line;
         string currentMappingName;
-        vector<unique_ptr<DialogueUnit>>* currentDialogueList = nullptr;
+        //we'll pass these into the constructor
+        vector<string> dialogueLines;
 
         while (getline(inFile, line)) {
             if (!line.empty()) {
                 line.erase(line.find_last_not_of(" \t\r\n") + 1);
             }
 
-            if (line.empty()) continue;
+            if (line.empty()){
+                //empty lines are part of dialogue output formatting
+                dialogueLines.push_back(line);
+            }
 
-            // Start new mapping group
+            //Done with textfile
+            if (line == "+doneReading"){
+                break;
+            }
+
+            //Start new mapping group
             if (line == "+mappingName") {
                 if (getline(inFile, line)) {
                     line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                    /*Program:
+                        check if dialogueLines vector isn't empty before we change mapping name
+                        if not empty then use the the currentMappingName to push into map<string, vector<unique_ptr<DialogueUnit>>>
+                        we would call the dialogue constructor with the parameter of dialogueLines to make the object
+                        push that object in and then clear the dialogueLines vector to reuse aswell as currentMappingName
+                    */
+                    if (!dialogueLines.empty() && !currentMappingName.empty()) {
+                        //Push Dialogue object with its designated mapping name to dialogueMap for the Game dialogue Library
+                        dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                        //clear vector
+                        dialogueLines.clear();
+                        //clear string
+                        currentMappingName.clear();
+                    }
                     currentMappingName = line;
-                    currentDialogueList = &dialogueMap[currentMappingName];
                 }
             }
 
             // Choice with 2 options
-            else if (line == "+Choice2{") {
-                if (!currentDialogueList) continue;
-
+            if (line == "+Choice2{") {
                 string opt1, opt2;
                 int j1 = 0, j2 = 0;
 
@@ -191,16 +213,16 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         {opt2, j2}
                     };
 
-                    currentDialogueList->emplace_back(make_unique<Choice>(options));
+                    //call choice constructor 
+                    //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
+                    //we should already have the mapping name associated to this push 
+
                 }
-
+                //end of reading a choice object
                 getline(inFile, line); // +end}
-            }
 
-            // Choice with 3 options
-            else if (line == "+Choice3{") {
-                if (!currentDialogueList) continue;
-
+            }else if (line == "+Choice3{") {
+                // Choice with 3 options
                 string opt1, opt2, opt3;
                 int j1 = 0, j2 = 0, j3 = 0;
 
@@ -217,12 +239,17 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         {opt3, j3}
                     };
 
-                    currentDialogueList->emplace_back(make_unique<Choice>(options));
+                    //call choice constructor 
+                    //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
+                    //we should already have the mapping name associated to this push
+                    
                 }
-
+                //end of reading a choice object
                 getline(inFile, line); // +end}
+            }else {
+                //if not a choice block then continue to push all strings even empty to dialogueLines vector
+                dialogueLines.push_back(line);
             }
-            // All other +tags and regular lines pushed as strings
         }
 
         inFile.close();
@@ -360,7 +387,8 @@ vector<Autopsy> GameLoader::loadAutopies(const string& filename){
 
     string line;
     while (getline(inFile, line)) {
-        //Remove trailing whitespace (helps match +tags better)
+        //Remove trailing whitespace (helps match +tags better) 
+        //example: "Hello world   " will still be recognized as "Hello world"
         if (!line.empty()) {
             line.erase(line.find_last_not_of(" \t\r\n") + 1);
         }
