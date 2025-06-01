@@ -263,6 +263,7 @@ vector<Day> GameLoader::loadDays(const string& filename){
             if (clue == "+end") break;
             if (!clue.empty()) {
                 clues.push_back(stoi(clue));
+                //stoi is changing string to int
             }
         }
 
@@ -271,9 +272,6 @@ vector<Day> GameLoader::loadDays(const string& filename){
         bool nightBool = (night == "true");
         bool eveningBool = (evening == "true");
         bool morningBool = (morning == "true");
-
-        // You can also use isLocked and allCluesFound as needed
-        // e.g., bool isLockedBool = (isLocked == "true");
 
         Day day(dayNumber, nightBool, eveningBool, morningBool, clues);
         days.push_back(day);
