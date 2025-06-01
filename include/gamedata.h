@@ -15,6 +15,9 @@
 #include "person.h"
 #include "player.h"
 #include "location.h"
+#include "item.h"
+#include "clue.h"
+#include "interview.h"
 
 using namespace std;
 

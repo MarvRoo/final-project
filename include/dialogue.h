@@ -3,9 +3,17 @@
 
 #include <vector>
 using namespace std;
+#include "dialogueunit.h"
 
 
-class Dialogue {
+class Dialogue : public DialogueUnit{
+private:
+    vector<string> dialogueSegments;
+public:
+
+    Dialogue();
+    Dialogue(vector<string> dialogueStrings);
+    void print() const override;
 
 };
 

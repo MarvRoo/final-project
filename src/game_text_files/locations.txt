@@ -5,7 +5,6 @@ Mallet
 The shed walls hold up neat rows of tools. One big item noticeably missing. It doesn't take long...a bloody mallet against the wall near Lana, the sitter's body. She's face down sprawled on a tarp that covers the whole floor with her hands beneath her. The back of her head matted with crusted blood.
 Shed
 true
-false
 Mallet
 
 +multi-item
@@ -15,8 +14,14 @@ Brother Keys
 The walls are painted a pale yellow and drawers and cupboards white. Looks pretty clean and well kept as far as you can tell. Nothing out of place it seems.
 Kitchen
 true
-false
 Brother Keys
 
-The flowers are lively 
+"Uncut Grass"
+The flowers are lively but a little overgrown. The grass is uncut it's really time for a trim. Strange the gardener was suppose to mow and trim today early in the morning.
 Garden
+true
+"Uncut Grass"
+
+What usually is a crystal clear pool for a good summer day is now bere white walls sinking 12 ft down. It's a kidney shaped pool with one set of stairs. A pool noodle lies near the edge, it has a stain...migjt be blood.
+Pool
+

@@ -15,7 +15,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         throw runtime_error("Failed to open dialogue file: " + filename);
     }
 
-    string line, descript, name, ifLocked, itemFound, keyItem;
+    string line, descript, name, ifLocked, itemFound, keyClue;
     bool isLocked, isFound;
 
     while (getline(inFile, line)) {
@@ -24,6 +24,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         }
 
         if (line.find("+multi-item") != string::npos) {
+            bool multiClue = true;
             vector<string> clues;
             string clue;
 
@@ -36,31 +37,30 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             getline(inFile, descript);
             getline(inFile, name);
             getline(inFile, ifLocked);
-            getline(inFile, itemFound);
-            getline(inFile, keyItem);
+            getline(inFile, keyClue);
             getline(inFile, line); //read empty line
 
             isLocked = (ifLocked == "true" || ifLocked == "1");
             isFound = (itemFound == "true" || itemFound == "1");
 
-            //uncomment when classes merged
-            //Location place(name, descript, clues, isLocked, isFound, keyItem);
-            //locations.push_back(place);
+            Location place(name, descript, clues, isLocked, multiClue, keyClue);
+            //const string& name, const string& description, vector <string> clueList, bool accessible, bool multiple, string keyClue
+            locations.push_back(place);
         } else {
             //Fallback to normal item
+            bool multiClue = false;
             getline(inFile, descript);
             getline(inFile, name);
             getline(inFile, ifLocked);
-            getline(inFile, itemFound);
-            getline(inFile, keyItem);
+            getline(inFile, keyClue);
             getline(inFile, line); // read empty line
 
             isLocked = (ifLocked == "true" || ifLocked == "1");
             isFound = (itemFound == "true" || itemFound == "1");
 
             //uncomment when classes merged
-            //Location place(name, descript, isLocked, isFound, keyItem);
-            //locations.push_back(place);
+            Location place(name, descript, isLocked, multiClue, keyClue);
+            locations.push_back(place);
         }
     }
 
@@ -71,7 +71,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 //uncomment when classes merged
 //classes are not compeleted
 //Tank works the same as dialogue but no mapping
-/*vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
+vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
     //seperated files since formatting varies greatly between string clues and item clues
     vector<unique_ptr<Clue>> clues;
 
@@ -85,20 +85,14 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     while (getline(itemFile, line)) {
         string name = line;
 
-        string isLockedStr, keyItem, isFoundStr, foundBy, locationFound, description, clueID;
+        string clueText;
+        getline(itemFile, clueText); // The clue text
 
-        getline(itemFile, isLockedStr);
-        getline(itemFile, keyItem);
-        getline(itemFile, isFoundStr);
-        getline(itemFile, foundBy);
-        getline(itemFile, locationFound);
-        getline(itemFile, description);
-        getline(itemFile, clueID); // #clueID line (can be stored or parsed if needed)
+        string clueID;
+        getline(itemFile, clueID);   // #clueID line
 
-        // Construct item and wrap in unique_ptr
-        unique_ptr<Item> item = makeItem(name, isLockedStr, keyItem, isFoundStr, foundBy, locationFound, description);
-
-        // Add to the clues vector
+        // Construct item (assumes Item inherits from Clue and has appropriate constructor)
+        auto item = make_unique<Item>(name, clueText, clueID);
         clues.push_back(std::move(item));
     }
 
@@ -114,19 +108,38 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         if (line == "+Clue") {
             string clueText, clueID;
 
-            getline(clueFile, clueText);     // the clue string
-            getline(clueFile, clueID);       // #number or similar
-            getline(clueFile, line);         // +end
+            getline(clueFile, clueText); // The clue string
+            getline(clueFile, clueID);   // #clueID
+            getline(clueFile, line);     // +end
 
             if (line != "+end") {
                 throw runtime_error("Expected +end after clue text");
             }
 
-            // Construct basic clue
-            unique_ptr<Clue> clue = makeClue(clueText);
+            auto clue = make_unique<Clue>(clueText, clueID);
             clues.push_back(std::move(clue));
         }
+
+        else if (line == "+Interview") {
+            vector<string> lines;
+
+            // Read all lines until +end
+            while (getline(clueFile, line) && line != "+end") {
+                lines.push_back(line);
+            }
+
+            // After +end, get the clue ID
+            string clueID;
+            getline(clueFile, clueID); // #clueID
+
+            // Construct interview
+            auto interview = make_unique<Interview>(lines, clueID);
+            clues.push_back(std::move(interview));
+        }
     }
+    //After the file loop ends, push any remaining dialogue lines
+
+
 
     clueFile.close();
 
@@ -134,70 +147,163 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 
 }
 
-unique_ptr<Item> GameLoader::makeItem(){}//return pointer of item
-unique_ptr<clue> GameLoader::makeClue(){}//return pointer of clue
-unique_ptr<Interview> GameLoader::makeInterview(){}*/
-
-//text file not ready 
 map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles){
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
     for (const string& file : DialogueFiles) {
-        //specify where files are located
         ifstream inFile("src/game_text_files/" + file);
-
         if (!inFile.is_open()) {
-            //debug error if file is not open
             throw runtime_error("Failed to open dialogue file: " + file);
         }
 
         string line;
+        string currentMappingName;
+        //we'll pass these into the constructor
+        vector<string> dialogueLines;
+
         while (getline(inFile, line)) {
-            // Remove trailing whitespace (optional, helps match +tags better)
             if (!line.empty()) {
                 line.erase(line.find_last_not_of(" \t\r\n") + 1);
             }
 
-            if (line.find("+clue") != string::npos) {
-                // Process clue line
-            } else if (line.find("+interview") != string::npos) {
-                // Process interview line
-            } else if (line.find("+choice") != string::npos) {
-                // Process choice line
-            } else if (line.find("+end") != string::npos) {
-                // Process end line
+            if (line.empty()){
+                //empty lines are part of dialogue output formatting
+                dialogueLines.push_back(line);
+            }
+
+            //Done with textfile
+            if (line == "+doneReading"){
+                break;
+            }
+
+            //Start new mapping group
+            if (line == "+mappingName") {
+                if (getline(inFile, line)) {
+                    line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                    /*Program:
+                        check if dialogueLines vector isn't empty before we change mapping name
+                        if not empty then use the the currentMappingName to push into map<string, vector<unique_ptr<DialogueUnit>>>
+                        we would call the dialogue constructor with the parameter of dialogueLines to make the object
+                        push that object in and then clear the dialogueLines vector to reuse aswell as currentMappingName
+                    */
+                    if (!dialogueLines.empty() && !currentMappingName.empty()) {
+                        //Push Dialogue object with its designated mapping name to dialogueMap for the Game dialogue Library
+                        dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                        //clear vector
+                        dialogueLines.clear();
+                        //clear string
+                        currentMappingName.clear();
+                    }
+                    currentMappingName = line;
+                }
+            }
+
+            // Choice with 2 options
+            if (line == "+Choice2{") {
+                string opt1, opt2;
+                int j1 = 0, j2 = 0;
+
+                if (getline(inFile, opt1) &&
+                    getline(inFile, line) && (j1 = stoi(line)) &&
+                    getline(inFile, opt2) &&
+                    getline(inFile, line) && (j2 = stoi(line))) {
+
+                    vector<pair<string, int>> options = {
+                        {opt1, j1},
+                        {opt2, j2}
+                    };
+
+                    //call choice constructor 
+                    //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
+                    //we should already have the mapping name associated to this push
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options)); 
+
+                }
+                //end of reading a choice object
+                getline(inFile, line); // +end}
+
+            }else if (line == "+Choice3{") {
+                // Choice with 3 options
+                string opt1, opt2, opt3;
+                int j1 = 0, j2 = 0, j3 = 0;
+
+                if (getline(inFile, opt1) &&
+                    getline(inFile, line) && (j1 = stoi(line)) &&
+                    getline(inFile, opt2) &&
+                    getline(inFile, line) && (j2 = stoi(line)) &&
+                    getline(inFile, opt3) &&
+                    getline(inFile, line) && (j3 = stoi(line))) {
+
+                    vector<pair<string, int>> options = {
+                        {opt1, j1},
+                        {opt2, j2},
+                        {opt3, j3}
+                    };
+
+                    //call choice constructor 
+                    //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
+                    //we should already have the mapping name associated to this push
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options));
+                    
+                }
+                //end of reading a choice object
+                getline(inFile, line); // +end}
+            }else {
+                //if not a choice block then continue to push all strings even empty to dialogueLines vector
+                dialogueLines.push_back(line);
             }
         }
 
         inFile.close();
     }
+
     return dialogueMap;
 
 }
 
+
+//incomplete
 vector<Day> GameLoader::loadDays(const string& filename){
     vector<Day> days;
     ifstream inFile("src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
-        //debug error if file is not open
         throw runtime_error("Failed to open dialogue file: " + filename);
     }
 
-    string line;
-    while (getline(inFile, line)) {
-        // Remove trailing whitespace (optional, helps match +tags better)
-        if (!line.empty()) {
-            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+    string line, dayNum, night, evening, morning, isLocked, allCluesFound, clue;
+    while (getline(inFile, dayNum)) {
+        // Skip empty lines
+        if (dayNum.empty()) continue;
+
+        getline(inFile, morning);
+        getline(inFile, evening);
+        getline(inFile, night);
+        getline(inFile, isLocked);
+        getline(inFile, allCluesFound);
+
+        // Expect +clues line next
+        while (getline(inFile, line) && line != "+clues") {
+            if (line.empty()) continue;
         }
 
-        if (line.find("+player") != string::npos) {
-            // Process clue line
-        } else if (line.find("+clue") != string::npos) {
-            // Process interview line
-        } else if (line.find("+end") != string::npos) {
-            // Process end line
+        vector<int> clues;
+        while (getline(inFile, clue)) {
+            if (clue == "+end") break;
+            if (!clue.empty()) {
+                clues.push_back(stoi(clue));
+                //stoi is changing string to int
+            }
         }
+
+        // Convert required values
+        int dayNumber = stoi(dayNum);
+        bool nightBool = (night == "true");
+        bool eveningBool = (evening == "true");
+        bool morningBool = (morning == "true");
+
+        Day day(dayNumber, nightBool, eveningBool, morningBool, clues);
+        days.push_back(day);
     }
 
     inFile.close();
@@ -283,7 +389,8 @@ vector<Autopsy> GameLoader::loadAutopies(const string& filename){
 
     string line;
     while (getline(inFile, line)) {
-        //Remove trailing whitespace (helps match +tags better)
+        //Remove trailing whitespace (helps match +tags better) 
+        //example: "Hello world   " will still be recognized as "Hello world"
         if (!line.empty()) {
             line.erase(line.find_last_not_of(" \t\r\n") + 1);
         }
@@ -303,6 +410,7 @@ vector<Autopsy> GameLoader::loadAutopies(const string& filename){
     return autopsyReports;
 }
 
+//hp converted to int 
 vector<Ending> GameLoader::loadendings(const string& filename){
     vector<Ending>  storyEndings;
     ifstream inFile("src/game_text_files/" + filename);
@@ -327,6 +435,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
         getline(inFile, hp);
         getline(inFile, line);
         //empty line read
+
 
         Ending Ending(name, text, hpCap);
         storyEndings.push_back(Ending);

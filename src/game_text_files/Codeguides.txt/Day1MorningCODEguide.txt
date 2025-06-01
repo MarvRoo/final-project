@@ -1,0 +1,11 @@
+Gameloop code guideline example
+
+
+
+if ("+choice") {
+    choice->display(); // show options to the player
+    int userInput;
+    cin >> userInput;
+    int hp = choice->getPointValue(userInput - 1);
+    //update charater hp;
+}
