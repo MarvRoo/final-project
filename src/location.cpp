@@ -30,3 +30,4 @@ bool Location::checkUnlock(){
 bool Location::checkMultiItems(){
     return hasMultipleClues;
 }
+
