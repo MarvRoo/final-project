@@ -106,3 +106,5 @@ With not much to do you think about any of the other places you can inspect. Mig
 Continue to search for clues or continue?
 +end}
 +doneReading
+1
+Evening
