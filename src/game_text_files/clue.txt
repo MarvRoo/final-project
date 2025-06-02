@@ -9,9 +9,8 @@
 +end
 
 +Interview
-"I went on a lunch break at 11pm"
-"He called saying his truck broke down on the way to work"
+Pool Boy:
+“Pool boy left before 11 am on a lunch break."
+"He called saying his truck broke down on the way to work."
 +end
 #number
-
-//clues are meant to be string statement, like observations

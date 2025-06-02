@@ -1,0 +1,27 @@
++mappingName
+Day 1 Night
+
+As hours passed you, the Gardner, the Pool boy, and the Sheriff spend most of the day in the living. Every now and then contemplating living, the stress of it all duanting on you. For dinner...pizza like some makeshift pizza party. Your apetite is really low so you spend most of the time pondering. All you can do for now is suspect the people in this house...in particular was it the Gardener? The Pool Boy? Mmmm decisons decisions...decisions.
+
+Sheriff: I'll stay here with these two through the night so you don't have to worry your pretty little head!"
+-Choice2{
+"Now your being helpful?"
+5
+"I'll bring some blankets. You won't need one I guess."
+10
++end}
+
+    The Sheriff doesn't find your tone very funny and gives you a long stare down before walking away*
+
+Me: "...too soon for jokes."
+
+    I wasn't joking.*
+
++callNightInterface
++chooseSuspect{
+Gardener
+Pool Boy
++end}
++doneReading
+1
+Evening

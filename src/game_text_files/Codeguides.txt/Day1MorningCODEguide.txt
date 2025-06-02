@@ -31,21 +31,4 @@ but it looks like the sitter isn't here...
 +end}
 
 [if we're at backyard story follows]
-Thoughts and explanation on how these files work: 
-    [Dialogue for calling the sheiff mom
-    Now I'll make point choices
-    When a choice is made it pushes the dialogue container as it is rn 
-    pushes the choice contianer and from now maps the rest of this text file as continuing
-    The printer function dialogue should be calling the interfaces within its saved string and not printing the 
-    actual strings +acquire or +location
-    THE PRINTER CLASS handles the vector of dialogue and choice objects ]
 As you make your way to the backyard you notice the grass is uncut and...a trail of blood that leads to the shed.
-
-//Note: Dialogue for calling the sheiff or mom
-    Now I'll make point choices
-    When a choice is made it pushes the dialogue container as it is rn 
-    pushes the choice contianer and from now maps the rest of this text file as continuing
-    The printer function dialogue should be calling the interfaces within its saved string and not printing the 
-    actual strings +acquire or +location
-    THE PRINTER CLASS handles the vector of dialogue and choice objects 
-//you call the sheriff and mom 

@@ -78,7 +78,6 @@ Dr.Lou: "I think these are fingerprints and theres a trail of blood coming into 
 "Blood behind her head"
 "Fingerprints found on bloody tarp”
 “Body found on tarp in the shed”
-“Body appears to be dragged on grass by blood pattern"
 +end}
 Me: "Yeah...I'll make now of all those things..."
 Sheriff: "Well well well, come take a look at who showed up!"
@@ -88,7 +87,7 @@ Sheriff: "Well well well, come take a look at who showed up!"
 Sheriff: "He says he just came back from his lunch break ey."
 Pool Boy: "I swear I finished cleaning up the pool a little early so I thought I could go get my lunch before my next job ya know. I'd come back and fill the pool up I swear! I was bailing on the job, please forgive me."
 
-+Choice3{
+-Choice3{
 "Your not in trouble for that."
 5
 "Who said you could take lunch early? That's not very professional."
@@ -128,3 +127,6 @@ Living Room
 Living Room
 Game: mmm you should probably go interview everyone in the Living Room...
 +end}
++doneReading
+1
+Morning
