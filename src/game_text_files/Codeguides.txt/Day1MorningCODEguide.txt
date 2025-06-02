@@ -1,11 +1,34 @@
-Gameloop code guideline example
+[+CheckBranch is jobs for GameLoop]
+Day 1 Morning
+Welcome to Drop Dead Introductions! 
+You (the player as sister) will be the Character Ally- the sister.
 
+Story Characters in Game:
+Jacob (Brother) 
+Dr. Lou (Mother)
+Angie (Sitter) 
+The Gardener
+Sheriff
+Pool Boy
 
+The story begins:
+You, Jacob, and Dr. Lou, returned home from a 3 week vacation from Barbados. You wanted to find the house sitter, Angie, to ask her what she's been up to. Your really good friends. Where should we search first?
+    [If player doesn't go straight to backyard check branch will be called later to check that]
+    [call Location description]
++goToLocation
 
-if ("+choice") {
-    choice->display(); // show options to the player
-    int userInput;
-    cin >> userInput;
-    int hp = choice->getPointValue(userInput - 1);
-    //update charater hp;
-}
+[+CheckBranch This line means to check the called previous location and if it's
+not the main branch of the story then print out the following text. Job for GameLoop]
+
++CheckBranch{
+    [Name of the location we want the player to get to]
+    Backyard
+    [check returned string from goToLocation to see if its the string name we need to continue the story]
+but it looks like the sitter isn't here...
+    [While string name returned is not Backyard]
+    +goToLocation if we're not in the main story branch
+    [Code loop here of goToLocation]
++end}
+
+[if we're at backyard story follows]
+As you make your way to the backyard you notice the grass is uncut and...a trail of blood that leads to the shed.
