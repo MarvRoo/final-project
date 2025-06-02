@@ -4,6 +4,7 @@
 #include<vector>
 #include<string>
 
+#include "gamedata.h"
 using namespace std;
 
 class Interface {
@@ -14,7 +15,7 @@ class Interface {
     public:
         void viewClueInterface();
         void viewLocationInterface();
-        void setGameData(const GameData& data){ gameDataPtr = &data;}
+        void setGameData(const GameData& data){ this->gameDataPtr = &data;}
 };
 
 #endif

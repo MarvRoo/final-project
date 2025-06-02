@@ -1,30 +1,108 @@
 +mappingName
 Day 1 Evening
 
-Morning has passed. Now that we found the sitter's why don't we help the sheiff conduct some interviews?
+Morning has passed. Now that we found the sitter, why don't we help the sheiff conduct some interviews?
 
 Sheiff: "Ehh I'd do it myself but...ya know.."
-He gestures to everyone seeing in the living room.
-+Choice{
+    He gestures to everyone seeing in the living room.*
+
+-Choice3{
 "Isn't this your job?"
 10
 "Sure, I'll interview everyone."
 0
 "For a sheriff your not very helpful..."
 5
++end}
++mappingName
+helpsheriff?
 
-Enter # choice: 
++mappingName
+eveningContinues
+Sheiff: "I'll keep an eye on them while you interview them individually...Up to you if you can get anything out of them."
+
+You begin interview...we'll start with Pool Boy.
+
+    He tries to keep his gaze on you while his feet shift uncomfortably.*
+
+Me: "You were supposed to clean the pool this morning, you finished but didn't fill up the pool after?"
+Pool Boy: "Yes...I'm sorry. Please I'm very grateful for the summer job. It's not that I don't take it seriously-...."
+Pool Boy: "There's a special on sandwiches at SubShake but they stop serving it after 11 am so I left early to make it in time."
+
+His eyes fall to the ground guilty*
+
+Me: "Sorry I'm not interogating you about your lunch or why you left...did you talk to Angie this morning?"
+Pool Boy: "Oh...yeah I-I saw her come out to the b-backyard a couple of times and be-before I left I told Angie I'd come back to fill up the pool."
+Me: "Did you see the Gardener?"
+Pool Boy: "N-no, but Angie said he be coming in late. His truck broke down and he couldn't get all his equipment to mow the lawn like usual."
+Pool Boy: "He said he'd be here around 1 pm, Angie was suppose to call you guys."
++InterviewClues{
+“Pool boy left before 11 am on a lunch break."
+“Angie was supposed to call us about the gardener”
+“Alibi is Angie”
 +end}
 
-+CheckChoice{
+    As you finish up talking to Pool Boy the Gardener comes inside the house looking pale.*
 
-Sheiff: "I'll keep an eye on them while you interview them individually."
+Me: Were you here this morning?
+Gardener: I was not. My truck broke down.
+
+    A bead of sweat trails down his brow.*
+
+Me: "The tarp that Angie was found on belongs to you and she was dragged on uncut grass."
+Gardener: "Well I don't always take my equipment with me. The tarps are v-very heavy. I'm old I-I thought it'd be easier to leave one in the shed."
+Me: "Did you talk to Angie this morning?"
+Gardener: "Yes I spoke to her around 10:30 am."
+
+    He shows you his call history fumbling a bit.*
+
+Me: "Do you have an abili, who did you speak else did you speak to this morning?"
+Gardener: "Oh! Yes, yes my newphew he let me borrow his truck and I was at the mechanic shop when I had to call about the situation."
+Me: "Got it. I'll call the mechanic shop to make sure. You can go sit in the living room now...the Sheriff won't let you leave until he can arrest someone."
+
+    The frowns and starts to whisper*
+
+Gardener: "...is that even legal."
+-Choice3{
+"Be my guest. I wouldn't try."
+5
+"He's not very patient...he'll arrest you if you leave."
+3
 +end}
++mappingName
+isItLegal?
 
-+interview{
-
++InterviewClues{
+“Gardener arrives during the interviews in a different truck.”
+“Called Angie from the Mechanic shop.”
+“Alibi is his nephew”
 +end}
+    The Gardener seems to think about it for a moment before shaking his head and begrudingly taking a seat.
 
-+clues{
+Dr.Lou: "Find anything useful?"
+Me: Some I think...I'm still unsure. So far the last person to see Angie alive is Eliot, the Pool Boy. Why do we call him that?"
 
+    Dr. Lou shrugs.*
+
+Dr. Lou: It's like his brand name, the young man is just a boy. Plus cheap and he's never failed us before."
+Me: "Fair enough...well there's not much to interview you about. We got here almost at the same time...I got here around 12:40 and you got here 10 minutes behind me with the Sheriff."
+Dr. Lou: "Right. Well I need to get some of my tools. I think I have a scalpel and some other things I can use to finish inspecting her. We can't fully be sure about the blood till tomorrow. I'll let you know when I have an autopsy report done."
+
+-Choice3{
+"I really need you to hurry, I'm in hot water!"
+5
+"Okay, guess it's gonna be a long awkard day."
+0
+"Seriously? Does it take that long for you to do a little bit of bloodwork??"
+10
 +end}
+Dr. Lou: "If you start complaining I'll let them take you. I'm just as stressed as you are."
+
+    Dr. Lou rubs her temples and heads to her room for her tools.*
+
+With not much to do you think about any of the other places you can inspect. Might be a good idea to take a look for more clues...
++goToLocation
++CheckBranch{
+Continue to search for clues or continue?
++end}
++doneReading

@@ -9,7 +9,7 @@ Choice::Choice(){
 }
 
 //copy the choice vector
-Choice::Choice(const vector<pair<string, int>>& choices) : options(options) {}
+Choice::Choice(const vector<pair<string, int>>& choices, bool isChoiceNeg) : options(options) , negHp(isChoiceNeg) {}
 
 void Choice::print() const{
     for (size_t i = 0; i < options.size(); ++i) {

@@ -1,12 +1,13 @@
 #include "day.h"
 
-Day::Day(int numDay, bool Night, bool Evening, bool Morning, const vector<int>& unlockClues){
+Day::Day(int numDay, bool Night, bool Evening, bool Morning, bool cluesFound, bool lockedDay, const vector<int>& unlockClues){
     this->numDay = numDay;
     this->Night = Night;
     this->Evening = Evening;
     this->Morning = Morning;
+    this->allFound = cluesFound;
+    this->locked = lockedDay;
     this->allDayClues = unlockClues;
-    
 }
 
 bool Day::isNight(int Day){
