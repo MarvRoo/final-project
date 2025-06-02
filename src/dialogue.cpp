@@ -1,5 +1,6 @@
 #include "dialogue.h"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -68,6 +69,31 @@ void Dialogue::print() const {
             ++i; // Skip +end}
             
         }
+        /*
+        +callNightInterface
+        +chooseSuspect{
+        Gardener
+        Pool Boy
+        +end}
+        */
+       if(line  == "+callNightInterface"){
+        vector<string> suspects;
+
+        //collect suspect list
+        ++i;
+        if (line  == "+chooseSuspect{"){
+            ++i
+            while (line != "+end}"){
+                suspects.push_back(line);
+                ++i
+            }
+        }
+        //call interface for end of the day summarization of 
+        //this function should take in the following
+        // function(suspects) and return the string name of the suspect the player choose in interface
+        //Gameloop will then call changeSuspect or whatever the function is called in player to set the name of the selected suspect
+        
+       }
 
         // Handle end-of-reading marker
         if (line == "+doneReading") {
