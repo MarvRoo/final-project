@@ -82,10 +82,10 @@ void Dialogue::print() const {
         //collect suspect list
         ++i;
         if (line  == "+chooseSuspect{"){
-            ++i
+            ++i;
             while (line != "+end}"){
                 suspects.push_back(line);
-                ++i
+                ++i;
             }
         }
         //call interface for end of the day summarization of 
