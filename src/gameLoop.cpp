@@ -9,12 +9,22 @@ void gameLoop::run(){
 
     //iterate through the   map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue library
     //that library not only holds dialogue but is the game flow 
+    //This iterrator is our game
 }
 
 Location* gameLoop::findLocation(string locationName){
     for (Location& loc : gameData.locationLibrary) {
         if (loc.getName() == locationName) {
             return &loc;
+        }
+    }
+    return nullptr; // Not found
+}
+
+Day* gameLoop::findDay(int numDay){
+    for (Day& day : gameData.dayLibrary) {
+        if (day.getDay() == numDay) {
+            return &day;
         }
     }
     return nullptr; // Not found
@@ -31,6 +41,29 @@ void gameLoop::unlockNextLocation(const string& locationName){
         //shouldnt happen but heres the error
         cout << "Error: Location " << locationName << "not found." << endl;
     }
+}
+
+string gameLoop::goToLocation(const string& chosenLocationName) {
+    // Only job here: validate the location, give clues if not already collected
+    for (Location& loc : gameData.locationLibrary) {
+        if (loc.getName() == chosenLocationName) {
+            if (!loc.checkkeyClueFound()) {
+                vector<string> clues = loc.getClues();
+                for (const string& clue : clues) {
+                    playerPtr->addNewClues(clue);
+                }
+                loc.markClueFound();
+                //marks that the locations key item has been found
+            } else {
+                //only if the keyitem in the location is already found
+                cout << "Hmmm there's no new clues to collect in " << chosenLocationName << "." << endl;
+            }
+            return chosenLocationName;
+        }
+    }
+
+    cout << "Error: Location " << chosenLocationName << " not found." << endl;
+    return "";
 }
 
 string gameLoop::goToLocation(const string& chosenLocationName){
@@ -51,16 +84,15 @@ string gameLoop::goToLocation(const string& chosenLocationName){
 }
 
 void gameLoop::acquireNewClue(const string& clueName){
-    Player player = gameData.playerLibrary[0];
-    for(int i = 0; i < gameData.clueLibrary.size(); ++i){
-        //checking if it exists okay good
-        if(gameData.clueLibrary[i]->getName() == clueName){
-            //not id, id is an int
+    //fixed the copy change
+    for(auto& clue : gameData.clueLibrary){
+        if(clue->getName() == clueName){
             playerPtr->addNewClues(clueName);
             return; 
         }
     }
-    cout << "Error: Clue " << clueName << "not found." << endl;
+    //shouldn't happen
+    cout << "Error: Clue " << clueName << " not found." << endl;
 }
 
 //revisit
@@ -83,6 +115,7 @@ void gameLoop::changeDayTime(int dayNum, const string& currentTime){
         day->changeDay(currentTime);
     }
     else{
+        //shouldnt happen ever
         cout << "Error: Day " << dayNum << "not found" << endl;
     }
 }

@@ -52,6 +52,13 @@ void Printer::printClues(vector<vector<string>>* clues){
         }
         cout << endl;
     }
+
+    //base case: When a clue is inspected it should be marked as so, a player should
+    //know what clues they have already looked into
+    //also find the clue itself and mark it as found
+    //location only has a vector of names but those names range from just a clue to the 
+    //subclass item or interview and they have they're own inspected
+    
 } 
 
 void Printer::printPersonDetails(const string& personName){

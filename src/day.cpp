@@ -10,16 +10,16 @@ Day::Day(int numDay, bool Night, bool Evening, bool Morning, bool cluesFound, bo
     this->allDayClues = unlockClues;
 }
 
-bool Day::isNight(int Day){
+bool Day::isNight(){
     //no other logic needed besides returning the value of the priavte variable Night
     return Night;
 }
 
-bool Day::isMorning(int Day){
+bool Day::isMorning(){
     return Morning;
 }
 
-bool Day::isEvening(int Day){
+bool Day::isEvening(){
     return Evening;
 }
 

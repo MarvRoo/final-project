@@ -20,7 +20,7 @@ public:
 
     void run();
     void unlockNextLocation(const string& locationName);
-    string goToLocation();
+    
     string goToLocation(const string& requiredLocation);
     void acquireNewClue(const string& clueName);
     void changeDayTime(int dayNum, const string& currentTime);

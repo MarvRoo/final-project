@@ -23,12 +23,13 @@ public:
     //dayNumber, morning, evening, night, locked, allFound, clues
     Day(int numDay, bool Night, bool Evening, bool Morning, bool cluesFound, bool lockedDay, const vector<int>& unlockClues);
    
-    bool isNight(int Day);
-    bool isMorning(int Day);
-    bool isEvening(int Day);
+    bool isNight();
+    bool isMorning();
+    bool isEvening();
 
     bool isDayComplete(const vector<int>& playerClueList);
     void changeDay(const string& currentTimeOfDay);
+    int getDay(){return numDay;}
 };
 
 #endif

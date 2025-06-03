@@ -20,15 +20,19 @@ public:
     Location(const string& name, const string& description, vector <string> clueList, bool accessible, bool multiple, string keyClue);
     Location(const string& name, const string& description, bool accessible, bool multiple, string keyClue);
 
-    bool checkUnlock();
-    bool checkkeyClueFound();
-    bool checkMultiItems();
-    string getName() const;
-    string getKeyClue() const;
-    vector<string> getClueList() const;
-    void changeClueFound();
-    void unlockLocation();
-    void lockLocation();
-    
+    void unlockLocation(){isAccessible = true;}
+    void lockLocation(){isAccessible = false;}
+    void markClueFound(){keyClueFound = true;}
+
+    //these should be made into acessors with const
+    bool checkkeyClueFound(){return keyClueFound;}
+    bool checkMultiItems(){return hasMultipleClues;}
+    bool checkUnlock(){return isAccessible;}
+
+    //these are also const
+    string getName() const {return name;}
+    string getKeyClue() const {return keyClue;}
+    vector<string> getClueList() const {return clueList;}
+    vector<string> getClues(){return clueList;}
 };
 #endif

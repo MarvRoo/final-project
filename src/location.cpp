@@ -23,17 +23,4 @@ Location::Location(const string& name, const string& description, bool accessibl
 
 }
 
-bool Location::checkUnlock(){
-    return isAccessible;
-}
 
-bool Location::checkMultiItems(){
-    return hasMultipleClues;
-}
-string Location::getName() const {return name;}
-string Location::getKeyClue() const {return keyClue;}
-vector<string> Location::getClueList() const {return clueList;}
-void Location::unlockLocation(){isAccessible = true;}
-void Location::lockLocation(){isAccessible = false;}
-void Location::changeClueFound(){keyClueFound = true;}
-bool Location::checkkeyClueFound(){return keyClueFound;}
