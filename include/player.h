@@ -26,6 +26,7 @@ public:
     vector<string>* shareClueListPtr() {return &clueList;}
     vector<string>* shareRoomListPtr() {return &roomList;}
     void upDateHp(int newHP) {this->hp = newHP;}
+    void addNewClues(string clueName){clueList.push_back(clueName);}
 };
 
 #endif

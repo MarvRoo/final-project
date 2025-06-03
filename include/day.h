@@ -28,6 +28,7 @@ public:
     bool isEvening(int Day);
 
     bool isDayComplete(const vector<int>& playerClueList);
+    void changeDayTime(){}
 };
 
 #endif

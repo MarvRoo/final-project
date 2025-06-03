@@ -32,3 +32,8 @@ bool Location::checkMultiItems(){
 }
 string Location::getName() const {return name;}
 string Location::getKeyClue() const {return keyClue;}
+vector<string> Location::getClueList() const {return clueList;}
+void Location::unlockLocation(){isAccessible = true;}
+void Location::lockLocation(){isAccessible = false;}
+void Location::changeClueFound(){keyClueFound = true;}
+bool Location::checkkeyClueFound(){return keyClueFound;}

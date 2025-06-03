@@ -21,9 +21,14 @@ public:
     Location(const string& name, const string& description, bool accessible, bool multiple, string keyClue);
 
     bool checkUnlock();
+    bool checkkeyClueFound();
     bool checkMultiItems();
     string getName() const;
     string getKeyClue() const;
+    vector<string> getClueList() const;
+    void changeClueFound();
+    void unlockLocation();
+    void lockLocation();
     
 };
 #endif

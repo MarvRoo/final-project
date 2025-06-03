@@ -6,11 +6,17 @@
 #include "gamedata.h"
 #include "interface.h"
 #include "printer.h"
+#include "player.h"
 
 class gameLoop{
+private:
+    GameData gameData;
+    Player* playerPtr = &gameData.playerLibrary[0];
+    Interface interface;
+    Printer printer;
 public:
-    gameLoop();
-    ~gameLoop();
+    gameLoop(){}
+    ~gameLoop(){}
 
     void run();
     void unlockNextLocation(const string& locationName);
@@ -18,11 +24,8 @@ public:
     string goToLocation(const string& requiredLocation);
     void acquireNewClue(const string& clueName);
     void changeDayTime(int dayNum, string& currentTime);
+    Location* findLocation(string locationName);
+    Day* findDay(int numDay);
 
-private:
-    GameData gameData;
-    Player* playerPtr;
-    Interface interface;
-    Printer printer;
 };
 #endif
