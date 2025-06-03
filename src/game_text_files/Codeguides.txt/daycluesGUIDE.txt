@@ -1,0 +1,16 @@
+1
+false
+false
+true
+false
+false
++clues
+2201  # "Blood behind her head"
+2204  # "Body found on tarp in the shed"
+2208  # "Body appears to be dragged on grass by blood pattern"
+2209  # "Missing Mop"
+2210  # "The floor was freshly mopped..."
+1101  # "Tarp"
+1109  # "Mallet"
+3301  # Pool Boy and Gardener interviews combined clue id
++end
