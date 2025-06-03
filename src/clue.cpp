@@ -8,3 +8,5 @@ Clue::Clue() {
 }
 
 Clue::Clue(int id, const string& name, bool inspected) : ClueID(id), name(name), inspected(inspected) {}
+
+string Clue::getName() const {return name;}

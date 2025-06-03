@@ -30,4 +30,5 @@ bool Location::checkUnlock(){
 bool Location::checkMultiItems(){
     return hasMultipleClues;
 }
-
+string Location::getName() const {return name;}
+string Location::getKeyClue() const {return keyClue;}

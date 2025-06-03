@@ -22,7 +22,8 @@ public:
 
     bool checkUnlock();
     bool checkMultiItems();
-    string getDescription() const {return description;}
+    string getName() const;
+    string getKeyClue() const;
     
 };
 #endif

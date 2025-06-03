@@ -18,3 +18,5 @@ Person::Person(const string& name, const string& bloodType, const string& person
 string Person::grabDescription() const{
     return description;
 }
+
+string Person::getPersonName() const {return name;}
