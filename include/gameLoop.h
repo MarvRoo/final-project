@@ -2,12 +2,9 @@
 #define GAMELOOP_H
 #include <string>
 #include <vector>
-#include "gameData.h"
-#include "day.h"
-#include "clue.h"
+#include "gamedata.h"
 #include "interface.h"
 #include "printer.h"
-#include "gameLoader.h"
 
 class gameLoop{
 public:
@@ -24,4 +21,7 @@ public:
 private:
     GameData gameData;
     Player* playerPtr;
-}
+    Interface interface;
+    Printer printer;
+};
+#endif
