@@ -9,6 +9,8 @@ Clue::Clue() {
 
 Clue::Clue(int id, const string& name) : ClueID(id), name(name), inspected(false) {}
 
+string Clue::getName() const {return name;}
+
 Clue::~Clue() {
     // No manual cleanup needed
     // included for standard practice 

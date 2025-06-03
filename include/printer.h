@@ -4,6 +4,7 @@
 #include "player.h"
 #include "gamedata.h"
 #include "ending.h"
+#include <vector>
 
 using namespace std;
 
@@ -14,10 +15,10 @@ class Printer {
     public:
         void setGameData(const GameData& data);
         void printClues(vector<vector<string>>* clues);
-        void printSearchItemLibrary(vector<string>* items);
+        void printSearchItem(vector<Item*>* items);
         void printPersonDetails(const string& personName);
-        void printDialogueSegment(const string& segementName);
         void printEnd(const Ending& ending);
+        void printAccessibleLocations(Player* player);
 };
 
 #endif

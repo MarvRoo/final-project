@@ -15,7 +15,9 @@ private:
 public:
     Ending();
     Ending(string name, string storyDescript, int hp);
-    
+    string getSceneName() const;
+    string getStoryDescription() const;
+    int getHPCap() const;
 };
 
 #endif

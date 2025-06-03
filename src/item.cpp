@@ -10,7 +10,6 @@ Item::Item() {
     hasBlood = false;
     bloodType = "N/A";
     hasFingerPrint = false;
-    bloodType = "N/A";
     whoseFingerprint = "N/A";
     itemLocation = "N/A";
     itemDescription = "N/A";
@@ -36,9 +35,9 @@ Item::~Item() {
 }
 
 //checks if the item has been found yet
-bool Item::isItemFound() {return this->itemFound;}
+bool Item::isItemFound() const {return this->itemFound;}
 
-void Item::print() {
+void Item::print() const {
     cout << "Item name: " << this->name << endl;
     if(this->hasBlood == true) cout << "The item has blood on it." << endl;
     if(this->bloodType != "N/A") cout << "Blood type found on the item: " << this->bloodType << "." << endl;

@@ -19,6 +19,7 @@ public:
     Person();
     Person(const string& name, const string& bloodType, const string& personalItem, bool isDead, bool hasAutopsy,  const string& description);
     string grabDescription() const;
+    string getPersonName() const;
 };
 
 #endif
