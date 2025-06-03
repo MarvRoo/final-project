@@ -28,7 +28,7 @@ public:
     bool isEvening(int Day);
 
     bool isDayComplete(const vector<int>& playerClueList);
-    void changeDay(const string& newTimeOfDay){}
+    void changeDay(const string& currentTimeOfDay);
 };
 
 #endif

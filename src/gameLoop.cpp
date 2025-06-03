@@ -71,6 +71,14 @@ void gameLoop::changeDayTime(int dayNum, const string& currentTime){
     //then using the currentTime to set that bool to false and the next one that comes after should be 
     //true 
     Day* day = findDay(dayNum);
+    if (currentTime == "Night"){
+        if(dayNum < 3){
+            //we only have three days so if the day is either day 1 or 2 and the currentTime is Night
+            //we need to set the nextDay's Morning to true
+            Day* nextDay = findDay(dayNum+1);
+            nextDay->changeDay("NEXTDAYTRUE");
+        }
+    }
     if(day){
         day->changeDay(currentTime);
     }

@@ -28,18 +28,21 @@ bool Day::isDayComplete(const vector<int>& playerClueList) {
     return false;
 }
 
-void Day::changeDay(const string& newTimeOfDay){
-    Night = false;
-    Evening = false;
-    Morning = false;
+void Day::changeDay(const string& currentTimeOfDay){
 
-    if(newTimeOfDay == "Night"){
+    if(currentTimeOfDay == "Night"){
+        Night = false;
+        //Day 2 morning changed to true in game loop
+    }
+    else if(currentTimeOfDay == "Evening"){
+        Evening = false;
         Night = true;
     }
-    else if(newTimeOfDay == "Evening"){
+    else if(currentTimeOfDay == "Morning"){
+        Morning = false;
         Evening = true;
-    }
-    else if(newTimeOfDay == "Morning"){
+    }else{
+        //being called to change morning to true for day 2 or 3
         Morning = true;
     }
 }

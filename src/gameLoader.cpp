@@ -12,7 +12,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
-        throw runtime_error("Failed to open dialogue file: " + filename);
+        throw runtime_error("Failed to open dialogue in file: " + filename + "-Fix loadLocations");
     }
 
     string line, descript, name, ifLocked, itemFound, keyClue;
@@ -68,7 +68,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     return locations;
 }
 
-//Incomplete loadClues
+//converter catcher needed 
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
     //seperated files since formatting varies greatly between string clues and item clues
     vector<unique_ptr<Clue>> clues;
@@ -76,7 +76,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
     // Load item clues
     ifstream itemFile("../src/game_text_files/" + fileItems);
     if (!itemFile.is_open()) {
-        throw runtime_error("Failed to open item clue file: " + fileItems);
+        throw runtime_error("Failed to open item clue file: " + fileItems + "-fix loadClues");
     }
 
     //loop for reading item text file first 
