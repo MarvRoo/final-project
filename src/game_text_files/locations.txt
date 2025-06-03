@@ -4,17 +4,18 @@ Mallet
 +end
 The shed walls hold up neat rows of tools. One big item noticeably missing. It doesn't take long...a bloody mallet against the wall near Lana, the sitter's body. She's face down sprawled on a tarp that covers the whole floor with her hands beneath her. The back of her head matted with crusted blood.
 Shed
-true
+false
 Mallet
 
 +multi-item
 Sitter Bracelet
-Brother Keys
+“The floor was freshly mopped...”
+“Missing Mop”
 +end
-The walls are painted a pale yellow and drawers and cupboards white. Looks pretty clean and well kept as far as you can tell. Nothing out of place it seems.
+The walls are painted a pale yellow and drawers and cupboards white. Looks pretty clean and well kept as far as you can tell. Nothing out of place it seems, the floor looks like it's just been mopped but no mop in sight.
 Kitchen
 true
-Brother Keys
+“The floor was freshly mopped...”
 
 "Uncut Grass"
 The flowers are lively but a little overgrown. The grass is uncut it's really time for a trim. Strange the gardener was suppose to mow and trim today early in the morning.
@@ -22,6 +23,68 @@ Garden
 true
 "Uncut Grass"
 
-What usually is a crystal clear pool for a good summer day is now bere white walls sinking 12 ft down. It's a kidney shaped pool with one set of stairs. A pool noodle lies near the edge, it has a stain...migjt be blood.
++multi-item
+“Blood found on the pool noodle"
+Pool Noodle
++end
+What usually is a crystal clear pool for a good summer day is now bere white walls sinking 12 ft down. It's a kidney shaped pool with one set of stairs. A pool noodle lies near the edge, it has a stain...might be blood.
 Pool
+false
+“Blood found on the pool noodle"
 
++multi-item
+“A couple of blood spots in the living room carpet."
+Angie's Phone
++end
+The living rooms curtains closed make the living room more depressing despite the house plants all around. Looking around you spot some blood on the carpet...along with Angie's phone on the coffee table. Dead.
+Living Room
+false
+“A couple of blood spots in the living room carpet."
+
++multi-item
+Brother’s keys
+“Body appears to be dragged on grass by blood pattern”
++end
+More uncut grass but as you walk further through the backyard...the grass is noticiably smushed like something was dragged. Some of the grass is smeared with blood...
+Backyard
+true
+Brother’s keys
+
++multi-item
+"Little to no cleaning supplies"
+"Clogged tiolet"
++end
+Upstairs Bathroom
+false
+"Little to no cleaning supplies"
+
++multi-item
+Bloody tissue
+Jacobs's Gun
+“Gun is missing 2 bullets now.”
++end
+Downstairs Bathroom
+false
++end
+
++multi-item
+“Jacob has a gun”
+“Revolver can hold 6 bullets”
+“Revolver has 5 out of 6 bullets”
++end
+Posters from bands my brother likes plastered on almost ever inch of the wall. Nothing particularly out of place..then you notice the wooden chest inside the top shelf in the closet. After Dad died Jacob got to keep his revolver. He always says in case of an intruder it's better to keep it within reach...He might have been right. Poor Angie.
+Brother's Room
+false
+“Revolver has 5 out of 6 bullets”
+
+Sitter Hair Brush
+My room as usual spotless, Angie usually sleeps in my room when she house sits...her hair brush still on my dresser next to a bag of clothes on the ground.
+My Room
+true
+Sitter Hair Brush
+
+Dr. Lou's Phone
+Nothing remarkable...there's a picture of her and Dad next to the bed. Oh and mom's phone. She accidentally brought her work phone on the trip instead.
+Dr. Lou's Room
+true
+Dr. Lou's Phone

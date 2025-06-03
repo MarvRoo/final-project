@@ -4,12 +4,20 @@
 #include<vector>
 #include<string>
 
+#include "gamedata.h"
+
 using namespace std;
 
 class Interface {
 
-public:
-    void viewClueInterface();
+    private:
+        const GameData* gameDataPtr;
+
+    public:
+        void viewClueInterface();
+        void viewLocationInterface();
+        void setGameData(const GameData& data){ this->gameDataPtr = &data;}
+        string viewSuspectList(vector<string>&suspectList);
 };
 
 #endif

@@ -9,7 +9,7 @@ using namespace std;
 //marked red because location class constructor isnt fixed 
 vector<Location> GameLoader::loadLocations(const string& filename) {
     vector<Location> locations;
-    ifstream inFile("src/game_text_files/" + filename);
+    ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
         throw runtime_error("Failed to open dialogue file: " + filename);
@@ -68,55 +68,67 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     return locations;
 }
 
-//uncomment when classes merged
-//classes are not compeleted
-//Tank works the same as dialogue but no mapping
+//Incomplete loadClues
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
     //seperated files since formatting varies greatly between string clues and item clues
     vector<unique_ptr<Clue>> clues;
 
     // Load item clues
-    ifstream itemFile("src/game_text_files/" + fileItems);
+    ifstream itemFile("../src/game_text_files/" + fileItems);
     if (!itemFile.is_open()) {
         throw runtime_error("Failed to open item clue file: " + fileItems);
     }
 
-    string line;
-    while (getline(itemFile, line)) {
-        string name = line;
+    //loop for reading item text file first 
+    string line, name, hasBlood, bloodType, hasfingerPrints, whoTouched, location, descrip, isFound, itemID;
+    int clueID;
+    bool ifBlood, ifFingerPrints, ifFound;
+    while (getline(itemFile, name)) {
+        getline(itemFile, hasBlood);
+        getline(itemFile, bloodType);
+        getline(itemFile, hasfingerPrints);
+        getline(itemFile, whoTouched);
+        getline(itemFile, location);
+        getline(itemFile, descrip);
+        getline(itemFile, isFound);
+        getline(itemFile, itemID);
+        //empty line
+        getline(itemFile, line);
 
-        string clueText;
-        getline(itemFile, clueText); // The clue text
-
-        string clueID;
-        getline(itemFile, clueID);   // #clueID line
+        // Convert required values
+        int clueID = stoi(itemID);
+        bool ifBlood = (hasBlood == "true");
+        bool ifFingerPrints = (hasfingerPrints == "true");
+        bool ifFound = (isFound == "true");
 
         // Construct item (assumes Item inherits from Clue and has appropriate constructor)
-        auto item = make_unique<Item>(name, clueText, clueID);
+        //Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
+        auto item = make_unique<Item>(name, ifBlood, bloodType, ifFingerPrints, whoTouched, location, descrip, ifFound, clueID);
         clues.push_back(std::move(item));
     }
 
     itemFile.close();
 
+    string clueText;
     // Load string clues
-    ifstream clueFile("src/game_text_files/" + fileClues);
+    ifstream clueFile("../src/game_text_files/" + fileClues);
     if (!clueFile.is_open()) {
         throw runtime_error("Failed to open clue text file: " + fileClues);
     }
 
     while (getline(clueFile, line)) {
         if (line == "+Clue") {
-            string clueText, clueID;
 
             getline(clueFile, clueText); // The clue string
-            getline(clueFile, clueID);   // #clueID
+            getline(clueFile, itemID);   // #clueID
             getline(clueFile, line);     // +end
 
             if (line != "+end") {
                 throw runtime_error("Expected +end after clue text");
             }
-
-            auto clue = make_unique<Clue>(clueText, clueID);
+            //convert clueID
+            clueID = stoi(itemID);
+            auto clue = make_unique<Clue>(clueID, clueText);
             clues.push_back(std::move(clue));
         }
 
@@ -129,18 +141,15 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             }
 
             // After +end, get the clue ID
-            string clueID;
-            getline(clueFile, clueID); // #clueID
+            getline(clueFile, itemID); // #clueID
+            clueID = stoi(itemID);
 
             // Construct interview
             auto interview = make_unique<Interview>(lines, clueID);
             clues.push_back(std::move(interview));
         }
     }
-    //After the file loop ends, push any remaining dialogue lines
-
-
-
+    
     clueFile.close();
 
     return clues;
@@ -151,7 +160,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
     for (const string& file : DialogueFiles) {
-        ifstream inFile("src/game_text_files/" + file);
+        ifstream inFile("../src/game_text_files/" + file);
         if (!inFile.is_open()) {
             throw runtime_error("Failed to open dialogue file: " + file);
         }
@@ -199,7 +208,11 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
             }
 
             // Choice with 2 options
-            if (line == "+Choice2{") {
+            if (line == "+Choice2{" || line == "-Choice2{"  ) {
+                bool negValue;
+                if(line == "-Choice2{"){
+                    negValue = true;
+                }
                 string opt1, opt2;
                 int j1 = 0, j2 = 0;
 
@@ -212,17 +225,27 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         {opt1, j1},
                         {opt2, j2}
                     };
-
+                    getline(inFile, line); //+end} skip it
+                    getline(inFile, line);
+                    line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                    if (line == "+mappingName"){
+                        //should be mapping since questions are a different format for mapping
+                        getline(inFile, currentMappingName);
+                    }
                     //call choice constructor 
                     //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
                     //we should already have the mapping name associated to this push
-                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options)); 
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options, negValue)); 
 
                 }
                 //end of reading a choice object
                 getline(inFile, line); // +end}
 
-            }else if (line == "+Choice3{") {
+            }else if (line == "+Choice3{" || line == "-Choice3{") {
+                bool negValue;
+                if(line == "-Choice3{"){
+                    negValue = true;
+                }
                 // Choice with 3 options
                 string opt1, opt2, opt3;
                 int j1 = 0, j2 = 0, j3 = 0;
@@ -239,11 +262,18 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         {opt2, j2},
                         {opt3, j3}
                     };
+                    getline(inFile, line); //+end} skip it
+                    getline(inFile, line);
+                    line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                    if (line == "+mappingName"){
+                        //should be mapping since questions are a different format for mapping
+                        getline(inFile, currentMappingName);
+                    }
 
                     //call choice constructor 
                     //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
                     //we should already have the mapping name associated to this push
-                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options));
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options, negValue));
                     
                 }
                 //end of reading a choice object
@@ -258,14 +288,13 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
     }
 
     return dialogueMap;
-
 }
 
 
 //incomplete
 vector<Day> GameLoader::loadDays(const string& filename){
     vector<Day> days;
-    ifstream inFile("src/game_text_files/" + filename);
+    ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
         throw runtime_error("Failed to open dialogue file: " + filename);
@@ -301,9 +330,10 @@ vector<Day> GameLoader::loadDays(const string& filename){
         bool nightBool = (night == "true");
         bool eveningBool = (evening == "true");
         bool morningBool = (morning == "true");
+        bool cluesFound = (allCluesFound == "true");
+        bool dayLocked = (isLocked == "true");
 
-        Day day(dayNumber, nightBool, eveningBool, morningBool, clues);
-        days.push_back(day);
+        days.emplace_back(Day(dayNumber, morningBool, eveningBool, nightBool, cluesFound, dayLocked, clues));
     }
 
     inFile.close();
@@ -314,7 +344,7 @@ vector<Day> GameLoader::loadDays(const string& filename){
 //read from the same text file
 vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player> &players){
     vector<Person> people;
-    ifstream inFile("src/game_text_files/" + filename);
+    ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
         //debug error if file is not open
@@ -338,6 +368,8 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
             getline(inFile, description);
             getline(inFile, line); 
             // skip +end
+
+            //conversion
 
             //call the functon to make a player object and push the return
             players.push_back(makePlayer(name, bloodType, item ,description));
@@ -380,7 +412,7 @@ Player GameLoader::makePlayer(const string name,const string bloodType,const str
 
 vector<Autopsy> GameLoader::loadAutopies(const string& filename){
     vector<Autopsy>  autopsyReports;
-    ifstream inFile("src/game_text_files/" + filename);
+    ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
         //debug error if file is not open
@@ -413,7 +445,7 @@ vector<Autopsy> GameLoader::loadAutopies(const string& filename){
 //hp converted to int 
 vector<Ending> GameLoader::loadendings(const string& filename){
     vector<Ending>  storyEndings;
-    ifstream inFile("src/game_text_files/" + filename);
+    ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
         //debug error if file is not open
@@ -436,7 +468,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
         getline(inFile, line);
         //empty line read
 
-
+        //
         Ending Ending(name, text, hpCap);
         storyEndings.push_back(Ending);
 
@@ -454,23 +486,25 @@ GameData LoadFiles() {
 
     vector<Player> players;
 
-    vector<string> DialogueFiles = {"Day1Morning.txt", "Day1Evening.txt","Day1Night.txt", 
-    "Day2Morning.txt", "Day2Evening.txt", "Day2Night.txt", "Day3Morning.txt", "Day3Evening.txt",
-    "Day3Night.txt"};
+    //for now only test first day
+    vector<string> DialogueFiles = {"Day1Morning.txt", "Day1Evening.txt","Day1Night.txt"};
+
+    /*"Day2Morning.txt", "Day2Evening.txt", "Day2Night.txt", "Day3Morning.txt", "Day3Evening.txt",
+    "Day3Night.txt"};*/
     //read all file names and push contents to DialogueFiles
     
 
-    data.locationLibrary = DropDead.loadLocations("src/locations.txt");
+    data.locationLibrary = DropDead.loadLocations("locations.txt");
     //double file reader
-    data.clueLibrary = DropDead.loadClues("src/items.txt","src/clue.txt" );
+    data.clueLibrary = DropDead.loadClues("item.txt","clue.txt" );
     //multi-file reader +2
     data.gameDialogue = DropDead.loadDialogue(DialogueFiles);
-    data.autopsyLibrary = DropDead.loadAutopies("src/autopsies.txt");
-    data.dayLibrary = DropDead.loadDays("src/days.txt");
-    data.endingsLibrary = DropDead.loadendings("src/endings.txt");
+    data.autopsyLibrary = DropDead.loadAutopies("autopsies.txt");
+    data.dayLibrary = DropDead.loadDays("days.txt");
+    data.endingsLibrary = DropDead.loadendings("ending.txt");
 
     //reference vector
-    data.personLibrary = DropDead.loadCharacters("src/person.txt", players);
+    data.personLibrary = DropDead.loadCharacters("person.txt", players);
     data.playerLibrary = players;
 
 

@@ -30,7 +30,9 @@ Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fin
     this->ClueID = clueID;
       }
 
-Item::~Item() {}
+Item::~Item() {
+    // All members are std::string or bool — no manual cleanup needed
+}
 
 //checks if the item has been found yet
 bool Item::isItemFound() const {return this->itemFound;}

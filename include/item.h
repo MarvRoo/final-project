@@ -27,7 +27,7 @@ public:
     void print() const;
     Item(const Item&) = delete; //delete copy constructor
     Item& operator=(const Item&) = delete; //delete copy assignment operator
-    ~Item();
+    ~Item() override;
 };
 
 #endif
