@@ -3,11 +3,8 @@
 #include <string>
 #include <vector>
 #include "gameData.h"
-#include "day.h"
-#include "clue.h"
 #include "interface.h"
 #include "printer.h"
-#include "gameLoader.h"
 
 class gameLoop{
 public:
