@@ -103,7 +103,7 @@ void Dialogue::print() const {
             int dayNum;
 
             string currentTime = dialogueSegments[i++];
-            // TODO: GameLoop::changeDayTime(dayNum, currentTime, false);
+            // TODO: GameLoop::changeDayTime(dayNum, currentTime);
             //Gameloop should search Days for a day with the dayNum int. So 1 is Day1 etc.
             //Then check what currentTime string was passed in Morning or Evening or Night
             //Fixing the bools in the day accordingly

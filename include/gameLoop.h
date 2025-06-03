@@ -19,7 +19,7 @@ public:
     string goToLocation();
     string goToLocation(const string& requiredLocation);
     void acquireNewClue(const string& clueName);
-    void changeDayTime(int dayNum, string& currentTime, bool isChoice);
+    void changeDayTime(int dayNum, string& currentTime);
 
 private:
     GameData gameData;
