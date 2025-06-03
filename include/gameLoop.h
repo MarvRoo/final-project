@@ -23,7 +23,7 @@ public:
     string goToLocation();
     string goToLocation(const string& requiredLocation);
     void acquireNewClue(const string& clueName);
-    void changeDayTime(int dayNum, string& currentTime);
+    void changeDayTime(int dayNum, const string& currentTime);
     Location* findLocation(string locationName);
     Day* findDay(int numDay);
 

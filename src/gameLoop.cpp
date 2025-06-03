@@ -72,23 +72,10 @@ void gameLoop::changeDayTime(int dayNum, const string& currentTime){
     //true 
     Day* day = findDay(dayNum);
     if(day){
-        day->Night = false;
-        day->Evening = false;
-        day->Morning = false;
-
-    if(currentTime == "Night"){
-        day->Night = true;
-    }
-    else if(currentTime == "Evening"){
-        day->Evening = true;
-    }
-    else if(currentTime == "Morning"){
-        day->Morning = true;
-    }
+        day->changeDay(currentTime);
     }
     else{
-        //shouldnt happen but good to have the error check
-        cout << "Error: Day " << dayNum << " not found." << endl;
+        cout << "Error: Day " << dayNum << "not found" << endl;
     }
 }
 
