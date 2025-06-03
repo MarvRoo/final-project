@@ -2,7 +2,8 @@
 #define GAMELOOP_H
 #include <string>
 #include <vector>
-#include "gameData.h"
+
+#include "gamedata.h"
 #include "interface.h"
 #include "printer.h"
 
@@ -21,4 +22,7 @@ public:
 private:
     GameData gameData;
     Player* playerPtr;
-}
+    Interface interface;
+    Printer printer;
+};
+#endif
