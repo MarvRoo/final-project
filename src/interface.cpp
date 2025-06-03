@@ -30,6 +30,36 @@
     cout << "Enter the number '2' to see what locations you have not visited yet." << endl;
 }
 
+string Interface::viewSuspectList(vector<string>&suspectList) {
+    //print out list of possible suspects
+    int suspectCount = 0;
+
+    for(int i = 0; i < suspectList.size(); ++i) {
+        suspectCount +=1;
+        cout << suspectList.at(i) << " (" << i + 1 << ")" << endl;
+    }
+
+    cout << "Given the list of possible suspects, input the number (next to the person's name) that indicates who you think the suspect is." << endl;
+    int suspectNumber;
+    string chosenSuspect;
+    bool ifFalse = false;
+
+    
+    while(suspectNumber >= suspectList.size()+2 || suspectNumber <= 0) {
+        cout << "Input a valid number as indicted next to the suspects's name." << "From 1 to " << suspectCount << endl;
+        cin >> suspectNumber;
+        if(suspectNumber <= suspectList.size()+1 && suspectNumber > 0) break;
+    }
+
+    //find the suspect given the number
+    for(int j = 0; j < suspectList.size(); ++j) {
+        if(suspectNumber-1 == j) {
+            chosenSuspect = suspectList.at(j);
+            break;
+        }
+    }
+    return chosenSuspect;
+}
 
 /*
 Printer Class should have the following

@@ -17,6 +17,7 @@ class Interface {
         void viewClueInterface();
         void viewLocationInterface();
         void setGameData(const GameData& data){ this->gameDataPtr = &data;}
+        string viewSuspectList(vector<string>&suspectList);
 };
 
 #endif
