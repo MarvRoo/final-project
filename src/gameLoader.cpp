@@ -301,6 +301,9 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
                         try {
                             auto choice = make_unique<Choice>(options, negValue);
+                            if (choiceMapName.empty()) {
+                                throw std::runtime_error("Missing +mappingName after choice block. Cannot insert Choice.");
+                            }
                             dialogueMap[choiceMapName].emplace_back(std::move(choice));
                         } catch (const bad_alloc&) {
                             throw runtime_error("Memory allocation failed while loading choice block 2 in dialogue");
