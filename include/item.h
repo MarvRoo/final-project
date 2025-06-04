@@ -12,7 +12,7 @@ private:
     string bloodType;
     string whoseFingerprint;
     string itemLocation;
-    bool itemFound; 
+    bool itemFound;
     string itemDescription;
 
 

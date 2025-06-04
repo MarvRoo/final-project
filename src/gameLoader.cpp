@@ -563,7 +563,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
         string name, text, hp;
         int hpCap;
 
-        getline(inFile, name);
+        name = line;
         getline(inFile, text);
         getline(inFile, hp);
         getline(inFile, line);
