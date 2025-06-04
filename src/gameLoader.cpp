@@ -17,6 +17,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 
     string line, descript, name, ifLocked, keyClue;
     bool isLocked;
+    vector<string> clues;
 
     while (getline(inFile, line)) {
         if (!line.empty()) {
@@ -25,8 +26,8 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 
         if (line.find("+multi-item") != string::npos) {
             bool multiClue = true;
-            vector<string> clues;
             string clue;
+            clues.clear();
 
             // Read clues until "+end"
             while (getline(inFile, clue)) {
@@ -49,7 +50,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             //Fallback to normal item
             bool multiClue = false;
             //single clue locations mean that keyclue is both the first line
-            getline(inFile, line);
+            getline(inFile, keyClue);
             getline(inFile, descript);
             getline(inFile, name);
             getline(inFile, ifLocked);
@@ -72,6 +73,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const string& fileClues){
     //seperated files since formatting varies greatly between string clues and item clues
     vector<unique_ptr<Clue>> clues;
+    vector<string> lines;
 
     // Load item clues
     ifstream itemFile("../src/game_text_files/" + fileItems);
@@ -125,15 +127,14 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
     }
 
     while (getline(clueFile, line)) {
+        lines.clear();
         if (line == "+Clue") {
 
             getline(clueFile, clueText); // The clue string
             getline(clueFile, itemID);   // #clueID
             getline(clueFile, line);     // +end
-
-            if (line != "+end") {
-                throw runtime_error("Expected +end after clue text");
-            }
+            getline(clueFile, line);     //white line too
+            
             //convert clueID
             try {
             clueID = stoi(itemID);
@@ -147,18 +148,18 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             } catch (const bad_alloc&) {
                 throw runtime_error("Memory allocation failed while loading clue ID: " + itemID);
             }
-        }
-
-        else if (line == "+Interview") {
-            vector<string> lines;
-
+        }else if (line == "+Interview") {
             // Read all lines until +end
             while (getline(clueFile, line) && line != "+end") {
+                //grabbed a new line and compare
                 lines.push_back(line);
             }
 
             // After +end, get the clue ID
             getline(clueFile, itemID); // #clueID
+            getline(clueFile, line);
+            //grab useless nextline
+
             try {
             clueID = stoi(itemID);
             } catch (const invalid_argument& e) {
@@ -443,7 +444,7 @@ vector<Day> GameLoader::loadDays(const string& filename){
 
 //checkpoints +player and +end used in txt file
 //read from the same text file
-vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player> &players){
+vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>& players){
     vector<Person> people;
     ifstream inFile("../src/game_text_files/" + filename);
 
@@ -467,20 +468,19 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
             getline(inFile, bloodType);
             getline(inFile, item);
             getline(inFile, description);
-            getline(inFile, line); 
+            getline(inFile, line);
             // skip +end
-
-            //conversion
-
+            Player player(name, bloodType, item, description);
             //call the functon to make a player object and push the return
-            players.push_back(makePlayer(name, bloodType, item ,description));
+            players.push_back(player);
 
         }else{
             //non player
             string isDeadStr, hasAutopsyStr;
             bool isDead, hasAutopsy;
 
-            getline(inFile, name);
+            //line grabbed at first is name if not +player
+            name = line;
             getline(inFile, bloodType);
             getline(inFile, item);
 
@@ -502,13 +502,6 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
 
     inFile.close();
     return people;
-}
-
-Player GameLoader::makePlayer(const string name,const string bloodType,const string item,const string description){
-    //create an object and return 
-    Player player(name, bloodType, item, description);
-    //push to player vector in function called from
-    return player;
 }
 
 vector<Autopsy> GameLoader::loadAutopies(const string& filename){

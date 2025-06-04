@@ -63,7 +63,7 @@ false
 N/A
 true
 Jacob
-Kitchen Counter
+Kitchen
 Belong to Jacob, he used them to drive from the airport to home.
 false
 1107

@@ -27,7 +27,7 @@ public:
 
     //game loader for people complete in theory(start testing)
     vector<Person> loadCharacters(const string& filename, vector<Player> &players);
-    Player makePlayer(const string name,const string bloodType,const string item,const string description);
+    //Player makePlayer(const string name,const string bloodType,const string item,const string description);
 };
 
 GameData LoadFiles();
