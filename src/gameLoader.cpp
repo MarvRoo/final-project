@@ -243,7 +243,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         we would call the dialogue constructor with the parameter of dialogueLines to make the object
                         push that object in and then clear the dialogueLines vector to reuse aswell as currentMappingName
                     */
-                    if (!dialogueLines.empty() && !currentMappingName.empty()) {
+                    if (!dialogueLines.empty()) {
                         try {
                             dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
                         } catch (const bad_alloc&) {
@@ -256,7 +256,9 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                 }
             }
 
+
             // Choice with 2 options
+            string choiceMapName;
             if (line == "+Choice2{" || line == "-Choice2{") {
                 bool negValue = (line[0] == '-');
                 string opt1, opt2;
@@ -293,20 +295,19 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         line.erase(line.find_last_not_of(" \t\r\n") + 1);
 
                         if (line == "+mappingName") {
-                            getline(inFile, currentMappingName);
-                            currentMappingName.erase(currentMappingName.find_last_not_of(" \t\r\n") + 1);
+                            getline(inFile, choiceMapName);
+                            choiceMapName.erase(choiceMapName.find_last_not_of(" \t\r\n") + 1);
                         }
 
                         try {
                             auto choice = make_unique<Choice>(options, negValue);
-                            dialogueMap[currentMappingName].emplace_back(std::move(choice));
+                            dialogueMap[choiceMapName].emplace_back(std::move(choice));
                         } catch (const bad_alloc&) {
                             throw runtime_error("Memory allocation failed while loading choice block 2 in dialogue");
                         }
                     }
                 }
 
-                getline(inFile, line); // Final +end} (safety skip)
             }else if (line == "+Choice3{" || line == "-Choice3{") {
                 //looks crazy I know 
                 bool negValue = (line[0] == '-');
@@ -350,30 +351,31 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                             };
 
                             getline(inFile, line); // skip +end}
-                            getline(inFile, line);
+                            getline(inFile, line); //should read mapping
                             line.erase(line.find_last_not_of(" \t\r\n") + 1);
 
                             if (line == "+mappingName") {
-                                getline(inFile, currentMappingName);
-                                currentMappingName.erase(currentMappingName.find_last_not_of(" \t\r\n") + 1);
+                                getline(inFile, choiceMapName);
+                                choiceMapName.erase(choiceMapName.find_last_not_of(" \t\r\n") + 1);
                             }
 
                             try {
                                 auto choice = make_unique<Choice>(options, negValue);
-                                dialogueMap[currentMappingName].emplace_back(std::move(choice));
+                                dialogueMap[choiceMapName].emplace_back(std::move(choice));
                             } catch (const bad_alloc&) {
                                 throw runtime_error("Memory allocation failed while loading choice 3 block in dialogue");
                             }
+
                         }
                     }
                 }
-                getline(inFile, line); // Final +end} (safety)
+                
             }else {
                 //if not a choice block then continue to push all strings even empty to dialogueLines vector
                 dialogueLines.push_back(line);
             }
         }
-
+        //moving to next textfile
         inFile.close();
     }
     //return map should be when donereading is read 
