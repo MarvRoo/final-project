@@ -54,6 +54,7 @@ Brother’s keys
 "Little to no cleaning supplies"
 "Clogged tiolet"
 +end
+Walking into the bathroom is quite the scene. Checking under the sink it looks like someone rampaged through and emptied out every possible cleaning supplies....
 Upstairs Bathroom
 false
 "Little to no cleaning supplies"
@@ -64,9 +65,10 @@ Jacobs's Gun
 “Gun is missing 2 bullets now.”
 Badge
 +end
+The bathroom floor becomes messier by the second as you peer from behind the sheriff's back. The gun shot fired woke you up so now you stand in the dimly lit downstairs bathroom. Usually messier since it's closer to jacobs room but now slumped against the tub is the gardener with a gun in his right hand.
 Downstairs Bathroom
 false
-+end
+“Gun is missing 2 bullets now.”
 
 +multi-item
 “Jacob has a gun”
