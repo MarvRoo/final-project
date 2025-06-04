@@ -308,44 +308,66 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
                 getline(inFile, line); // Final +end} (safety skip)
             }else if (line == "+Choice3{" || line == "-Choice3{") {
+                //looks crazy I know 
                 bool negValue = (line[0] == '-');
-                // Choice with 3 options
                 string opt1, opt2, opt3;
                 int j1 = 0, j2 = 0, j3 = 0;
 
                 if (getline(inFile, opt1) &&
-                    getline(inFile, line) && (j1 = stoi(line)) &&
-                    getline(inFile, opt2) &&
-                    getline(inFile, line) && (j2 = stoi(line)) &&
-                    getline(inFile, opt3) &&
-                    getline(inFile, line) && (j3 = stoi(line))) {
+                    getline(inFile, line)) {
 
-                    vector<pair<string, int>> options = {
-                        {opt1, j1},
-                        {opt2, j2},
-                        {opt3, j3}
-                    };
-                    getline(inFile, line); //+end} skip it
-                    getline(inFile, line);
                     line.erase(line.find_last_not_of(" \t\r\n") + 1);
-                    if (line == "+mappingName"){
-                        //should be mapping since questions are a different format for mapping
-                        getline(inFile, currentMappingName);
+                    try {
+                        j1 = stoi(line);
+                    } catch (const invalid_argument&) {
+                        throw runtime_error("Invalid score for Choice3 option 1: '" + line + "'");
                     }
 
-                    //call choice constructor 
-                    //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
-                    //we should already have the mapping name associated to this push
-                    try {
-                        auto choice = make_unique<Choice>(options, negValue); // Assuming constructor like that exists
-                        dialogueMap[currentMappingName].emplace_back(std::move(choice));
-                    } catch (const bad_alloc&) {
-                        throw runtime_error("Memory allocation failed while loading choice 3 block in dialogue");
+                    if (getline(inFile, opt2) &&
+                        getline(inFile, line)) {
+
+                        line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                        try {
+                            j2 = stoi(line);
+                        } catch (const invalid_argument&) {
+                            throw runtime_error("Invalid score for Choice3 option 2: '" + line + "'");
+                        }
+
+                        if (getline(inFile, opt3) &&
+                            getline(inFile, line)) {
+
+                            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                            try {
+                                j3 = stoi(line);
+                            } catch (const invalid_argument&) {
+                                throw runtime_error("Invalid score for Choice3 option 3: '" + line + "'");
+                            }
+
+                            vector<pair<string, int>> options = {
+                                {opt1, j1},
+                                {opt2, j2},
+                                {opt3, j3}
+                            };
+
+                            getline(inFile, line); // skip +end}
+                            getline(inFile, line);
+                            line.erase(line.find_last_not_of(" \t\r\n") + 1);
+
+                            if (line == "+mappingName") {
+                                getline(inFile, currentMappingName);
+                                currentMappingName.erase(currentMappingName.find_last_not_of(" \t\r\n") + 1);
+                            }
+
+                            try {
+                                auto choice = make_unique<Choice>(options, negValue);
+                                dialogueMap[currentMappingName].emplace_back(std::move(choice));
+                            } catch (const bad_alloc&) {
+                                throw runtime_error("Memory allocation failed while loading choice 3 block in dialogue");
+                            }
+                        }
                     }
-                        
                 }
-                //end of reading a choice object
-                getline(inFile, line); // +end}
+                getline(inFile, line); // Final +end} (safety)
             }else {
                 //if not a choice block then continue to push all strings even empty to dialogueLines vector
                 dialogueLines.push_back(line);
