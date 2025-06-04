@@ -19,17 +19,17 @@ Item::Item() {
 
 //initialize Item object
 Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
-    : hasBlood(hasBlood), 
-      bloodType(bloodType),
-      hasFingerPrint(fingerPrint), 
-      whoseFingerprint(whoseFingerprint),
-      itemLocation(itemLocation), 
-      itemDescription(itemDescrip),
-      itemFound(itemFound)
-      {
+{
     this->name = name;
-    this->ClueID = clueID;
-      }
+    this->hasBlood = hasBlood;
+    this->bloodType = bloodType;
+    hasFingerPrint = fingerPrint;
+    this->whoseFingerprint = whoseFingerprint;
+    this->itemLocation = itemLocation;
+    itemDescription = itemDescrip;
+    this->itemFound = itemFound;
+    this->ClueID = ClueID;
+}
 
 Item::~Item() {
     // All members are std::string or bool — no manual cleanup needed
