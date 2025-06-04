@@ -13,7 +13,9 @@ class Autopsy {
     public: 
 
     Autopsy(string charName, const string& descript);
-    void findAutopsies(string personName);
+    string getCharacterName() const;
+    string getAutopsyDescription() const;
+    void findAutopsies(string personName) const;
     ~Autopsy();
 };
 

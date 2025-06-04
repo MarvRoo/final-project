@@ -78,3 +78,18 @@ void Printer::printEnd(const Ending& ending){
         cout << "HP : " << ending.getHPCap() << endl;
     }
 }
+
+void Printer::findAutopsy(const string& characterName) const {
+    if(!gameDataPtr){
+        cout << "Error: Printer has no gameData set to find autopsy." << endl;
+        return;
+    }
+    for(size_t i = 0; i < gameDataPtr->autopsyLibrary.size(); ++i){
+        const Autopsy& currentAutopsy = gameDataPtr->autopsyLibrary[i];
+
+        if(currentAutopsy.getCharacterName() == characterName){
+            currentAutopsy.findAutopsies(characterName);
+            return;
+        }
+    }
+}
