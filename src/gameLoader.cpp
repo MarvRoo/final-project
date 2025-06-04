@@ -15,8 +15,8 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         throw runtime_error("Failed to open dialogue in file: " + filename + "-Fix loadLocations");
     }
 
-    string line, descript, name, ifLocked, itemFound, keyClue;
-    bool isLocked, isFound;
+    string line, descript, name, ifLocked, keyClue;
+    bool isLocked;
 
     while (getline(inFile, line)) {
         if (!line.empty()) {
@@ -41,7 +41,6 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             getline(inFile, line); //read empty line
 
             isLocked = (ifLocked == "true" || ifLocked == "1");
-            isFound = (itemFound == "true" || itemFound == "1");
 
             Location place(name, descript, clues, isLocked, multiClue, keyClue);
             //const string& name, const string& description, vector <string> clueList, bool accessible, bool multiple, string keyClue
@@ -49,6 +48,8 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
         } else {
             //Fallback to normal item
             bool multiClue = false;
+            //single clue locations mean that keyclue is both the first line
+            getline(inFile, line);
             getline(inFile, descript);
             getline(inFile, name);
             getline(inFile, ifLocked);
@@ -56,7 +57,6 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             getline(inFile, line); // read empty line
 
             isLocked = (ifLocked == "true" || ifLocked == "1");
-            isFound = (itemFound == "true" || itemFound == "1");
 
             //uncomment when classes merged
             Location place(name, descript, isLocked, multiClue, keyClue);
@@ -107,8 +107,12 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
         // Construct item (assumes Item inherits from Clue and has appropriate constructor)
         //Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
-        auto item = make_unique<Item>(name, ifBlood, bloodType, ifFingerPrints, whoTouched, location, descrip, ifFound, clueID);
-        clues.push_back(std::move(item));
+        try {
+            auto item = make_unique<Item>(name, ifBlood, bloodType, ifFingerPrints, whoTouched, location, descrip, ifFound, clueID);
+            clues.push_back(std::move(item));
+        } catch (const bad_alloc&) {
+            throw runtime_error("Memory allocation failed while loading item clue: " + name);
+        }
     }
 
     itemFile.close();
@@ -136,8 +140,13 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             } catch (const invalid_argument& e) {
                 throw runtime_error("Invalid CLUEID value in ending file: [" + itemID + "] is not a number. Found readings clues.");
             }
-            auto clue = make_unique<Clue>(clueID, clueText);
-            clues.push_back(std::move(clue));
+            
+            try {
+                auto clue = make_unique<Clue>(clueID, clueText);
+                clues.push_back(std::move(clue));
+            } catch (const bad_alloc&) {
+                throw runtime_error("Memory allocation failed while loading clue ID: " + itemID);
+            }
         }
 
         else if (line == "+Interview") {
@@ -157,8 +166,12 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
             }
 
             // Construct interview
-            auto interview = make_unique<Interview>(lines, clueID);
-            clues.push_back(std::move(interview));
+            try {
+                auto interview = make_unique<Interview>(lines, clueID);
+                clues.push_back(std::move(interview));
+            } catch (const bad_alloc&) {
+                throw runtime_error("Memory allocation failed while loading interview ID: " + itemID);
+            }
         }
     }
     
@@ -209,7 +222,11 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
                 // Push any remaining dialogue for the current mapping
                 if (!dialogueLines.empty() && !currentMappingName.empty()) {
-                    dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                    try {
+                        dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                    } catch (const bad_alloc&) {
+                        throw runtime_error("Memory allocation failed while loading dialogue at +done: " + currentMappingName);
+                    }
                     dialogueLines.clear();
                     currentMappingName.clear();
                 }
@@ -227,11 +244,12 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                         push that object in and then clear the dialogueLines vector to reuse aswell as currentMappingName
                     */
                     if (!dialogueLines.empty() && !currentMappingName.empty()) {
-                        //Push Dialogue object with its designated mapping name to dialogueMap for the Game dialogue Library
-                        dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
-                        //clear vector
+                        try {
+                            dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                        } catch (const bad_alloc&) {
+                            throw runtime_error("Memory allocation failed while loading dialogue at +mapping: " + currentMappingName);
+                        }
                         dialogueLines.clear();
-                        //clear string
                         currentMappingName.clear();
                     }
                     currentMappingName = line;
@@ -239,36 +257,56 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
             }
 
             // Choice with 2 options
-            if (line == "+Choice2{" || line == "-Choice2{"  ) {
+            if (line == "+Choice2{" || line == "-Choice2{") {
                 bool negValue = (line[0] == '-');
                 string opt1, opt2;
                 int j1 = 0, j2 = 0;
-                //might need stoi throws
+
                 if (getline(inFile, opt1) &&
-                    getline(inFile, line) && (j1 = stoi(line)) &&
-                    getline(inFile, opt2) &&
-                    getline(inFile, line) && (j2 = stoi(line))) {
+                    getline(inFile, line)) {
 
-                    vector<pair<string, int>> options = {
-                        {opt1, j1},
-                        {opt2, j2}
-                    };
-                    getline(inFile, line); //+end} skip it
-                    getline(inFile, line);
+                    // Clean line and convert safely
                     line.erase(line.find_last_not_of(" \t\r\n") + 1);
-                    if (line == "+mappingName"){
-                        //should be mapping since questions are a different format for mapping
-                        getline(inFile, currentMappingName);
+                    try {
+                        j1 = stoi(line);
+                    } catch (const invalid_argument&) {
+                        throw runtime_error("Invalid score for Choice2 option 1: '" + line + "'");
                     }
-                    //call choice constructor 
-                    //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
-                    //we should already have the mapping name associated to this push
-                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options, negValue)); 
 
+                    if (getline(inFile, opt2) &&
+                        getline(inFile, line)) {
+
+                        line.erase(line.find_last_not_of(" \t\r\n") + 1);
+                        try {
+                            j2 = stoi(line);
+                        } catch (const invalid_argument&) {
+                            throw runtime_error("Invalid score for Choice2 option 2: '" + line + "'");
+                        }
+
+                        vector<pair<string, int>> options = {
+                            {opt1, j1},
+                            {opt2, j2}
+                        };
+
+                        getline(inFile, line); // skip +end}
+                        getline(inFile, line); // check for +mappingName
+                        line.erase(line.find_last_not_of(" \t\r\n") + 1);
+
+                        if (line == "+mappingName") {
+                            getline(inFile, currentMappingName);
+                            currentMappingName.erase(currentMappingName.find_last_not_of(" \t\r\n") + 1);
+                        }
+
+                        try {
+                            auto choice = make_unique<Choice>(options, negValue);
+                            dialogueMap[currentMappingName].emplace_back(std::move(choice));
+                        } catch (const bad_alloc&) {
+                            throw runtime_error("Memory allocation failed while loading choice block 2 in dialogue");
+                        }
+                    }
                 }
-                //end of reading a choice object
-                getline(inFile, line); // +end}
 
+                getline(inFile, line); // Final +end} (safety skip)
             }else if (line == "+Choice3{" || line == "-Choice3{") {
                 bool negValue = (line[0] == '-');
                 // Choice with 3 options
@@ -298,8 +336,13 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                     //call choice constructor 
                     //push constructed choice to vector map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
                     //we should already have the mapping name associated to this push
-                    dialogueMap[currentMappingName].emplace_back(make_unique<Choice>(options, negValue));
-                    
+                    try {
+                        auto choice = make_unique<Choice>(options, negValue); // Assuming constructor like that exists
+                        dialogueMap[currentMappingName].emplace_back(std::move(choice));
+                    } catch (const bad_alloc&) {
+                        throw runtime_error("Memory allocation failed while loading choice 3 block in dialogue");
+                    }
+                        
                 }
                 //end of reading a choice object
                 getline(inFile, line); // +end}

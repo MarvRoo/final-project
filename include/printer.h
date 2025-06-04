@@ -19,6 +19,7 @@ class Printer {
         void printPersonDetails(const string& personName);
         void printEnd(const Ending& ending);
         void printAccessibleLocations(Player* player);
+        //find the autopy and call the autopsy mini printer which printers the descript
 };
 
 #endif
