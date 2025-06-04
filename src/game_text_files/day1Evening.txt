@@ -73,9 +73,9 @@ Gardener: "...is that even legal."
 isItLegal?
 
 +InterviewClues{
-“Gardener arrives during the interviews in a different truck.”
-“Called Angie from the Mechanic shop.”
-“Alibi is his nephew”
+"Gardener arrives during the interviews in a different truck."
+"Called Angie from the Mechanic shop."
+"Alibi is his nephew"
 +end}
     The Gardener seems to think about it for a moment before shaking his head and begrudingly taking a seat.
 

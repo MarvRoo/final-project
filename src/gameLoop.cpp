@@ -10,6 +10,7 @@ void gameLoop::run(){
     //iterate through the   map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue library
     //that library not only holds dialogue but is the game flow 
     //This iterrator is our game
+    
 }
 
 Location* gameLoop::findLocation(string locationName){
@@ -64,23 +65,6 @@ string gameLoop::goToLocation(const string& chosenLocationName) {
 
     cout << "Error: Location " << chosenLocationName << " not found." << endl;
     return "";
-}
-
-string gameLoop::goToLocation(const string& chosenLocationName){
-    //first grab the only player in our library
-    vector<string>* playerLocations = playerPtr->shareRoomListPtr();
-
-    //check that we found the valid location and that the player has not found the keyclue in that location
-    for (const string& roomName : *playerLocations) {
-        for (Location& loc : gameData.locationLibrary) {
-            if (loc.getName() == roomName && loc.checkkeyClueFound() == false) {
-                //then add the locations cluelist to players clue list;
-
-            }else{
-                cout << "Hmmm there's no new clues to collect in " << chosenLocationName << endl;
-            }
-        }
-    }
 }
 
 void gameLoop::acquireNewClue(const string& clueName){

@@ -1,110 +1,110 @@
 +Clue
 "Blood behind her head"
-#2201
+2201
 +end
 
 +Clue
 "Blood found on the pool noodle"
-#2202
+2202
 +end
 
 +Clue
 "Fingerprints found on bloody tarp"
-#2203
+2203
 +end
 
 +Clue
 "Body found on tarp in the shed"
-#2204
+2204
 +end
 
 +Clue
 "Jacob has a gun"
-#2205
+2205
 +end
 
 +Clue
 "Revolver can hold 6 bullets"
-#2206
+2206
 +end
 
 +Clue
 "Revolver has 5 out of 6 bullets"
-#2207
+2207
 +end
 
 +Clue
 "Body appears to be dragged on grass by blood pattern"
-#2208
+2208
 +end
 
 +Clue
 "Missing Mop"
-#2209
+2209
 +end
 
 +Clue
 "The floor was freshly mopped..."
-#2210
+2210
 +end
 
 +Clue
 "Pool boy left before 11 am"
-#2211
+2211
 +end
 
 +Clue
 "Gardener arrives during the interviews in a different truck."
-#2212
+2212
 +end
 
 +Clue
 "A couple of blood spots in the living room carpet."
-#2213
+2213
 +end
 
 +Clue
 "Gardener appears to have taken his own life"
-#2214
+2214
 +end
 
 +Clue
 "Gardener is left-handed."
-#2215
+2215
 +end
 
 +Clue
 "Gardener is dead holding the gun with his right hand."
-#2216
+2216
 +end
 
 +Clue
 "Gun is missing 2 bullets now."
-#2217
+2217
 +end
 
 +Clue
 "Voice mail of Angie telling Dr. Lou the gardener will be late. Then she screams and a gun shot is heard."
-#2218
+2218
 +end
 
 +Clue
 "Angie was shot in the kitchen."
-#2219
+2219
 +end
 
 +Interview
 Pool Boy:
-“Pool boy left before 11 am on a lunch break."
-“Angie was supposed to call us about the gardener”
-“Alibi is Angie”
+"Pool boy left before 11 am on a lunch break."
+"Angie was supposed to call us about the gardener"
+"Alibi is Angie"
 +end
-#3301
+3301
 
 +Interview
 Gardener:
-“Gardener arrives during the interviews in a different truck.”
-“Called Angie from the Mechanic shop.”
-“Alibi is his nephew”
+"Gardener arrives during the interviews in a different truck."
+"Called Angie from the Mechanic shop."
+"Alibi is his nephew"
 +end
-#3302
+3302

@@ -76,8 +76,8 @@ Dr. Lou: "Well I guess I'll start writing a report we can reference...autopsy re
 Dr.Lou: "I think these are fingerprints and theres a trail of blood coming into the shed...likely she was unconscious or dragged in here already dead. 
 +stringClues{
 "Blood behind her head"
-"Fingerprints found on bloody tarp”
-“Body found on tarp in the shed”
+"Fingerprints found on bloody tarp"
+"Body found on tarp in the shed"
 +end}
 Me: "Yeah...I'll make now of all those things..."
 Sheriff: "Well well well, come take a look at who showed up!"

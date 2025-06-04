@@ -30,10 +30,18 @@ int main() {
         }
 
         cout << "All files loaded and validated successfully!" << endl;
+
+    } catch (const std::bad_alloc& e) {
+        cerr << "Memory allocation failed during file loading: " << e.what() << endl;
+        return 1;
     } catch (const exception& e) {
         cerr << "Error during file loading: " << e.what() << endl;
+        return 1;
+    } catch (...) {
+        cerr << "Unknown error during file loading." << endl;
         return 1;
     }
 
     return 0;
 }
+

@@ -1,12 +1,12 @@
-//missing clue ID numbers for the last line
-Bracelet
+Sitter Bracelet
 false
 N/A
 false
 N/A
 Kitchen Counter
 A gold bracelet that Angie almost never took off.
-#clueID
+false
+1106
 
 Tarp
 true
@@ -15,6 +15,8 @@ true
 Jacob
 Shed
 Angie's dead body was found on top of the tarp.
+false
+1101
 
 Gun
 false
@@ -23,14 +25,18 @@ true
 Jacob
 Jacob's room
 Glock 19 purchased 2 weeks ago.
+false
+1102
 
-Grass
+Uncut Grass
 true
 A-
 false
 N/A
 Backyard
 Bloody trail left in the grass leading to the shed.
+false
+1103
 
 Pool Noodle
 true
@@ -39,6 +45,8 @@ false
 N/A
 Near the pool and shed
 Pink pool noodle that looks to have been touched while Angie's body was dragged
+false
+1104
 
 Hair Brush
 false
@@ -47,35 +55,35 @@ true
 Angie
 Ally's room
 Angie's hair brush. She usually brushed her hair in Ally's room because she likes her mirror.
+false
+1105
 
-Car Keys
+Brother’s keys
 false
 N/A
 true
 Jacob
 Kitchen Counter
 Belong to Jacob, he used them to drive from the airport to home.
+false
+1107
 
 Badge
 false
 N/A
 false
 N/A
-Officer Uniform
+Downstairs Bathroom
 An important form of identification as a Sheriff.
+false
+1112
 
 Scalpel
 true
 A-
 false
 N/A
-Dr. Lou's operating room
+Dr. Lou's Room
 Used in Angie's autopsy.
-
-Phone
 false
-N/A
-true
-Ally
-Ally's pocket
-Ally always has her iPhone 15 on her.
+1113

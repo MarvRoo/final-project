@@ -62,6 +62,7 @@ false
 Bloody tissue
 Jacobs's Gun
 “Gun is missing 2 bullets now.”
+Badge
 +end
 Downstairs Bathroom
 false
@@ -83,7 +84,10 @@ My Room
 true
 Sitter Hair Brush
 
++multi-item
 Dr. Lou's Phone
+Scalpel
++end
 Nothing remarkable...there's a picture of her and Dad next to the bed. Oh and mom's phone. She accidentally brought her work phone on the trip instead.
 Dr. Lou's Room
 true

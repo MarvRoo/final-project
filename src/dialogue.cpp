@@ -100,7 +100,7 @@ void Dialogue::print() const {
             cout << "[End of this section. Time progresses.]" << endl;
             string NumDay = dialogueSegments[i++];
             //convert to numDay variable to an int 
-            int dayNum;
+            int dayNum = stoi(NumDay);
 
             string currentTime = dialogueSegments[i++];
             // TODO: GameLoop::changeDayTime(dayNum, currentTime);

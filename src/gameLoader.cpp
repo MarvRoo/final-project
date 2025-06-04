@@ -96,7 +96,11 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
         getline(itemFile, line);
 
         // Convert required values
-        int clueID = stoi(itemID);
+        try {
+        clueID = stoi(itemID);
+        } catch (const invalid_argument& e) {
+            throw runtime_error("Invalid CLUEID value in ending file: [" + itemID + "] is not a number. Found in reading items.");
+        }
         bool ifBlood = (hasBlood == "true");
         bool ifFingerPrints = (hasfingerPrints == "true");
         bool ifFound = (isFound == "true");
@@ -113,7 +117,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
     // Load string clues
     ifstream clueFile("../src/game_text_files/" + fileClues);
     if (!clueFile.is_open()) {
-        throw runtime_error("Failed to open clue text file: " + fileClues);
+        throw runtime_error("Failed to open clue text file: " + fileClues + "-fix loadClues");
     }
 
     while (getline(clueFile, line)) {
@@ -127,7 +131,11 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
                 throw runtime_error("Expected +end after clue text");
             }
             //convert clueID
+            try {
             clueID = stoi(itemID);
+            } catch (const invalid_argument& e) {
+                throw runtime_error("Invalid CLUEID value in ending file: [" + itemID + "] is not a number. Found readings clues.");
+            }
             auto clue = make_unique<Clue>(clueID, clueText);
             clues.push_back(std::move(clue));
         }
@@ -142,7 +150,11 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
             // After +end, get the clue ID
             getline(clueFile, itemID); // #clueID
+            try {
             clueID = stoi(itemID);
+            } catch (const invalid_argument& e) {
+                throw runtime_error("Invalid CLUEID value in ending file: [" + itemID + "] is not a number. Found in reading interviews.");
+            }
 
             // Construct interview
             auto interview = make_unique<Interview>(lines, clueID);
@@ -162,7 +174,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
     for (const string& file : DialogueFiles) {
         ifstream inFile("../src/game_text_files/" + file);
         if (!inFile.is_open()) {
-            throw runtime_error("Failed to open dialogue file: " + file);
+            throw runtime_error("Failed to open dialogue file: " + file + " -fix dialogue");
         }
 
         string line;
@@ -171,9 +183,13 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
         vector<string> dialogueLines;
 
         while (getline(inFile, line)) {
-            if (!line.empty()) {
-                line.erase(line.find_last_not_of(" \t\r\n") + 1);
+            size_t end = line.find_last_not_of(" \t\r\n");
+            if (end != string::npos) {
+                line.erase(end + 1); // trims trailing whitespace
+            } else {
+                line.clear(); // the line is all whitespace, so make it an empty string
             }
+
 
             if (line.empty()){
                 //empty lines are part of dialogue output formatting
@@ -182,7 +198,22 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
             //Done with textfile
             if (line == "+doneReading"){
-                break;
+                //we want to push this edge, it's an exeption
+                //Read the next two lines 
+                dialogueLines.push_back(line);
+
+                getline(inFile, line);
+                dialogueLines.push_back(line);
+                getline(inFile, line);
+                dialogueLines.push_back(line);
+
+                // Push any remaining dialogue for the current mapping
+                if (!dialogueLines.empty() && !currentMappingName.empty()) {
+                    dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                    dialogueLines.clear();
+                    currentMappingName.clear();
+                }
+                return dialogueMap;
             }
 
             //Start new mapping group
@@ -209,13 +240,10 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
             // Choice with 2 options
             if (line == "+Choice2{" || line == "-Choice2{"  ) {
-                bool negValue;
-                if(line == "-Choice2{"){
-                    negValue = true;
-                }
+                bool negValue = (line[0] == '-');
                 string opt1, opt2;
                 int j1 = 0, j2 = 0;
-
+                //might need stoi throws
                 if (getline(inFile, opt1) &&
                     getline(inFile, line) && (j1 = stoi(line)) &&
                     getline(inFile, opt2) &&
@@ -242,10 +270,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                 getline(inFile, line); // +end}
 
             }else if (line == "+Choice3{" || line == "-Choice3{") {
-                bool negValue;
-                if(line == "-Choice3{"){
-                    negValue = true;
-                }
+                bool negValue = (line[0] == '-');
                 // Choice with 3 options
                 string opt1, opt2, opt3;
                 int j1 = 0, j2 = 0, j3 = 0;
@@ -286,7 +311,8 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
 
         inFile.close();
     }
-
+    //return map should be when donereading is read 
+    //but as a failure backup the line is here
     return dialogueMap;
 }
 
@@ -297,7 +323,7 @@ vector<Day> GameLoader::loadDays(const string& filename){
     ifstream inFile("../src/game_text_files/" + filename);
 
     if (!inFile.is_open()) {
-        throw runtime_error("Failed to open dialogue file: " + filename);
+        throw runtime_error("Failed to open dialogue file: " + filename + "-fix loadDays");
     }
 
     string line, dayNum, night, evening, morning, isLocked, allCluesFound, clue;
@@ -321,12 +347,17 @@ vector<Day> GameLoader::loadDays(const string& filename){
             if (clue == "+end") break;
             if (!clue.empty()) {
                 clues.push_back(stoi(clue));
-                //stoi is changing string to int
+                //stoi is changing string to int might need a throw error hear to catch
             }
         }
 
         // Convert required values
-        int dayNumber = stoi(dayNum);
+        int dayNumber;
+        try {
+        dayNumber = stoi(dayNum);
+        } catch (const invalid_argument& e) {
+            throw runtime_error("Invalid CLUEID value in ending file: [" + dayNum + "] is not a number.");
+        }
         bool nightBool = (night == "true");
         bool eveningBool = (evening == "true");
         bool morningBool = (morning == "true");
@@ -348,7 +379,7 @@ vector<Person> GameLoader::loadCharacters(const string& filename, vector<Player>
 
     if (!inFile.is_open()) {
         //debug error if file is not open
-        throw runtime_error("Failed to open dialogue file: " + filename);
+        throw runtime_error("Failed to open dialogue file: " + filename + "-fix loadChars");
     }
 
     string line;
@@ -416,7 +447,7 @@ vector<Autopsy> GameLoader::loadAutopies(const string& filename){
 
     if (!inFile.is_open()) {
         //debug error if file is not open
-        throw runtime_error("Failed to open dialogue file: " + filename);
+        throw runtime_error("Failed to open dialogue file: " + filename  + "-fix loadAutopsies");
     }
 
     string line;
@@ -449,7 +480,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
 
     if (!inFile.is_open()) {
         //debug error if file is not open
-        throw runtime_error("Failed to open dialogue file: " + filename);
+        throw runtime_error("Failed to open dialogue file: " + filename + "-fix loadends");
     }
 
     string line;
@@ -468,7 +499,16 @@ vector<Ending> GameLoader::loadendings(const string& filename){
         getline(inFile, line);
         //empty line read
 
-        //
+        //convert string hp into int for hpCap
+        //write a throw error when stoi fails.
+        try {
+        hpCap = stoi(hp);
+        } catch (const invalid_argument& e) {
+            throw runtime_error("Invalid HP value in ending file: [" + hp + "] is not a number.");
+        } catch (const std::out_of_range& e) {
+            throw runtime_error("HP value out of range in ending file: [" + hp + "].");
+        }
+
         Ending Ending(name, text, hpCap);
         storyEndings.push_back(Ending);
 
@@ -487,10 +527,10 @@ GameData LoadFiles() {
     vector<Player> players;
 
     //for now only test first day
-    vector<string> DialogueFiles = {"Day1Morning.txt", "Day1Evening.txt","Day1Night.txt"};
+    vector<string> DialogueFiles = {"day1Morning.txt", "day1Evening.txt","day1Night.txt"};
 
-    /*"Day2Morning.txt", "Day2Evening.txt", "Day2Night.txt", "Day3Morning.txt", "Day3Evening.txt",
-    "Day3Night.txt"};*/
+    /*"day2Morning.txt", "day2Evening.txt", "day2Night.txt", "day3Morning.txt", "day3Evening.txt",
+    "day3Night.txt"};*/
     //read all file names and push contents to DialogueFiles
     
 
