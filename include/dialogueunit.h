@@ -3,7 +3,8 @@
 
 #include <vector>
 using namespace std;
-#include "interface.h"
+
+class Interface;  // <--- forward declare here
 
 class DialogueUnit {
 public:

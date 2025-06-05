@@ -5,6 +5,7 @@
 #include <map>
 #include <memory>
 
+class DialogueUnit;  // Forward declaration
 
 #include "dialogueunit.h"
 #include "dialogue.h"
