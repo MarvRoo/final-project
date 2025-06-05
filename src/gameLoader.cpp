@@ -186,7 +186,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
 }
 
-map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles){
+map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles, vector<string> &perserveKeyOrder){
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
     for (const string& file : DialogueFiles) {
@@ -229,6 +229,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                 if (!dialogueLines.empty() && !currentMappingName.empty()) {
                     try {
                         dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                        perserveKeyOrder.push_back(currentMappingName);
                     } catch (const bad_alloc&) {
                         throw runtime_error("Memory allocation failed while loading dialogue at +done: " + currentMappingName);
                     }
@@ -252,6 +253,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                     if (!dialogueLines.empty()) {
                         try {
                             dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+                            perserveKeyOrder.push_back(currentMappingName);
                         } catch (const bad_alloc&) {
                             throw runtime_error("Memory allocation failed while loading dialogue at +mapping: " + currentMappingName);
                         }
@@ -311,6 +313,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                                 throw std::runtime_error("Missing +mappingName after choice block. Cannot insert Choice.");
                             }
                             dialogueMap[choiceMapName].emplace_back(std::move(choice));
+                            perserveKeyOrder.push_back(choiceMapName);
                         } catch (const bad_alloc&) {
                             throw runtime_error("Memory allocation failed while loading choice block 2 in dialogue");
                         }
@@ -371,6 +374,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                             try {
                                 auto choice = make_unique<Choice>(options, negValue);
                                 dialogueMap[choiceMapName].emplace_back(std::move(choice));
+                                perserveKeyOrder.push_back(choiceMapName);
                             } catch (const bad_alloc&) {
                                 throw runtime_error("Memory allocation failed while loading choice 3 block in dialogue");
                             }
@@ -593,6 +597,7 @@ GameData LoadFiles() {
     GameData data;
 
     vector<Player> players;
+    vector<string> perserveKeyOrder;
 
     //for now only test first day
     vector<string> DialogueFiles = {"day1Morning.txt", "day1Evening.txt","day1Night.txt"};
@@ -606,7 +611,9 @@ GameData LoadFiles() {
     //double file reader
     data.clueLibrary = DropDead.loadClues("item.txt","clue.txt" );
     //multi-file reader +2
-    data.gameDialogue = DropDead.loadDialogue(DialogueFiles);
+    data.gameDialogue = DropDead.loadDialogue(DialogueFiles, perserveKeyOrder);
+    data.dialogueKeyOrder = perserveKeyOrder;
+
     data.autopsyLibrary = DropDead.loadAutopies("autopsies.txt");
     data.dayLibrary = DropDead.loadDays("days.txt");
     data.endingsLibrary = DropDead.loadendings("ending.txt");

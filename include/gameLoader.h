@@ -18,7 +18,7 @@ public:
     vector<unique_ptr<Clue>> loadClues (const string& filename, const string& filename2);
 
     //incomplete
-    map<string, vector<unique_ptr<DialogueUnit>>> loadDialogue(vector<string>& DialogueFiles);
+    map<string, vector<unique_ptr<DialogueUnit>>> loadDialogue(vector<string>& DialogueFiles, vector<string> &keyOrder);
     //these functions help make the pointer object to push to loadDialogues
 
     vector<Day> loadDays(const string& filename);

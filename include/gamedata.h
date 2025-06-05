@@ -24,6 +24,7 @@ using namespace std;
 //Just a data container no .cpp
 // what the game knows.
 struct GameData {
+    vector<string> dialogueKeyOrder;
     vector<Location> locationLibrary;
     vector<unique_ptr<Clue>> clueLibrary;
     vector<Autopsy> autopsyLibrary;

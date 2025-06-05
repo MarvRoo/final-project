@@ -27,6 +27,11 @@ void gameLoop::run(){
     for (const auto& pair : gameData.gameDialogue) {
         cout << "- " << pair.first << endl;
     }
+
+    cout << "Testing dialogue key order:" << endl;
+    for (const string& key : gameData.dialogueKeyOrder) {
+        cout << "- " << key << endl;
+    }
     
 }
 
