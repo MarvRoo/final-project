@@ -7,7 +7,7 @@
 
 //pesudo code for interface rn bc game loop isn't done yet
 void Interface::setPrinter(Printer* printerPtr) {
-    printer = printerPtr;
+    this->printer = printerPtr;
 }
 
 //repetative pop up that gives player review the clues
@@ -74,34 +74,58 @@ void Interface::viewClueInterface() {
 
 //repetative pop up that gives player review the location they want go
 string Interface::viewLocationInterface() {
-    cout << "Viewing lists of locations:" << endl;
-    int locSize = printer->printAccessibleLocations();
+    cout << "Viewing list of accessible locations:\n";
 
-    if (locSize == 0) {
-        cout << "No accessible locations found." << endl;
-        return "";
+    if (!printer) {
+        cerr << "[Error] Printer not set in Interface::viewLocationInterface()\n";
+        throw runtime_error("Printer is not set in Interface.");
     }
 
-    int choosenindex = -1;
+    int locSize = 0;
+    try {
+        locSize = printer->printAccessibleLocations();
+    } catch (const exception& e) {
+        cerr << "[Error] Failed to print accessible locations: " << e.what() << endl;
+        throw runtime_error("Failed during printer->printAccessibleLocations().");
+    }
+
+    if (locSize == 0) {
+        cerr << "[Error] No accessible locations found in viewLocationInterface()\n";
+        throw runtime_error("No accessible locations available.");
+    }
+
+    int choosenindex = 0;
     string returnedLoc;
 
     while (true) {
-        cout << endl << "Enter the number (0 to " << (locSize - 1) << ") of the location to enter: ";
+        cout << "\nEnter the number (0 to " << (locSize - 1) << ") of the location to enter: ";
         cin >> choosenindex;
 
         if (cin.fail()) {
-            cin.clear(); // clear error flag
+            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            // discard input
-            cout << "Invalid input. Please enter a number." << endl;
+            cout << "[Warning] Invalid input. Please enter a valid number.\n";
             continue;
         }
 
         try {
             returnedLoc = printer->printLocation(choosenindex);
-            break; // success
-        } catch (const out_of_range& e) {
-            cout << "That number is out of range. Try again." << endl;
+
+            if (returnedLoc == "OutOfBounds") {
+                cout << "[Warning] Number is out of range. Try again.\n";
+                continue;
+            }
+
+            if (returnedLoc.empty()) {
+                cerr << "[Error] Internal failure retrieving location.\n";
+                throw runtime_error("printLocation() returned an empty string.");
+            }
+
+            break; // Successful return
+
+        } catch (const exception& e) {
+            cerr << "[Exception] printLocation threw: " << e.what() << endl;
+            throw;
         }
     }
 

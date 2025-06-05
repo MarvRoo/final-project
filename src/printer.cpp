@@ -19,19 +19,38 @@ void Printer::printSearchItems() {
     cout << "---------------------" << endl;
 }
 
-int Printer::printAccessibleLocations() {
-    if (!playerPtr || !gameLibraryPtr) {
-        throw runtime_error("Player or Game data not set.");
+vector<string> Printer::getAccessibleLocationList() const {
+    vector<string> accessible;
+
+    if (!gameLibraryPtr || !playerPtr) return accessible;
+
+    const vector<string>& roomList = *playerPtr->shareRoomListPtr();
+
+    for (const string& roomName : roomList) {
+        for (const Location& loc : gameLibraryPtr->locationLibrary) {
+            if (loc.getName() == roomName) {
+                accessible.push_back(roomName);  // only add valid ones
+                break;
+            }
+        }
     }
 
-    vector<string>* roomListPtr = playerPtr->shareRoomListPtr(); 
-    vector<string>* clueListPtr = playerPtr->shareClueListPtr();
+    return accessible;
+}
 
-    for (const string& roomName : *roomListPtr) {
+
+int Printer::printAccessibleLocations() {
+    if (!gameLibraryPtr) throw runtime_error("Game data not set.");
+    if (!playerPtr) throw runtime_error("Player data not set.");
+
+    vector<string> accessibleList = getAccessibleLocationList();
+    const vector<string>& clueList = *playerPtr->shareClueListPtr();
+
+    for (const string& roomName : accessibleList) {
         for (const Location& loc : gameLibraryPtr->locationLibrary) {
             if (loc.getName() == roomName) {
                 bool visited = false;
-                for (const string& clue : *clueListPtr) {
+                for (const string& clue : clueList) {
                     if (clue == loc.getKeyClue()) {
                         visited = true;
                         break;
@@ -45,27 +64,27 @@ int Printer::printAccessibleLocations() {
     }
 
     cout << "------------------------------" << endl;
-    return static_cast<int>(roomListPtr->size());
+    return static_cast<int>(accessibleList.size());
 }
 
+
 string Printer::printLocation(int choosenindex){
+    try {
+        if (!playerPtr) throw runtime_error("Player pointer is null.");
+        if (!gameLibraryPtr) throw runtime_error("Game data pointer is null.");
 
-    vector<string>* roomListPtr = playerPtr->shareRoomListPtr();
+        vector<string> accessibleList = getAccessibleLocationList();
 
-    if (choosenindex < 0 || choosenindex >= static_cast<int>(roomListPtr->size())) {
-        //tell the player
-        return "OutOfBounds";
-    }
-
-    const string& targetRoomName = (*roomListPtr)[choosenindex];
-
-    for (const Location& loc : gameLibraryPtr->locationLibrary) {
-        if (loc.getName() == targetRoomName) {
-            return loc.getName();
+        if (choosenindex < 0 || choosenindex >= static_cast<int>(accessibleList.size())) {
+            return "OutOfBounds";
         }
+
+        return accessibleList[choosenindex];  // directly return the chosen room name
+
+    } catch (const exception& e) {
+        cerr << "[Error in printLocation]: " << e.what() << endl;
+        return "";
     }
-    //should not be valid
-    throw runtime_error("Location not found in locationLibrary for selected index");
 }
 
 void Printer::printClues() {

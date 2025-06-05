@@ -11,7 +11,7 @@ using namespace std;
 class Printer {
     private:
         //printer should already have access
-        const GameData* gameLibraryPtr;
+        GameData* gameLibraryPtr;
         Player* playerPtr;
         // Stores the last displayed selectable items and clues for index-based selection
         vector<const Item*> lastItemList;
@@ -22,6 +22,7 @@ class Printer {
         void setGameData(GameData* gameDataPtr){this->gameLibraryPtr = gameDataPtr;}
         void setplayer(Player* player){playerPtr = player;}
         int printAccessibleLocations();
+        vector<string> getAccessibleLocationList() const;
         string printLocation(int choosenindex);
 
         void printClues();

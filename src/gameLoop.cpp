@@ -4,12 +4,27 @@ using namespace std;
 
 void gameLoop::run(){
     GameData gameData = LoadFiles();
-    //pass printer a pointer to gameData
+    if (gameData.playerLibrary.empty()) {
+        throw runtime_error("No player...");
+    }
+
+    Player* playerPtr = &gameData.playerLibrary[0];
+
+    // Create shared Interface object
+    shared_ptr<Interface> interface = make_shared<Interface>();
+    Printer printer;
+
+    // Configure Printer
     printer.setGameData(&gameData);
     printer.setplayer(playerPtr);
-    
-    //they wouldn't print if its printing
-    //Iterate through the gameDialogue map using the preserved key order
+
+    // Set printer in interface
+    interface->setPrinter(&printer);
+
+    // Set player for other logic
+    setPlayer(playerPtr);
+
+    // Loop through game dialogue using preserved order
     for (const string& key : gameData.dialogueKeyOrder) {
         auto it = gameData.gameDialogue.find(key);
         if (it != gameData.gameDialogue.end()) {
@@ -19,10 +34,9 @@ void gameLoop::run(){
 
             for (const auto& dialogueUnitPtr : dialogueList) {
                 if (dialogueUnitPtr) {
-                    dialogueUnitPtr->setInterface(&interface);
-                    
+                    dialogueUnitPtr->setInterface(interface);
+                    //shared pointer passed safer
                     dialogueUnitPtr->print();
-                    // Optional: trigger game logic based on the dialogue unit here
                 }
             }
 

@@ -11,17 +11,15 @@
 class gameLoop{
 private:
     GameData gameData;
-    //the following is like a tool box that does stuff not an actual item
-    Player* playerPtr = &gameData.playerLibrary[0];
-    Interface interface;
-    Printer printer;
+    Player* playerPtr;
 public:
     gameLoop(){}
     ~gameLoop(){}
 
     void run();
     void unlockNextLocation(const string& locationName);
-    
+    void setPlayer(Player* playerPtr){this->playerPtr = playerPtr;}
+
     string goToLocation(const string& requiredLocation);
     void acquireNewClue(const string& clueName);
     void changeDayTime(int dayNum, const string& currentTime);

@@ -5,18 +5,21 @@
 #include "dialogueunit.h"
 #include <string>
 
+
 class Choice : public DialogueUnit{
 private:
     vector<pair<string, int>> options;
     bool negHp;
-    Interface* interface;
+    shared_ptr<Interface> interface;
 public: 
     Choice();
     Choice(const vector<pair<string, int>>& choices, bool isChoiceNeg);
     void print() const override;
     int getPointValue(int index) const;
 
-    void setInterface(Interface* visuals) override { interface = visuals; }
+    void setInterface(std::shared_ptr<Interface> visuals) override {
+        interface = visuals;
+    }
 
 };
 
