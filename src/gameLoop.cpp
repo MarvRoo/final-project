@@ -7,10 +7,21 @@ void gameLoop::run(){
     //pass printer a pointer to gameData
     printer.setGameData(&gameData);
     printer.setplayer(playerPtr);
-
+    interface.setPrinter(&printer);
     //iterate through the   map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue library
-    //that library not only holds dialogue but is the game flow 
-    //This iterrator is our game
+    // Iterate through the gameDialogue map
+    for (auto& [key, dialogueList] : gameData.gameDialogue) {
+        cout << "---- Entering Scene: " << key << " ----" << endl;
+
+        for (const auto& dialogueUnitPtr : dialogueList) {
+            if (dialogueUnitPtr) {
+                dialogueUnitPtr->print();
+                //let the games begin...
+            }
+        }
+
+        cout << "------------------------------" << endl;
+    }
     
 }
 

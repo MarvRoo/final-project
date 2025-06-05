@@ -5,20 +5,21 @@
 #include <vector>
 
 //pesudo code for interface rn bc game loop isn't done yet
+void Interface::setPrinter(Printer* printerPtr) {
+    printer = printerPtr;
+}
 
 //repetative pop up that gives player review the clues
-//use clueLibrary in gamedata.h
  void Interface::viewClueInterface() {
-    printer.printClues();
+    printer->printClues();
     cout << "Enter the number (that's next to the corresponding clue)";
     cout << "that you would like to reveiw on. " << endl;
 }
 
 //repetative pop up that gives player review the location they want go
-//use locationLibrary in gamedata.h
  void Interface::viewLocationInterface() {
     cout << "Viewing lists of locations:" << endl;
-    printer.printAccessibleLocations();
+    printer->printAccessibleLocations();
 }
 
 string Interface::viewSuspectList(vector<string>&suspectList) {
