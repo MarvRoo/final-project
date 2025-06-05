@@ -49,9 +49,6 @@ int Printer::printAccessibleLocations() {
 }
 
 string Printer::printLocation(int choosenindex){
-    if (!playerPtr || !gameLibraryPtr) {
-        throw runtime_error("Player or Game data not set.");
-    }
 
     vector<string>* roomListPtr = playerPtr->shareRoomListPtr();
 
@@ -72,9 +69,6 @@ string Printer::printLocation(int choosenindex){
 }
 
 void Printer::printClues() {
-    if (!playerPtr || !gameLibraryPtr) {
-        throw runtime_error("Player or Game data not set.");
-    }
 
     vector<string>* clues = playerPtr->shareClueListPtr();
     if (!clues) throw runtime_error("Clue list not found.");
@@ -100,9 +94,6 @@ void Printer::printClues() {
 }
 
 void Printer::printPersonDetails(const string& personName) {
-    if (!gameLibraryPtr) {
-        throw runtime_error("Game data not set.");
-    }
 
     for (const Person& person : gameLibraryPtr->personLibrary) {
         if (person.getPersonName() == personName) {
@@ -118,9 +109,6 @@ void Printer::printPersonDetails(const string& personName) {
 }
 
 void Printer::printEnd(const Ending& ending) {
-    if (!playerPtr) {
-        throw runtime_error("Player not set.");
-    }
 
     cout << "==== Ending ====" << endl;
     cout << "End Name: " << ending.getSceneName() << endl;
@@ -130,9 +118,6 @@ void Printer::printEnd(const Ending& ending) {
 }
 
 void Printer::printAutopsy(const string& characterName) const {
-    if (!gameLibraryPtr) {
-        throw runtime_error("Game data not set.");
-    }
 
     for (const Autopsy& autopsy : gameLibraryPtr->autopsyLibrary) {
         if (autopsy.getCharacterName() == characterName) {
@@ -146,8 +131,7 @@ void Printer::printAutopsy(const string& characterName) const {
 
 
 int Printer::printSelectableItems() {
-    if (!playerPtr || !gameLibraryPtr) throw runtime_error("Game data not set.");
-
+    
     lastItemList.clear();
     vector<string>* clues = playerPtr->shareClueListPtr();
 
@@ -170,8 +154,6 @@ int Printer::printSelectableItems() {
 }
 
 int Printer::printSelectableClues() {
-    if (!playerPtr || !gameLibraryPtr) throw runtime_error("Game data not set.");
-
     lastClueList.clear();
     vector<string>* clues = playerPtr->shareClueListPtr();
 
