@@ -2,16 +2,15 @@
 #define DIALOGUEUNIT_H
 
 #include <vector>
+#include "interface.h"
 using namespace std;
 
 class DialogueUnit {
-private:
-    Interface* interface;
 public:
     virtual void print() const = 0;            // Pure virtual function
     virtual ~DialogueUnit() = default;         // Virtual default destructor
     
-    virtual void setInterface(Interface* visuals){interface = visuals;}
+    virtual void setInterface(Interface* visuals){}
 };
 
 #endif
