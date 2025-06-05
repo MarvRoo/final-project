@@ -7,8 +7,8 @@ void gameLoop::run(){
     //pass printer a pointer to gameData
     printer.setGameData(&gameData);
     printer.setplayer(playerPtr);
-    interface.setPrinter(&printer);
     
+    //they wouldn't print if its printing
     //Iterate through the gameDialogue map using the preserved key order
     for (const string& key : gameData.dialogueKeyOrder) {
         auto it = gameData.gameDialogue.find(key);
@@ -20,6 +20,7 @@ void gameLoop::run(){
             for (const auto& dialogueUnitPtr : dialogueList) {
                 if (dialogueUnitPtr) {
                     dialogueUnitPtr->setInterface(&interface);
+                    
                     dialogueUnitPtr->print();
                     // Optional: trigger game logic based on the dialogue unit here
                 }
