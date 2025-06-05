@@ -20,14 +20,16 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     vector<string> clues;
 
     while (getline(inFile, line)) {
-        if (!line.empty()) {
+
+        if (line.empty()) {
+            break;
+        }else{
             line.erase(line.find_last_not_of(" \t\r\n") + 1); // trim trailing
         }
 
         if (line.find("+multi-item") != string::npos) {
             bool multiClue = true;
             string clue;
-            clues.clear();
 
             // Read clues until "+end"
             while (getline(inFile, clue)) {
@@ -37,6 +39,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 
             getline(inFile, descript);
             getline(inFile, name);
+            cout << "Loaded multi-item: " << name << endl;
             getline(inFile, ifLocked);
             getline(inFile, keyClue);
             getline(inFile, line); //read empty line
@@ -46,6 +49,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             Location place(name, descript, clues, isLocked, multiClue, keyClue);
             //const string& name, const string& description, vector <string> clueList, bool accessible, bool multiple, string keyClue
             locations.push_back(place);
+            clues.clear();
         } else {
             //Fallback to normal item
             bool multiClue = false;
@@ -53,6 +57,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             getline(inFile, keyClue);
             getline(inFile, descript);
             getline(inFile, name);
+            cout << "Loaded non multi-item: " << name << endl;
             getline(inFile, ifLocked);
             getline(inFile, keyClue);
             getline(inFile, line); // read empty line
