@@ -186,6 +186,45 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
 
 }
 
+/*void handleNewMappingName(
+    const string& newMappingName,
+    string& currentMappingName,
+    vector<string>& dialogueLines,
+    map<string, vector<unique_ptr<DialogueUnit>>>& dialogueMap,
+    vector<string>& perserveKeyOrder
+) {
+    if (!dialogueLines.empty()) {
+        try {
+            dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+            perserveKeyOrder.push_back(currentMappingName);
+        } catch (const bad_alloc&) {
+            throw runtime_error("Memory allocation failed while loading dialogue at +mapping: " + currentMappingName);
+        }
+        dialogueLines.clear();
+        currentMappingName.clear();
+    }
+    currentMappingName = newMappingName;
+}*/
+
+void GameLoader::flushDialogueBuffer(
+    map<string, vector<unique_ptr<DialogueUnit>>>& dialogueMap,
+    vector<string>& perserveKeyOrder,
+    string& currentMappingName,
+    vector<string>& dialogueLines
+) {
+    if (!dialogueLines.empty()) {
+        try {
+            dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
+            perserveKeyOrder.push_back(currentMappingName);
+        } catch (const bad_alloc&) {
+            throw runtime_error("Memory allocation failed while flushing dialogue at mapping: " + currentMappingName);
+        }
+        dialogueLines.clear();
+        currentMappingName.clear();
+    }
+}
+
+
 map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<string>& DialogueFiles, vector<string> &perserveKeyOrder){
     map<string, vector<unique_ptr<DialogueUnit>>> dialogueMap;
 
@@ -239,35 +278,24 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                 //dont return anything just break or other files wont be read
                 break;
             }
-
-            //Start new mapping group
+            
+            //INJECT HELPER
+            // Start new mapping group
             if (line == "+mappingName") {
-                if (getline(inFile, line)) {
+                /*if (getline(inFile, line)) {
                     line.erase(line.find_last_not_of(" \t\r\n") + 1);
-                    /*Program:
-                        check if dialogueLines vector isn't empty before we change mapping name
-                        if not empty then use the the currentMappingName to push into map<string, vector<unique_ptr<DialogueUnit>>>
-                        we would call the dialogue constructor with the parameter of dialogueLines to make the object
-                        push that object in and then clear the dialogueLines vector to reuse aswell as currentMappingName
-                    */
-                    if (!dialogueLines.empty()) {
-                        try {
-                            dialogueMap[currentMappingName].emplace_back(make_unique<Dialogue>(dialogueLines));
-                            perserveKeyOrder.push_back(currentMappingName);
-                        } catch (const bad_alloc&) {
-                            throw runtime_error("Memory allocation failed while loading dialogue at +mapping: " + currentMappingName);
-                        }
-                        dialogueLines.clear();
-                        currentMappingName.clear();
-                    }
-                    currentMappingName = line;
-                }
+                    handleNewMappingName(line, currentMappingName, dialogueLines, dialogueMap, perserveKeyOrder);
+                }*/
+               line.erase(line.find_last_not_of(" \t\r\n") + 1);
+               //set the new mappingName
+               currentMappingName = line;
             }
-
 
             // Choice with 2 options
             string choiceMapName;
             if (line == "+Choice2{" || line == "-Choice2{") {
+                //push the current mapping first
+                flushDialogueBuffer(dialogueMap, perserveKeyOrder,currentMappingName,dialogueLines);
                 bool negValue = (line[0] == '-');
                 string opt1, opt2;
                 int j1 = 0, j2 = 0;
@@ -321,6 +349,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                 }
 
             }else if (line == "+Choice3{" || line == "-Choice3{") {
+                flushDialogueBuffer(dialogueMap, perserveKeyOrder,currentMappingName,dialogueLines);
                 //looks crazy I know 
                 bool negValue = (line[0] == '-');
                 string opt1, opt2, opt3;

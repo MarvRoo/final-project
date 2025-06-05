@@ -17,7 +17,21 @@ public:
 
     vector<unique_ptr<Clue>> loadClues (const string& filename, const string& filename2);
 
-    //incomplete
+    //internal Dialogue reader helper
+    /*void handleNewMappingName(
+        const string& newMappingName,
+        string& currentMappingName,
+        vector<string>& dialogueLines,
+        map<string, vector<unique_ptr<DialogueUnit>>>& dialogueMap,
+        vector<string>& perserveKeyOrder
+    );*/
+
+    void flushDialogueBuffer(
+        map<string, vector<unique_ptr<DialogueUnit>>>& dialogueMap,
+        vector<string>& perserveKeyOrder,
+        string& currentMappingName,
+        vector<string>& dialogueLines
+    );
     map<string, vector<unique_ptr<DialogueUnit>>> loadDialogue(vector<string>& DialogueFiles, vector<string> &keyOrder);
     //these functions help make the pointer object to push to loadDialogues
 
