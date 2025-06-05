@@ -10,7 +10,7 @@ void gameLoop::run(){
     interface.setPrinter(&printer);
     //iterate through the   map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue library
     // Iterate through the gameDialogue map
-    for (auto& [key, dialogueList] : gameData.gameDialogue) {
+    /*for (auto& [key, dialogueList] : gameData.gameDialogue) {
         cout << "---- Entering Scene: " << key << " ----" << endl;
 
         for (const auto& dialogueUnitPtr : dialogueList) {
@@ -21,6 +21,11 @@ void gameLoop::run(){
         }
 
         cout << "------------------------------" << endl;
+    }*/
+    // Print the keys in gameDialogueLibrary
+    cout << "Dialogue Keys in Order:\n";
+    for (const auto& pair : gameData.gameDialogue) {
+        cout << "- " << pair.first << endl;
     }
     
 }
