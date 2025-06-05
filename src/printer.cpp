@@ -4,23 +4,6 @@
 
 using namespace std;
 
-void Printer::printSearchItem(string itemName) {
-    if (!gameLibraryPtr) {
-        throw runtime_error("Game data not set.");
-    }
-
-    for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
-        Item* item = dynamic_cast<Item*>(cluePtr.get());
-        if (item && item->getName() == itemName) {
-            item->print();
-            item->setInspected(true);
-            return;
-        }
-    }
-
-    throw runtime_error("Item \"" + itemName + "\" not found.");
-}
-
 void Printer::printSearchItems() {
     if (!gameLibraryPtr) {
         throw runtime_error("Game data not set.");
@@ -36,7 +19,7 @@ void Printer::printSearchItems() {
     cout << "---------------------" << endl;
 }
 
-void Printer::printAccessibleLocations() {
+int Printer::printAccessibleLocations() {
     if (!playerPtr || !gameLibraryPtr) {
         throw runtime_error("Player or Game data not set.");
     }
@@ -62,6 +45,30 @@ void Printer::printAccessibleLocations() {
     }
 
     cout << "------------------------------" << endl;
+    return static_cast<int>(roomListPtr->size());
+}
+
+string Printer::printLocation(int choosenindex){
+    if (!playerPtr || !gameLibraryPtr) {
+        throw runtime_error("Player or Game data not set.");
+    }
+
+    vector<string>* roomListPtr = playerPtr->shareRoomListPtr();
+
+    if (choosenindex < 0 || choosenindex >= static_cast<int>(roomListPtr->size())) {
+        //tell the player
+        return "OutOfBounds";
+    }
+
+    const string& targetRoomName = (*roomListPtr)[choosenindex];
+
+    for (const Location& loc : gameLibraryPtr->locationLibrary) {
+        if (loc.getName() == targetRoomName) {
+            return loc.getName();
+        }
+    }
+    //should not be valid
+    throw runtime_error("Location not found in locationLibrary for selected index");
 }
 
 void Printer::printClues() {
@@ -90,23 +97,6 @@ void Printer::printClues() {
     }
 
     cout << endl;
-}
-
-void Printer::printClue(string clueName) {
-    if (!gameLibraryPtr) {
-        throw runtime_error("Game data not set.");
-    }
-
-    for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
-        if (!cluePtr || cluePtr->getName() != clueName) continue;
-        if (dynamic_cast<Item*>(cluePtr.get())) break;
-
-        cluePtr->print();
-        cluePtr->setInspected(true);
-        return;
-    }
-
-    throw runtime_error("Clue or Interview \"" + clueName + "\" not found.");
 }
 
 void Printer::printPersonDetails(const string& personName) {
@@ -154,3 +144,69 @@ void Printer::printAutopsy(const string& characterName) const {
     throw runtime_error("No autopsy found for \"" + characterName + "\".");
 }
 
+
+int Printer::printSelectableItems() {
+    if (!playerPtr || !gameLibraryPtr) throw runtime_error("Game data not set.");
+
+    lastItemList.clear();
+    vector<string>* clues = playerPtr->shareClueListPtr();
+
+    int index = 1;
+    for (const string& clueName : *clues) {
+        for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
+            if (cluePtr && cluePtr->getName() == clueName) {
+                if (Item* item = dynamic_cast<Item*>(cluePtr.get())) {
+                    cout << index++ << ". " << item->getName() << endl;
+                    lastItemList.push_back(item);
+                }
+                break;
+            }
+        }
+    }
+
+    if (lastItemList.empty()) cout << "(none found)" << endl;
+
+    return static_cast<int>(lastItemList.size());
+}
+
+int Printer::printSelectableClues() {
+    if (!playerPtr || !gameLibraryPtr) throw runtime_error("Game data not set.");
+
+    lastClueList.clear();
+    vector<string>* clues = playerPtr->shareClueListPtr();
+
+    int index = 1;
+    for (const string& clueName : *clues) {
+        for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
+            if (cluePtr && cluePtr->getName() == clueName) {
+                if (!dynamic_cast<Item*>(cluePtr.get())) {
+                    cout << index++ << ". " << cluePtr->getName() << endl;
+                    lastClueList.push_back(cluePtr.get());
+                }
+                break;
+            }
+        }
+    }
+
+    if (lastClueList.empty()) cout << "(none found)" << endl;
+
+    return static_cast<int>(lastClueList.size());
+}
+
+void Printer::printSelectedItemByIndex(int index) {
+    if (index < 1 || index > static_cast<int>(lastItemList.size()))
+        throw runtime_error("Invalid item selection.");
+
+    Item* item = const_cast<Item*>(lastItemList[index - 1]);
+    item->print();
+    item->setInspected(true);
+}
+
+void Printer::printSelectedClueByIndex(int index) {
+    if (index < 1 || index > static_cast<int>(lastClueList.size()))
+        throw runtime_error("Invalid clue selection.");
+
+    Clue* clue = const_cast<Clue*>(lastClueList[index - 1]);
+    clue->print();
+    clue->setInspected(true);
+}

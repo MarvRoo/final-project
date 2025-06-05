@@ -15,7 +15,7 @@ public:
     void setPrinter(Printer* printerPtr);  // Setter
 
     void viewClueInterface();
-    void viewLocationInterface();
+    string viewLocationInterface();
     string viewSuspectList(vector<string>& suspectList);
 };
 

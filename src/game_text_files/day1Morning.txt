@@ -14,7 +14,7 @@ Pool Boy
 The story begins:
 You, Jacob, and Dr. Lou, returned home from a 3 week vacation from Barbados. You wanted to find the house sitter, Angie, to ask her what she's been up to. Your really good friends. Where should we search first?
 
-+goToLocation (returns the string of the name where the place last entered)
++goToLocation
 +CheckBranch{
 Backyard
 but it looks like the sitter isn't here...

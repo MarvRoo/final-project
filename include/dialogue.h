@@ -10,12 +10,15 @@ using namespace std;
 class Dialogue : public DialogueUnit{
 private:
     vector<string> dialogueSegments;
+    Interface* interface;
 public:
 
     Dialogue();
     Dialogue(vector<string> dialogueStrings);
     //acts as a filter and caller to gameloops checkpoint functions 
     void print() const override;
+
+    void setInterface(Interface* visuals) override { interface = visuals; }
 };
 
 #endif

@@ -8,22 +8,31 @@ void gameLoop::run(){
     printer.setGameData(&gameData);
     printer.setplayer(playerPtr);
     interface.setPrinter(&printer);
-    //iterate through the   map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue library
-    // Iterate through the gameDialogue map
-    /*for (auto& [key, dialogueList] : gameData.gameDialogue) {
-        cout << "---- Entering Scene: " << key << " ----" << endl;
+    
+    //Iterate through the gameDialogue map using the preserved key order
+    for (const string& key : gameData.dialogueKeyOrder) {
+        auto it = gameData.gameDialogue.find(key);
+        if (it != gameData.gameDialogue.end()) {
+            const auto& dialogueList = it->second;
 
-        for (const auto& dialogueUnitPtr : dialogueList) {
-            if (dialogueUnitPtr) {
-                dialogueUnitPtr->print();
-                //let the games begin...
+            cout << "---- Entering Scene: " << key << " ----" << endl;
+
+            for (const auto& dialogueUnitPtr : dialogueList) {
+                if (dialogueUnitPtr) {
+                    dialogueUnitPtr->setInterface(&interface);
+                    dialogueUnitPtr->print();
+                    // Optional: trigger game logic based on the dialogue unit here
+                }
             }
-        }
 
-        cout << "------------------------------" << endl;
-    }*/
+            cout << "------------------------------" << endl;
+        } else {
+            cerr << "Warning: Key '" << key << "' not found in gameDialogue map!" << endl;
+        }
+    }
+
     // Print the keys in gameDialogueLibrary
-    cout << "Dialogue Keys in Order:\n";
+    /*cout << "Dialogue Keys in Order:\n";
     for (const auto& pair : gameData.gameDialogue) {
         cout << "- " << pair.first << endl;
     }
@@ -31,7 +40,7 @@ void gameLoop::run(){
     cout << "Testing dialogue key order:" << endl;
     for (const string& key : gameData.dialogueKeyOrder) {
         cout << "- " << key << endl;
-    }
+    }*/
     
 }
 
@@ -62,7 +71,7 @@ void gameLoop::unlockNextLocation(const string& locationName){
     }
     else{
         //shouldnt happen but heres the error
-        cout << "Error: Location " << locationName << "not found." << endl;
+        cout << "Error: Location " << locationName << " not found." << endl;
     }
 }
 

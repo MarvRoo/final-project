@@ -13,22 +13,32 @@ class Printer {
         //printer should already have access
         const GameData* gameLibraryPtr;
         Player* playerPtr;
+        // Stores the last displayed selectable items and clues for index-based selection
+        vector<const Item*> lastItemList;
+        vector<const Clue*> lastClueList;
 
 
     public:
         void setGameData(GameData* gameDataPtr){this->gameLibraryPtr = gameDataPtr;}
         void setplayer(Player* player){playerPtr = player;}
-        void printAccessibleLocations();
+        int printAccessibleLocations();
+        string printLocation(int choosenindex);
 
         void printClues();
-        void printClue(string clueName);
-
         void printSearchItems();
-        void printSearchItem(string itemName);
 
         void printPersonDetails(const std::string& personName);
         void printEnd(const Ending& ending);
         void printAutopsy(const std::string& characterName) const;
+
+
+        // Print grouped and numbered selectable items and clues
+        int printSelectableItems();         // Displays acquired items and stores them
+        int printSelectableClues();         // Displays acquired clues and stores them
+
+        // Print selected item/clue based on index (1-based)
+        void printSelectedItemByIndex(int index);
+        void printSelectedClueByIndex(int index);
 };
 
 #endif
