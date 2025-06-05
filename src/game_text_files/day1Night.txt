@@ -13,7 +13,7 @@ Sheriff: I'll stay here with these two through the night so you don't have to wo
 +mappingName
 areYouHelping?
 +mappingName
-nightContinues
+nightContinues1
 
     The Sheriff doesn't find your tone very funny and gives you a long stare down before walking away*
 

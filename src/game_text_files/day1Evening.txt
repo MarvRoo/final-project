@@ -17,7 +17,7 @@ Sheiff: "Ehh I'd do it myself but...ya know.."
 +mappingName
 helpsheriff?
 +mappingName
-eveningContinues
+eveningContinues1
 Sheiff: "I'll keep an eye on them while you interview them individually...Up to you if you can get anything out of them."
 
 You begin interview...we'll start with Pool Boy.
@@ -71,7 +71,7 @@ Gardener: "...is that even legal."
 +mappingName
 isItLegal?
 +mappingName
-eveningContinues
+eveningContinues2
 +InterviewClues{
 "Gardener arrives during the interviews in a different truck."
 "Called Angie from the Mechanic shop."
@@ -99,7 +99,7 @@ Dr. Lou: "Right. Well I need to get some of my tools. I think I have a scalpel a
 +mappingName
 hurryUp?
 +mappingName
-eveningContinues
+eveningContinues3
 Dr. Lou: "If you start complaining I'll let them take you. I'm just as stressed as you are."
 
     Dr. Lou rubs her temples and heads to her room for her tools.*
