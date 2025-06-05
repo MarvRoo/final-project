@@ -4,9 +4,8 @@
 
 using namespace std;
 
-int main() {
+/*int main() {
     //turn into a google test when all days are ready
-    /*
     try {
         GameData data = LoadFiles();
 
@@ -44,6 +43,6 @@ int main() {
         return 1;
     }
 
-    return 0;*/
-}
+    return 0;
+}*/
 
