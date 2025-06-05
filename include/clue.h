@@ -14,11 +14,14 @@ protected:
 public:
     Clue();
     Clue(int id, const string& name);
+
     virtual void print(){ cout << name;}
     virtual ~Clue();
+
     Clue(const Clue&) = delete; //delete copy constructor
     Clue& operator=(const Clue&) = delete; //delete copy assignment operator
     string getName() const;
+    void setInspected(bool inspection){inspected = inspection;}
 };
 
 #endif

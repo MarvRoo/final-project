@@ -19,14 +19,16 @@ private:
     //made up of strings like interview names, clue names, and item names
     //player has to order them in the correct order to move on 
 public:
-    Player();
+    Player(){}
     Player(string name, string bloodType, string item,string description);
 
     void setSuspect(string const suspectName){declaredSuspect = suspectName;}
     vector<string>* shareClueListPtr() {return &clueList;}
     vector<string>* shareRoomListPtr() {return &roomList;}
+
     void upDateHp(int newHP) {this->hp = newHP;}
     void addNewClues(string clueName){clueList.push_back(clueName);}
+    int getPlayerHp(){return hp;}
 };
 
 #endif

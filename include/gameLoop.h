@@ -11,6 +11,7 @@
 class gameLoop{
 private:
     GameData gameData;
+    //the following is like a tool box that does stuff not an actual item
     Player* playerPtr = &gameData.playerLibrary[0];
     Interface interface;
     Printer printer;

@@ -15,7 +15,6 @@ class Autopsy {
     Autopsy(string charName, const string& descript);
     string getCharacterName() const;
     string getAutopsyDescription() const;
-    void findAutopsies(string personName) const;
     ~Autopsy();
 };
 

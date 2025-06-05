@@ -4,8 +4,9 @@ using namespace std;
 
 void gameLoop::run(){
     GameData gameData = LoadFiles();
-    interface.setGameData(gameData);
-    printer.setGameData(gameData);
+    //pass printer a pointer to gameData
+    printer.setGameData(&gameData);
+    printer.setplayer(playerPtr);
 
     //iterate through the   map<string, vector<unique_ptr<DialogueUnit>>> gameDialogue library
     //that library not only holds dialogue but is the game flow 

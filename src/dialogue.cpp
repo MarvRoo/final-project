@@ -1,4 +1,5 @@
 #include "dialogue.h"
+#include "gameLoop.h"
 #include <string>
 #include <iostream>
 
@@ -13,6 +14,7 @@ Dialogue::Dialogue(vector<string> dialogueStrings){
 void Dialogue::print() const {
     string prevLocation;
     string returnedString; // This would come from GameLoop goToLocation()
+    gameLoop GameFUNCTIONS;
 
     for (size_t i = 0; i < dialogueSegments.size(); ++i) {
         const string& line = dialogueSegments[i];
@@ -22,7 +24,7 @@ void Dialogue::print() const {
             if (i < dialogueSegments.size()) {
                 string newUnlockedLocation = dialogueSegments[++i];
                 cout << "[Unlocked a new location: " << newUnlockedLocation << "]" << endl;
-                // TODO: GameLoop::unlockNextLocation(newUnlockedLocation);
+                GameFUNCTIONS.unlockNextLocation(newUnlockedLocation);
             }
         }
 

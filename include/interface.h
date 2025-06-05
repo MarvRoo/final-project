@@ -9,14 +9,11 @@
 using namespace std;
 
 class Interface {
-
     private:
-        const GameData* gameDataPtr;
-
+        Printer printer;
     public:
         void viewClueInterface();
         void viewLocationInterface();
-        void setGameData(const GameData& data){ this->gameDataPtr = &data;}
         string viewSuspectList(vector<string>&suspectList);
 };
 

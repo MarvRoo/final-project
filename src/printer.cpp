@@ -1,95 +1,156 @@
 #include "printer.h"
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
-void Printer::setGameData(const GameData& data){
-    gameDataPtr = &data;
-}
+void Printer::printSearchItem(string itemName) {
+    if (!gameLibraryPtr) {
+        throw runtime_error("Game data not set.");
+    }
 
-void Printer::printSearchItem(vector<Item *>* items){
-    if (!items) return;
-
-    for (Item* item : *items){
-        if (item && item->isItemFound()){
+    for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
+        Item* item = dynamic_cast<Item*>(cluePtr.get());
+        if (item && item->getName() == itemName) {
             item->print();
-            cout << endl;
+            item->setInspected(true);
+            return;
         }
     }
+
+    throw runtime_error("Item \"" + itemName + "\" not found.");
 }
 
-void Printer::printAccessibleLocations(Player* player){
-    vector<string>* roomListPtr = player->shareRoomListPtr(); 
-    vector<string>* clueListPtr = player->shareClueListPtr();
+void Printer::printSearchItems() {
+    if (!gameLibraryPtr) {
+        throw runtime_error("Game data not set.");
+    }
 
-    for (const string& roomName : *roomListPtr){
-        for (const Location& loc : gameDataPtr->locationLibrary){
-            if (loc.getName() == roomName){
+    for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
+        Item* item = dynamic_cast<Item*>(cluePtr.get());
+        if (item) {
+            cout << "- " << item->getName() << endl;
+        }
+    }
+
+    cout << "---------------------" << endl;
+}
+
+void Printer::printAccessibleLocations() {
+    if (!playerPtr || !gameLibraryPtr) {
+        throw runtime_error("Player or Game data not set.");
+    }
+
+    vector<string>* roomListPtr = playerPtr->shareRoomListPtr(); 
+    vector<string>* clueListPtr = playerPtr->shareClueListPtr();
+
+    for (const string& roomName : *roomListPtr) {
+        for (const Location& loc : gameLibraryPtr->locationLibrary) {
+            if (loc.getName() == roomName) {
                 bool visited = false;
-                
-                for (const string& clue : *clueListPtr){ //if player's clue list has the keyClue, means player has visited location
-                    if (clue == loc.getKeyClue()){
+                for (const string& clue : *clueListPtr) {
+                    if (clue == loc.getKeyClue()) {
                         visited = true;
                         break;
                     }
                 }
+
                 cout << loc.getName() << " : " << (visited ? "Visited" : "Pending Visit") << endl;
-                break; //location found, no more checking
+                break;
             }
         }
     }
+
+    cout << "------------------------------" << endl;
 }
 
-void Printer::printClues(vector<vector<string>>* clues){
-    if (!clues) return;
-
-    int segment = 1;
-    for (const vector<string>& clueSegment : *clues){
-        cout << "Clue(s) " << segment++ << " : " << endl;
-
-        for (const string& clue : clueSegment){
-            cout << " - " << clue << endl;
-        }
-        cout << endl;
+void Printer::printClues() {
+    if (!playerPtr || !gameLibraryPtr) {
+        throw runtime_error("Player or Game data not set.");
     }
 
-    //base case: When a clue is inspected it should be marked as so, a player should
-    //know what clues they have already looked into
-    //also find the clue itself and mark it as found
-    //location only has a vector of names but those names range from just a clue to the 
-    //subclass item or interview and they have they're own inspected
-    
-} 
+    vector<string>* clues = playerPtr->shareClueListPtr();
+    if (!clues) throw runtime_error("Clue list not found.");
 
-void Printer::printPersonDetails(const string& personName){
-    for (const Person& person : gameDataPtr->personLibrary){
-        if (personName == person.getPersonName()){
-            cout << "Name: " << personName << endl;
-            cout << "Description: " << person.grabDescription() << endl;
-            return;
+    int i = 1;
+    for (const string& clueName : *clues) {
+        bool found = false;
+        for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
+            if (cluePtr && cluePtr->getName() == clueName) {
+                if (dynamic_cast<Item*>(cluePtr.get())) break;
+                cluePtr->setInspected(true);
+                cout << "Clue " << i++ << ": " << cluePtr->getName() << endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            throw runtime_error("Clue \"" + clueName + "\" not found in library.");
         }
     }
+
+    cout << endl;
 }
 
-void Printer::printEnd(const Ending& ending){
-    for (const Ending& ending : gameDataPtr->endingsLibrary){
-        cout << "Finale : " << ending.getSceneName() << endl;
-        cout << ending.getStoryDescription() << endl;
-        cout << "HP : " << ending.getHPCap() << endl;
+void Printer::printClue(string clueName) {
+    if (!gameLibraryPtr) {
+        throw runtime_error("Game data not set.");
     }
-}
 
-void Printer::findAutopsy(const string& characterName) const {
-    if(!gameDataPtr){
-        cout << "Error: Printer has no gameData set to find autopsy." << endl;
+    for (const auto& cluePtr : gameLibraryPtr->clueLibrary) {
+        if (!cluePtr || cluePtr->getName() != clueName) continue;
+        if (dynamic_cast<Item*>(cluePtr.get())) break;
+
+        cluePtr->print();
+        cluePtr->setInspected(true);
         return;
     }
-    for(size_t i = 0; i < gameDataPtr->autopsyLibrary.size(); ++i){
-        const Autopsy& currentAutopsy = gameDataPtr->autopsyLibrary[i];
 
-        if(currentAutopsy.getCharacterName() == characterName){
-            currentAutopsy.findAutopsies(characterName);
+    throw runtime_error("Clue or Interview \"" + clueName + "\" not found.");
+}
+
+void Printer::printPersonDetails(const string& personName) {
+    if (!gameLibraryPtr) {
+        throw runtime_error("Game data not set.");
+    }
+
+    for (const Person& person : gameLibraryPtr->personLibrary) {
+        if (person.getPersonName() == personName) {
+            cout << "---- Person Details ----\n";
+            cout << "Name: " << person.getPersonName() << endl;
+            cout << "Description: " << person.grabDescription() << endl;
+            cout << "------------------------\n";
             return;
         }
     }
+
+    throw runtime_error("Person \"" + personName + "\" not found.");
 }
+
+void Printer::printEnd(const Ending& ending) {
+    if (!playerPtr) {
+        throw runtime_error("Player not set.");
+    }
+
+    cout << "==== Ending ====" << endl;
+    cout << "End Name: " << ending.getSceneName() << endl;
+    cout << ending.getStoryDescription() << endl;
+    int endHp = playerPtr->getPlayerHp();
+    cout << "You ended the game with " << endHp << " different choices could have gotten you elsewhere..." << endl;
+}
+
+void Printer::printAutopsy(const string& characterName) const {
+    if (!gameLibraryPtr) {
+        throw runtime_error("Game data not set.");
+    }
+
+    for (const Autopsy& autopsy : gameLibraryPtr->autopsyLibrary) {
+        if (autopsy.getCharacterName() == characterName) {
+            autopsy.getAutopsyDescription(); // Assuming this method prints or returns
+            return;
+        }
+    }
+
+    throw runtime_error("No autopsy found for \"" + characterName + "\".");
+}
+
