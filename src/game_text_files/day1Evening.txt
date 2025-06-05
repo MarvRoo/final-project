@@ -62,7 +62,7 @@ Me: "Got it. I'll call the mechanic shop to make sure. You can go sit in the liv
     The frowns and starts to whisper*
 
 Gardener: "...is that even legal."
--Choice3{
+-Choice2{
 "Be my guest. I wouldn't try."
 5
 "He's not very patient...he'll arrest you if you leave."
