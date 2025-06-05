@@ -10,6 +10,10 @@ Sheriff: I'll stay here with these two through the night so you don't have to wo
 "I'll bring some blankets. You won't need one I guess."
 10
 +end}
++mappingName
+areYouHelping?
++mappingName
+nightContinues
 
     The Sheriff doesn't find your tone very funny and gives you a long stare down before walking away*
 

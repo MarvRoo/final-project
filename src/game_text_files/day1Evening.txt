@@ -16,7 +16,6 @@ Sheiff: "Ehh I'd do it myself but...ya know.."
 +end}
 +mappingName
 helpsheriff?
-
 +mappingName
 eveningContinues
 Sheiff: "I'll keep an eye on them while you interview them individually...Up to you if you can get anything out of them."
@@ -71,7 +70,8 @@ Gardener: "...is that even legal."
 +end}
 +mappingName
 isItLegal?
-
++mappingName
+eveningContinues
 +InterviewClues{
 "Gardener arrives during the interviews in a different truck."
 "Called Angie from the Mechanic shop."
@@ -96,6 +96,10 @@ Dr. Lou: "Right. Well I need to get some of my tools. I think I have a scalpel a
 "Seriously? Does it take that long for you to do a little bit of bloodwork??"
 10
 +end}
++mappingName
+hurryUp?
++mappingName
+eveningContinues
 Dr. Lou: "If you start complaining I'll let them take you. I'm just as stressed as you are."
 
     Dr. Lou rubs her temples and heads to her room for her tools.*

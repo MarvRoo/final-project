@@ -20,10 +20,9 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
     vector<string> clues;
 
     while (getline(inFile, line)) {
+        //cout << "Top while next line is " <<  line << endl;
 
-        if (line.empty()) {
-            break;
-        }else{
+        if (!line.empty()) {
             line.erase(line.find_last_not_of(" \t\r\n") + 1); // trim trailing
         }
 
@@ -39,7 +38,7 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
 
             getline(inFile, descript);
             getline(inFile, name);
-            cout << "Loaded multi-item: " << name << endl;
+            //cout << "Loaded multi-item: " << name << endl;
             getline(inFile, ifLocked);
             getline(inFile, keyClue);
             getline(inFile, line); //read empty line
@@ -54,10 +53,10 @@ vector<Location> GameLoader::loadLocations(const string& filename) {
             //Fallback to normal item
             bool multiClue = false;
             //single clue locations mean that keyclue is both the first line
-            getline(inFile, keyClue);
+            keyClue = line;
             getline(inFile, descript);
             getline(inFile, name);
-            cout << "Loaded non multi-item: " << name << endl;
+            //cout << "Loaded non multi-item: " << name << endl;
             getline(inFile, ifLocked);
             getline(inFile, keyClue);
             getline(inFile, line); // read empty line
@@ -236,7 +235,8 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                     dialogueLines.clear();
                     currentMappingName.clear();
                 }
-                return dialogueMap;
+                //dont return anything just break or other files wont be read
+                break;
             }
 
             //Start new mapping group

@@ -41,7 +41,6 @@ Sheriff
 +end}
 +mappingName
 CallWho?
-
 +mappingName
 morningContinues
     *They both arrive to find you shaken as you lead them to the backyard and into the shed.
