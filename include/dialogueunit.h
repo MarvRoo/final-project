@@ -3,6 +3,7 @@
 
 #include <vector>
 using namespace std;
+#include "interface.h"
 
 class DialogueUnit {
 public:
