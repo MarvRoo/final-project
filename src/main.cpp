@@ -1,11 +1,9 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
+#include "gameLoop.h"
 
-#include "gameLoader.h"
-using namespace std;
+int main() {
+    //this looks funny
+    gameLoop game;
+    game.run();
 
-
-
-
+    return 0;
+}
