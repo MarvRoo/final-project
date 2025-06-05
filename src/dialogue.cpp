@@ -25,6 +25,7 @@ void Dialogue::print() const {
                 string newUnlockedLocation = dialogueSegments[++i];
                 cout << endl << "[Unlocked a new location: " << newUnlockedLocation << "]" << endl;
                 GameFUNCTIONS.unlockNextLocation(newUnlockedLocation);
+                
             }
         }
 
