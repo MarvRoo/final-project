@@ -286,6 +286,7 @@ map<string, vector<unique_ptr<DialogueUnit>>> GameLoader::loadDialogue(vector<st
                     line.erase(line.find_last_not_of(" \t\r\n") + 1);
                     handleNewMappingName(line, currentMappingName, dialogueLines, dialogueMap, perserveKeyOrder);
                 }*/
+               getline(inFile, line);
                line.erase(line.find_last_not_of(" \t\r\n") + 1);
                //set the new mappingName
                currentMappingName = line;
