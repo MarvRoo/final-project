@@ -1,3 +1,24 @@
+#include "item.h"
+#include "gtest/gtest.h"
+
+
+TEST(Item, testConstructor) {
+    Item poolNoodle("pool noodle", true, "A", true, "pool guy", "pool", "Blood found on the pool noodle", true, 1104);
+    EXPECT_TRUE(poolNoodle.isItemFound());
+    EXPECT_NO_THROW(poolNoodle.print());
+}
+
+TEST(Item, testDefaultConstructor){
+    Item defaultItem;
+    EXPECT_FALSE(defaultItem.isItemFound());
+    EXPECT_NO_THROW(defaultItem.print());
+}
+
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
 /*
 #include "../include/item.h"
 #include <iostream>
