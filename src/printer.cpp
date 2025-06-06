@@ -42,13 +42,44 @@ string Printer::printAccessibleLocations() const{
 //repetative pop up that gives player review the location they want go
 void Printer::printLocation(string locName) const {
     cout << "\n===== Location Selected =====" << endl;
-    //use the location name to search the library objection location and then print it
+
+    // Make sure pointers are valid
+    if (!gameLibraryPtr || !playerPtr) {
+        cerr << "Error: Missing game data or player pointer called at print locations." << endl;
+        return;
+    }
+
+    // Check if the location is already in the player's room list
+    const vector<string>* visitedRooms = playerPtr->shareRoomListPtr();
+    bool alreadyVisited = find(visitedRooms->begin(), visitedRooms->end(), locName) != visitedRooms->end();
+
     for (auto& loc : gameLibraryPtr->locationLibrary) {
         if (loc.getName() == locName) {
-            loc.printDescript();
+            if (alreadyVisited) {
+                // Player already visited
+                cout << "[You’ve already searched this location. Nothing new was found.]" << endl;
+            } else {
+                // First-time visit: show description and give clues
+                loc.printDescript();
+
+                // Give key clue (or all clues, if multiple)
+                if (loc.checkMultiItems()) {
+                    for (const string& clue : loc.getClues()) {
+                        playerPtr->addNewClues(clue);
+                    }
+                } else {
+                    playerPtr->addNewClues(loc.getKeyClue());
+                }
+
+                // Mark as visited by adding to room list
+                playerPtr->addUnlockedRoom(locName);
+            }
             return;
         }
     }
+
+    // If location not found at all
+    cerr << "Error: Location '" << locName << "' not found in location library." << endl;
 }
 
 
