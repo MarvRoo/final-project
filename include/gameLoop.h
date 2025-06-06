@@ -10,11 +10,13 @@
 
 class gameLoop{
 private:
-    GameData gameData;
     Player* playerPtr;
+    GameData* libraries;
 public:
     gameLoop(){}
     ~gameLoop(){}
+
+    void setInternalData(GameData* gameData){ this->libraries = gameData;}
 
     void run();
     void unlockNextLocation(const string& locationName);

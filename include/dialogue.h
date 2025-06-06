@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 using namespace std;
+
 #include "dialogueunit.h"
 
 
@@ -11,6 +12,7 @@ class Dialogue : public DialogueUnit{
 private:
     vector<string> dialogueSegments;
     shared_ptr<Interface> interface;
+    gameLoop* gameFunctions = nullptr;
 public:
 
     Dialogue();
@@ -19,8 +21,12 @@ public:
     void print() const override;
 
     void setInterface(std::shared_ptr<Interface> visuals) override {
-    interface = visuals;
-}
+        interface = visuals;
+    }
+
+    void setGameLoop(gameLoop* ptr) override {
+        gameFunctions = ptr;
+    }
 };
 
 #endif

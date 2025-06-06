@@ -12,7 +12,8 @@ using namespace std;
 class Player : public Person{
 private: 
     vector<string> clueList;
-    vector<string> roomList;
+    //raw intail list when game boots up
+    vector<string> roomList = {"My Room", "Dr. Lou's Room", "Backyard", "Garden", "Kitchen"};
     string declaredSuspect = "N/A";
     int hp = 50;
     vector<string> clueSummary;
@@ -29,6 +30,7 @@ public:
     void upDateHp(int newHP) {this->hp = newHP;}
     void addNewClues(string clueName){clueList.push_back(clueName);}
     int getPlayerHp(){return hp;}
+    void addUnlockedRoom(const std::string& roomName);
 };
 
 #endif

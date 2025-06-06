@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 class Location {
@@ -29,10 +30,18 @@ public:
     bool checkMultiItems(){return hasMultipleClues;}
     bool checkUnlock(){return isAccessible;}
 
+    bool checkkeyClueFound() const { return keyClueFound; }
+    bool checkMultiItems() const { return hasMultipleClues; }
+    bool checkUnlock() const { return isAccessible; }
+
+    vector<string> getClues() const { return clueList; }
+
+
     //these are also const
     string getName() const {return name;}
     string getKeyClue() const {return keyClue;}
     vector<string> getClueList() const {return clueList;}
-    vector<string> getClues(){return clueList;}
+
+    void printDescript(){cout << description << endl;}
 };
 #endif

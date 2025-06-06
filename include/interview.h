@@ -12,6 +12,7 @@ class Interview : public Clue {
 	public:
 		Interview(){}
 		Interview(const vector<string>& interviewClueString, int clueID);
+		string getType() const override { return "Interview"; }
 
 		~Interview() override;
 		void print();

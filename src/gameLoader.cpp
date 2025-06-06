@@ -564,8 +564,7 @@ vector<Autopsy> GameLoader::loadAutopies(const string& filename){
        
         getline(inFile, name);
         getline(inFile, descript);
-        getline(inFile, line);
-        //empty line read
+        
         Autopsy autopsyReport(name, descript);
         autopsyReports.push_back(autopsyReport);
 
@@ -622,6 +621,7 @@ vector<Ending> GameLoader::loadendings(const string& filename){
 }
 
 //Loader Central
+
 GameData LoadFiles() {
     GameLoader DropDead;
     GameData data;
@@ -632,8 +632,8 @@ GameData LoadFiles() {
     //for now only test first day
     vector<string> DialogueFiles = {"day1Morning.txt", "day1Evening.txt","day1Night.txt"};
 
-    /*"day2Morning.txt", "day2Evening.txt", "day2Night.txt", "day3Morning.txt", "day3Evening.txt",
-    "day3Night.txt"};*/
+    //"day2Morning.txt", "day2Evening.txt", "day2Night.txt", "day3Morning.txt", "day3Evening.txt",
+    //"day3Night.txt"};
     //read all file names and push contents to DialogueFiles
     
 

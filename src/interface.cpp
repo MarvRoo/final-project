@@ -12,153 +12,99 @@ void Interface::setPrinter(Printer* printerPtr) {
 
 //repetative pop up that gives player review the clues
 void Interface::viewClueInterface() {
-    cout << "=== Items Acquired ===" << endl;
+    //calls printer to print all clues 
     int itemCount = printer->printSelectableItems();
-
-    cout << "\n=== Clues Acquired ===" << endl;
     int clueCount = printer->printSelectableClues();
+    cout << "1. View Items\n";
+    cout << "2. View Clues & Interviews\n";
+    cout << "Choose an option (1 or 2): ";
 
-    if (itemCount == 0 && clueCount == 0) {
-        cout << "\nYou have no clues or items to inspect." << endl;
-        return;
-    }
+    int choice;
+    cin >> choice;
 
-    cout << "\nWould you like to inspect an (1) Item or (2) Clue? Enter 1 or 2: ";
-    int typeChoice;
-    cin >> typeChoice;
-
-    while (cin.fail() || (typeChoice != 1 && typeChoice != 2)) {
+    while (cin.fail() || (choice != 1 && choice != 2)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input. Please enter 1 for Item or 2 for Clue: ";
-        cin >> typeChoice;
+        cout << "Invalid input. Please enter 1 for Items or 2 for Clues: ";
+        cin >> choice;
     }
 
-    int selection;
-    if (typeChoice == 1) {
+    int index;
+    int count;
+    if (choice == 1) {
         if (itemCount == 0) {
-            cout << "No items available to inspect.\n";
+            cout << "\n[Info] No items in inventory to inspect.\n";
             return;
         }
-        cout << "Enter the number of the Item to inspect: ";
-        cin >> selection;
-
-        while (cin.fail() || selection < 1 || selection > itemCount) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Try again: ";
-            cin >> selection;
-        }
-
-        printer->printSelectedItemByIndex(selection);
-
+        cout << "\nEnter the number of the entry to inspect (1 to " << itemCount << "): ";
+        cin >> index;
+        count = itemCount;
     } else {
         if (clueCount == 0) {
-            cout << "No clues available to inspect.\n";
+            cout << "\n[Info] No clues or interviews to inspect.\n";
             return;
         }
-        cout << "Enter the number of the Clue to inspect: ";
-        cin >> selection;
-
-        while (cin.fail() || selection < 1 || selection > clueCount) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Try again: ";
-            cin >> selection;
-        }
-
-        printer->printSelectedClueByIndex(selection);
+        cout << "\nEnter the number of the entry to inspect (1 to " << clueCount << "): ";
+        cin >> index;
+        count = clueCount;
     }
+
+    while (cin.fail() || index < 1 || index > count) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid number. Try again (1 to " << count << "): ";
+        cin >> index;
+    }
+
+    if (choice == 1) {
+        printer->printSelectedItemByIndex(index);
+    } else {
+        printer->printSelectedClueByIndex(index);
+    }
+
 }
 
+string Interface::viewLocationInterface(){
 
-//repetative pop up that gives player review the location they want go
-string Interface::viewLocationInterface() {
-    cout << "Viewing list of accessible locations:\n";
+    //return the string after calling printer
+    return printer->printAccessibleLocations();
 
-    if (!printer) {
-        cerr << "[Error] Printer not set in Interface::viewLocationInterface()\n";
-        throw runtime_error("Printer is not set in Interface.");
-    }
-
-    int locSize = 0;
-    try {
-        locSize = printer->printAccessibleLocations();
-    } catch (const exception& e) {
-        cerr << "[Error] Failed to print accessible locations: " << e.what() << endl;
-        throw runtime_error("Failed during printer->printAccessibleLocations().");
-    }
-
-    if (locSize == 0) {
-        cerr << "[Error] No accessible locations found in viewLocationInterface()\n";
-        throw runtime_error("No accessible locations available.");
-    }
-
-    int choosenindex = 0;
-    string returnedLoc;
-
-    while (true) {
-        cout << "\nEnter the number (0 to " << (locSize - 1) << ") of the location to enter: ";
-        cin >> choosenindex;
-
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            cout << "[Warning] Invalid input. Please enter a valid number.\n";
-            continue;
-        }
-
-        try {
-            returnedLoc = printer->printLocation(choosenindex);
-
-            if (returnedLoc == "OutOfBounds") {
-                cout << "[Warning] Number is out of range. Try again.\n";
-                continue;
-            }
-
-            if (returnedLoc.empty()) {
-                cerr << "[Error] Internal failure retrieving location.\n";
-                throw runtime_error("printLocation() returned an empty string.");
-            }
-
-            break; // Successful return
-
-        } catch (const exception& e) {
-            cerr << "[Exception] printLocation threw: " << e.what() << endl;
-            throw;
-        }
-    }
-
-    return returnedLoc;
 }
 
 string Interface::viewSuspectList(vector<string>&suspectList) {
     //print out list of possible suspects
-    int suspectCount = 0;
-
-    for(int i = 0; i < suspectList.size(); ++i) {
-        suspectCount +=1;
-        cout << suspectList.at(i) << " (" << i + 1 << ")" << endl;
+    //print out the vector of suspectList and let the player pick which one
+    //call the printpersondetails
+    if (suspectList.empty()) {
+        cout << "[Info] You have no suspects yet.\n";
+        return "";
     }
 
-    cout << "Given the list of possible suspects, input the number (next to the person's name) that indicates who you think the suspect is." << endl;
-    int suspectNumber;
-    string chosenSuspect;
-    bool ifFalse = false;
-
-    
-    while(suspectNumber >= suspectList.size()+2 || suspectNumber <= 0) {
-        cout << "Input a valid number as indicted next to the suspects's name." << "From 1 to " << suspectCount << endl;
-        cin >> suspectNumber;
-        if(suspectNumber <= suspectList.size()+1 && suspectNumber > 0) break;
+    cout << "\n=== Suspect List ===\n";
+    for (size_t i = 0; i < suspectList.size(); ++i) {
+        cout << (i + 1) << ". " << suspectList[i] << endl;
     }
 
-    //find the suspect given the number
-    for(int j = 0; j < suspectList.size(); ++j) {
-        if(suspectNumber-1 == j) {
-            chosenSuspect = suspectList.at(j);
-            break;
-        }
+    cout << "\nSelect a suspect to view details (1 to " << suspectList.size() << "): ";
+    int index;
+    cin >> index;
+
+    while (cin.fail() || index < 1 || index > static_cast<int>(suspectList.size())) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. Enter a number between 1 and " << suspectList.size() << ": ";
+        cin >> index;
     }
+
+    string chosenSuspect = suspectList[index - 1];
+
+    // Call printer to show suspect's detailed info
+    printer->printPersonDetails(chosenSuspect);
+
+    //this is so player setsuspect can be called
     return chosenSuspect;
+}
+
+void Interface::gameOver() {
+    printer->printEnd(); // Now printer handles the logic internally
 }

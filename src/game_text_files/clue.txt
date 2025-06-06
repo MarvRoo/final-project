@@ -94,7 +94,7 @@
 +end
 
 +Interview
-Pool Boy:
+Pool Boy
 "Pool boy left before 11 am on a lunch break."
 "Angie was supposed to call us about the gardener"
 "Alibi is Angie"
@@ -102,7 +102,7 @@ Pool Boy:
 3301
 
 +Interview
-Gardener:
+Gardener
 "Gardener arrives during the interviews in a different truck."
 "Called Angie from the Mechanic shop."
 "Alibi is his nephew"
