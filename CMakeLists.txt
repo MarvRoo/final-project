@@ -38,6 +38,10 @@ add_executable(run_tests
     src/testInterview.cpp
     src/testPlayer.cpp  
     src/testAutopsy.cpp
+    src/testClues.cpp 
+    src/testGameLoader.cpp 
+    src/testLocation.cpp 
+    src/testPersonClass.cpp
 )
 
 target_link_libraries(run_tests

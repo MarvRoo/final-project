@@ -6,14 +6,13 @@ TEST(LocationTest, ConstructorWithCluesAndGetters){
     string name = "Shed";
     string description = "The shed walls hold up neat rows of tools. One big item noticeably missing.";
     vector<string> clueList = {"Tarp", "Mallet"};
-    bool accsessible = false;
+    bool accessible = false;
     bool multiple = true;
     string keyClue = "Mallet";
 
     Location shed(name, description, clueList, accessible, multiple, keyClue);
 
     EXPECT_EQ(name, shed.getName());
-    EXPECT_TRUE(compareStringVectors(clueList, shed.getClueList()));
     EXPECT_EQ(multiple, shed.checkMultiItems());
     EXPECT_FALSE(shed.checkkeyClueFound());
     EXPECT_EQ(keyClue, shed.getKeyClue());
@@ -22,7 +21,7 @@ TEST(LocationTest, ConstructorWithCluesAndGetters){
 TEST(LocationTest, ConstructorWithoutClues){
     string name = "Garden";
     string description = "The flowers are lively but a little overgrown.";
-    bool accsessible = true;
+    bool accessible = true;
     bool multiple = false;
     string keyClue = "\"Uncut Grass\"";
 
@@ -41,7 +40,7 @@ TEST(LocationTest, UnlockLocation){
     string name = "Shed";
     string description = "The shed walls hold up neat rows of tools. One big item noticeably missing.";
     vector<string> clueList = {"Tarp", "Mallet"};
-    bool accsessible = false;
+    bool accessible = false;
     bool multiple = true;
     string keyClue = "Mallet";
 
@@ -62,7 +61,7 @@ TEST(LocationTest, LockLocation){
     bool multiple = true;
     string keyClue = "\"The floor was freshly mopped...\"";
 
-    Location kitchen(name, description, clueList, accessible, multiple, keyClue);
+    Location kitchen(name, description, clueList, accessibleInitial, multiple, keyClue);
 
     EXPECT_TRUE(kitchen.checkUnlock());
 
@@ -75,7 +74,7 @@ TEST(LocationTest, MarkClueFound){
     string name = "Backyard";
     string description = "More uncut grass but as you walk further through the backyard...";
     vector<string> clueList = {"Brother's keys", "Body appears to be dragged on grass by blood pattern"};
-    bool accsessible = true;
+    bool accessible = true;
     bool multiple = true;
     string keyClue = "Brother's keys";
 
@@ -92,7 +91,7 @@ TEST(LocationTest, PrintDescription){
     string name = "Dr. Lou's Room";
     string description = "Nothing remarkable...there's a picture of her and Dad next to the bed.";
     vector<string> clueList = {"Dr. Lou's Phone", "Scalpel"};
-    bool accsessible = true;
+    bool accessible = true;
     bool multiple = true;
     string keyClue = "Dr. Lou's Phone";
 

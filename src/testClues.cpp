@@ -7,19 +7,16 @@ TEST(Clue, testDefaultClueConstructor) {
 
 TEST(Clue, testDefaultClueGetName) {
 	Clue defaultClue;
-    EXPECT__STREQ(defaultClue.getName(), "N/A");
+    EXPECT_STREQ(defaultClue.getName().c_str(), "N/A");
 }
 
 TEST(Clue, testClueConstructor) {
-	EXPECT_NO_THROW(Clue(1109, “Mallet”));
+	EXPECT_NO_THROW(Clue(1109, "Mallet"));
 }
 
 TEST(Clue, testClueGetName) {
     Clue bracelet(1106, "sitter's bracelet");
-    EXPECT__STREQ(bracelet.getName(), "sitter's bracelet");
+    EXPECT_STREQ(bracelet.getName().c_str(), "sitter's bracelet");
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+
