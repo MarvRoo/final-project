@@ -20,10 +20,15 @@ int test() {
         cout << "Players loaded: " << data.playerLibrary.size() << endl;
         cout << "Endings loaded: " << data.endingsLibrary.size() << endl;
 
+
         // Optional: Add basic assertions
         assert(!data.locationLibrary.empty());
         assert(!data.clueLibrary.empty());
         assert(!data.dayLibrary.empty());
+        assert(!data.autopsyLibrary.empty());
+        assert(!data.personLibrary.empty());
+        assert(!data.playerLibrary.empty());
+        assert(!data.endingsLibrary.empty());
 
         // Check if gameDialogue has any entries and that their values aren't empty
         for (const auto& pair : data.gameDialogue) {
@@ -106,4 +111,3 @@ void printOutGameDataLibraries(GameData* data){
 
     cout << "\n=== DONE ===\n";
 }
-

@@ -1,3 +1,21 @@
+#include "item.h"
+#include "gtest/gtest.h"
+
+
+TEST(Item, testConstructor) {
+    Item poolNoodle("pool noodle", true, "A", true, "pool guy", "pool", "Blood found on the pool noodle", true, 1104);
+    EXPECT_TRUE(poolNoodle.isItemFound());
+    EXPECT_NO_THROW(poolNoodle.print());
+}
+
+TEST(Item, testDefaultConstructor){
+    Item defaultItem;
+    EXPECT_FALSE(defaultItem.isItemFound());
+    EXPECT_NO_THROW(defaultItem.print());
+}
+
+
+
 /*
 #include "../include/item.h"
 #include <iostream>
