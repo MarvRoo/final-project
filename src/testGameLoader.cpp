@@ -20,6 +20,7 @@ int test() {
         cout << "Players loaded: " << data.playerLibrary.size() << endl;
         cout << "Endings loaded: " << data.endingsLibrary.size() << endl;
 
+
         // Optional: Add basic assertions
         assert(!data.locationLibrary.empty());
         assert(!data.clueLibrary.empty());
