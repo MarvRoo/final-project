@@ -24,8 +24,20 @@ bool Day::isEvening(){
 }
 
 bool Day::isDayComplete(const vector<int>& playerClueList) {
-    if (playerClueList == this->allDayClues) return true;
-    return false;
+    for (int requiredClue : allDayClues) {
+        bool found = false;
+        for (int playerClue : playerClueList) {
+            if (playerClue == requiredClue) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return false; 
+            //At least one required clue not found
+        }
+    }
+    return true; //All required clues found
 }
 
 void Day::changeDay(const string& currentTimeOfDay){

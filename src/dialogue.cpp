@@ -131,25 +131,13 @@ void Dialogue::print() const {
             while (!gameFunctions->cluesMatch(dayNum)){
                 //loop the go to location interface
                 string prevLoc = interface->viewLocationInterface();
-                cout << "Enter 1 for 'Yes' and 2 for 'No' to continue going to locations: ";
+                cout << "\nEnter 1 for 'Yes' and 2 for 'No' to continue going to locations: \n";
                 cin >> choice;
 
                 if (cin.fail() || choice < 1 || choice > 2) {
                     cin.clear();
                     cout << "Invalid input. Please try again." << endl;
                     cin >> choice;
-                }
-                //loop until string "No" is given
-                while (choice != 2){
-                    string prevLoc = interface->viewLocationInterface();
-                    cout << "Enter 1 for 'Yes' and 2 for 'No' to continue going to locations: ";
-                    cin >> choice;
-
-                    if (cin.fail() || choice < 1 || choice > 2) {
-                        cin.clear();
-                        cout << "Invalid input. Please try again." << endl;
-                        cin >> choice;
-                    }
                 }
 
             }

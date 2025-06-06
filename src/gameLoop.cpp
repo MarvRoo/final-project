@@ -185,6 +185,7 @@ bool gameLoop::cluesMatch(int numDay){
         }
     }
 
+
     //use clueIDs vector
     //Iterate through day library for a day with a true in either morning, evening or night
     // Use clueIDs vector to check days
