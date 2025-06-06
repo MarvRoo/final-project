@@ -21,7 +21,3 @@ TEST(Player, testAddUnlockedRoom) {
     EXPECT_EQ(rooms->at(5), "Shed");
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

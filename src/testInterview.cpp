@@ -10,7 +10,7 @@ TEST(Interview, testGardenerInterview) {
     };
     Interview gardener(gardenerClues, 3302);
     EXPECT_EQ(gardener.getName(), "Gardener's Interview");
-    EXPECT_NO_THROW(Gardener.print());
+    EXPECT_NO_THROW(gardener.print());
 }
 
 TEST(Interview, poolBoyInterview) {
@@ -24,9 +24,5 @@ TEST(Interview, poolBoyInterview) {
     EXPECT_NO_THROW(poolBoy.print());
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
 
 

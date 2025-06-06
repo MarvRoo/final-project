@@ -15,7 +15,4 @@ TEST(Autopsy, testAutopsyConstructor) {
     EXPECT_NO_THROW(Autopsy("Gardener", "Fingerprint taken, with no match to the fingerprint on Angie. Found dead in the downstairs bathroom from a self-inflicted gunshot wound to the head. Suspicious suicide."));
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+

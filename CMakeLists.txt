@@ -20,7 +20,6 @@ add_library(game_logic STATIC
     src/printer.cpp
     src/item.cpp
     src/location.cpp
-    src/main.cpp
     src/person.cpp
     src/player.cpp
     src/printer.cpp
@@ -35,12 +34,19 @@ target_link_libraries(FinalProject game_logic)
 add_subdirectory(googletest)
 
 add_executable(run_tests
-    src/testItemClass.cpp    
+    src/testItemClass.cpp  
+    src/testInterview.cpp
+    src/testPlayer.cpp  
+    src/testAutopsy.cpp
 )
 
 target_link_libraries(run_tests
     game_logic
     GTest::gtest_main
+)
+
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/src/game_text_files/"
+     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/game_text_files/"
 )
 
 include(CTest)
