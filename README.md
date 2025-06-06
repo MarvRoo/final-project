@@ -69,7 +69,8 @@ responsibilities the dialogue class was responsible for before.
  > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history.
 >  * Each team member should also submit the Peer Evaluation Form on Canvas for this final phase. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for the final phase, and a description of their contributions. Remember that each team member should submit the form individually.
  ## Final Class Diagram
- ![Final Murder Mystery UML Class.pdf](https://github.com/user-attachments/files/20631398/Final.Murder.Mystery.UML.Class.pdf)
+ ![Final Murder Mystery UML Class](https://github.com/user-attachments/assets/412523f7-7a53-4bbd-b8eb-4880a694b09c)
+
 
  ## Screenshots
  > Screenshots of the input/output after running your application
