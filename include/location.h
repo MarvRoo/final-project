@@ -41,6 +41,7 @@ public:
     string getName() const {return name;}
     string getKeyClue() const {return keyClue;}
     vector<string> getClueList() const {return clueList;}
+    bool isKeyFound(){return keyClueFound;}
 
     void printDescript(){cout << description << endl;}
 };

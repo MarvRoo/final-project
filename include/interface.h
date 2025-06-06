@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+class Printer; // Forward declaration
 #include "printer.h"
 
 using namespace std;
@@ -16,7 +17,7 @@ public:
     void viewClueInterface();
     string viewLocationInterface();
     string viewSuspectList(vector<string>& suspectList);
-    void showAutopsies(string deadNpc){printer->printAutopsy(deadNpc);}
+    void showAutopsies(string deadNpc);
     void gameOver();
 
     /*we still need to add accessors to printer for 

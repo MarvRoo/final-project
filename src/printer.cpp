@@ -51,11 +51,10 @@ void Printer::printLocation(string locName) const {
 
     // Check if the location is already in the player's room list
     const vector<string>* visitedRooms = playerPtr->shareRoomListPtr();
-    bool alreadyVisited = find(visitedRooms->begin(), visitedRooms->end(), locName) != visitedRooms->end();
 
     for (auto& loc : gameLibraryPtr->locationLibrary) {
         if (loc.getName() == locName) {
-            if (alreadyVisited) {
+            if (loc.isKeyFound()) {
                 // Player already visited
                 cout << "[You’ve already searched this location. Nothing new was found.]" << endl;
             } else {
@@ -70,9 +69,8 @@ void Printer::printLocation(string locName) const {
                 } else {
                     playerPtr->addNewClues(loc.getKeyClue());
                 }
-
-                // Mark as visited by adding to room list
-                playerPtr->addUnlockedRoom(locName);
+                //no repeated visits
+                loc.markClueFound();
             }
             return;
         }

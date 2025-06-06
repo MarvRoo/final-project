@@ -79,7 +79,7 @@ void Dialogue::print() const {
 
         // Handle clue blocks like interviews or dialogue clues
         else if (line == "+stringClues{" || line == "+InterviewClues{") {
-            cout << "[New clues discovered...]" << endl;
+            cout << endl << "[New clues discovered...]" << endl;
             //check next string after starting collection loop
             ++i;
             while (i < dialogueSegments.size() && dialogueSegments[i] != "+end}") {
@@ -90,6 +90,7 @@ void Dialogue::print() const {
                 ++i;
             }
             //prev line is +end} get rid of it 
+            cout << endl;
             ++i;
             
         }
@@ -101,8 +102,10 @@ void Dialogue::print() const {
         +end}
         */
        else if(line  == "+callNightInterface"){
-            throw runtime_error("+callNightInterface spotted and reached day 3");
+            throw runtime_error("CODE made it to day 3");
             vector<string> suspects;
+            //CODE TO READ THE SUMMARY WALKTHROUGH
+
 
             //collect suspect list
             ++i;
@@ -121,24 +124,54 @@ void Dialogue::print() const {
             //call interface for end of the day summarization of 
             //this function should take in the following
             // function(suspects) and return the string name of the suspect the player choose in interface
+            //printer is the one doing the work
             //Gameloop will then call changeSuspect or whatever the function is called in player to set the name of the selected suspect   
+
         }
 
         // Handle end-of-reading marker
         else if (line == "+doneReading") {
-            throw runtime_error("+doneReading file is in progress for closing");
-            cout << "[End of this section. Time progresses.]" << endl;
-            string NumDay = dialogueSegments[i++];
+            cout << endl << "[End of this section. Time progresses.]" << endl;
+            ++i;
+            string NumDay = dialogueSegments[i];
             //convert to numDay variable to an int 
             int dayNum = stoi(NumDay);
-
-            string currentTime = dialogueSegments[i++];
+            
+            ++i;
+            string currentTime = dialogueSegments[i];
             gameFunctions->changeDayTime(dayNum, currentTime);
-            //Gameloop should search Days for a day with the dayNum int. So 1 is Day1 etc.
-            //Then check what currentTime string was passed in Morning or Evening or Night
-            //Fixing the bools in the day accordingly
 
-            //THE dialogue segment should end automatically now 
+            cout << "Moving on to Day " + NumDay + ": " << endl << endl;
+            return;
+        }else if(line == "+search{"){
+            //keep reading 
+            ++i;
+            string gameText = dialogueSegments[i];
+            //skip the +end
+            ++i;
+            int choice;
+            cout << endl << gameText << endl;
+            cout << "Enter 1 for 'Yes' and 2 for 'No': ";
+            cin >> choice;
+
+            if (cin.fail() || choice < 1 || choice > 2) {
+                cin.clear();
+                cout << "Invalid input. Please try again." << endl;
+            }
+            //loop until string "No" is given
+            while (choice != 2){
+                string prevLoc = interface->viewLocationInterface();
+                //player can collect clues until there choice changes
+                cout << endl << endl << gameText << endl;
+                cout << "Enter 1 for 'Yes' and 2 for 'No': ";
+                cin >> choice;
+
+                if (cin.fail() || choice < 1 || choice > 2) {
+                    cin.clear();
+                    cout << "Invalid input. Please try again." << endl;
+                }
+            }
+
         }else{
             //Regular dialogue output
             //if all the branches dont get checked

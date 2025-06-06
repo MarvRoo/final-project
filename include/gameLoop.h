@@ -3,6 +3,12 @@
 #include <string>
 #include <vector>
 
+//tells the compilar these will exist
+class GameData;
+class Location;
+class Day;
+
+
 #include "gamedata.h"
 #include "interface.h"
 #include "printer.h"
@@ -17,14 +23,14 @@ public:
     ~gameLoop(){}
 
     void setInternalData(GameData* gameData){ this->libraries = gameData;}
-
     void run();
     void unlockNextLocation(const string& locationName);
     void setPlayer(Player* playerPtr){this->playerPtr = playerPtr;}
-
-    string goToLocation(const string& requiredLocation);
     void acquireNewClue(const string& clueName);
     void changeDayTime(int dayNum, const string& currentTime);
+    void playerChoices(int hpUpdate, bool subtract);
+
+    string goToLocation(const string& requiredLocation);
     Location* findLocation(string locationName);
     Day* findDay(int numDay);
 

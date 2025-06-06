@@ -161,4 +161,10 @@ void gameLoop::changeDayTime(int dayNum, const string& currentTime){
     }
 }
 
-
+void gameLoop::playerChoices(int hpUpdate, bool subtract){
+    if(subtract){
+        playerPtr->upDateHp(-hpUpdate);
+        return;
+    }
+    playerPtr->upDateHp(hpUpdate);
+}

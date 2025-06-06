@@ -1,5 +1,6 @@
 #include "interface.h"
 #include "player.h"
+#include "printer.h"
 
 #include <iostream>
 #include <vector>
@@ -10,6 +11,9 @@ void Interface::setPrinter(Printer* printerPtr) {
     this->printer = printerPtr;
 }
 
+void Interface::showAutopsies(string deadNpc){
+    printer->printAutopsy(deadNpc);
+}
 //repetative pop up that gives player review the clues
 void Interface::viewClueInterface() {
     //calls printer to print all clues 
