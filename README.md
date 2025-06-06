@@ -68,12 +68,21 @@ responsibilities the dialogue class was responsible for before.
  > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
  > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history.
 >  * Each team member should also submit the Peer Evaluation Form on Canvas for this final phase. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for the final phase, and a description of their contributions. Remember that each team member should submit the form individually.
+>
  ## Final Class Diagram
  ![Final Murder Mystery UML Class](https://github.com/user-attachments/assets/412523f7-7a53-4bbd-b8eb-4880a694b09c)
 
 
  ## Screenshots
  > Screenshots of the input/output after running your application
+>
+>
+> Screenshot of Testing:
+![RunTest1](https://github.com/user-attachments/assets/ccdd35dd-3688-46be-92bd-4170214fbdaf)
+![RunTest2](https://github.com/user-attachments/assets/96b629f7-25ea-4f28-a4d5-8902eed6794f)
+![RunTest3](https://github.com/user-attachments/assets/bbda737e-3c63-48ad-989d-68547a1c9e79)
+
+ 
  ## Installation/Usage
  > Instructions on installing and running the application
 > 1. Copy and paste the link below to clone this repository in your terminal.
