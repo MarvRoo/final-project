@@ -1,0 +1,131 @@
++mappingName
+Day 1 Morning
+Welcome to Drop Dead Introductions!
+You (the player as sister) will be the Character Ally.
+
+Story Characters in Game:
+Jacob (Brother)
+Dr. Lou (Mother)
+Angie (Sitter)
+The Gardener
+Sheriff
+Pool Boy
+
+The story begins:
+You, Jacob, and Dr. Lou, returned home from a 3 week vacation from Barbados. You wanted to find the house sitter, Angie, to ask her what she's been up to. Your really good friends. Where should we search first?
+
++goToLocation
++CheckBranch{
+Backyard
+but it looks like the sitter isn't here...
++end}
+
++unlockNextLocation
+Shed
+As you make your way to the backyard you notice the grass is uncut and...a trail of blood that leads to the shed.
++goToLocation
++CheckBranch{
+Shed
+Game: mmm you should probably go back and check the shed instead...
++end}
+
+Me: "OMG this is horrible...I gotta call 911...or should I call mom? The sheiff! wouldn't he know what to do?"
+*Grabs phone
+Calling...
+
++Choice2{
+Dr. Lou
+5
+Sheriff
+10
++end}
++mappingName
+CallWho?
++mappingName
+morningContinues1
+    *They both arrive to find you shaken as you lead them to the backyard and into the shed.
+
+Dr. Lou: "Jesus..."
+
+    The Sheiff loosens his tie looking at angie pitifully but annoyed*
+
+Sheriff: "Maybe...cover her eyes."
+Dr. Lou: "Maybe? Shouldn't you be calling for backup?! Ally you should've called 911 first!"
+Me: "I panicked! I was the only who got here! This looks bad...on me."
+Sheriff: "I don't understand why you called me!? God dammit I'm a week away from retirement!"
+
+    He rubs his eyes vigoriously*
+
+Sheriff: "If I have to arrest someone it'd have to be you, at least for questioning...I can't afford another blank case."
+Sheriff: "Another dead case...and my pension is on the line..."
+Dr. Lou: "So what we have to do your work for you!?"
+Sheriff: "I don't know you want me to arrest her? That's the easiest thing to do right now."
+Dr. Lou: "...useless, It's okay Ally we're going to figure this out."
+
+    Her reassurance lacks confidence...Are you ready to prove your innocence?
+
+Sheriff: "Alright, all you detectives."
+
+    The sheriffs hurries back outside the shed and you begin the investigation with Dr.Lou.
+
+Dr. Lou: "Well I guess I'll start writing a report we can reference...autopsy report. She has blunt force trauma to the head."
+
+    Dr. Lou crouches carefully scanning the tarp*
+
+Dr.Lou: "I think these are fingerprints and theres a trail of blood coming into the shed...likely she was unconscious or dragged in here already dead. 
++stringClues{
+"Blood behind her head"
+"Fingerprints found on bloody tarp"
+"Body found on tarp in the shed"
++end}
+Me: "Yeah...I'll make now of all those things..."
+Sheriff: "Well well well, come take a look at who showed up!"
+
+    Stepping out the shed you see the Sheriff eying down the pool boy.
+
+Sheriff: "He says he just came back from his lunch break ey."
+Pool Boy: "I swear I finished cleaning up the pool a little early so I thought I could go get my lunch before my next job ya know. I'd come back and fill the pool up I swear! I was bailing on the job, please forgive me."
+
+-Choice3{
+"Your not in trouble for that."
+5
+"Who said you could take lunch early? That's not very professional."
+10
+"It's okay, just calm down."
+0
++end}
++mappingName
+notInTrouble?
++mappingName
+morningContinues2
+    You look around at the backyard and past the pool boy to see if the pool is empty like he said after all.
+
++unlockNextLocation
+Pool
++goToLocation
++CheckBranch{
+Pool
+Game: mmm you should probably go back and check the pool instead...
++end}
+Me: "I think I need to have a talk with you and the Gardener."
+
+    Sheriff nods*
+
+Sheriff: "I'd say we aought to give them an interagation-"
+Me: "Uh more like an interview, no one's being accused without proof."
+
+    Sheriff shrugs*
+
+Sheriff: "Either you or them so get to it."
+
+Things sure look grim, better clear your name and quick. 
++unlockNextLocation
+Living Room
++goToLocation
++CheckBranch{
+Living Room
+Game: mmm you should probably go interview everyone in the Living Room...
++end}
++doneReading
+1
+Morning

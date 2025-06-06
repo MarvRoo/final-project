@@ -17,35 +17,9 @@ nightContinues1
 
     The Sheriff doesn't find your tone very funny and gives you a long stare down before walking away*
 
-Me: "...too soon for jokes I guess."
+Me: "...too soon for jokes."
 
     I wasn't joking.*
-
-Pool Boy: "Do you mind if I borrow you-your phone?"
-Me: "...Sure. Who are you going to call?"
-Pool Boy: "My friend..since I was stuck here I asked him to take on my job for me."
-    
-    He looks over pointedly to the Sheriff whose already dozing off*
-
-Pool Boy: He didn't let us charge our phones when they died...
-
-+Choice2{
-"Sorry..I'll let you borrow mine before I go to bed."
-5
-"Mmm might be for the best...sorry."
-10
-+end}
-+mappingName
-phoneCall?
-+mappingName
-nightContinues2
-
-    Hanging his head he retreats to the couches in the living room.*
-
-As cruel as it may sound their phone calls aren't jack shit to a life sentence in prison so no chance...
-Theough out of the both of them only one feels annoyingly cleared. Maybe it's paranoia talking...
-
-    The Gardener huddles on the using his sweater as blanket. Neither him or the Pool Boy seem to keen on converation. And the Sheriff? Knocked out..so much for keeping watch.
 
 +allDayCluesFound
 1

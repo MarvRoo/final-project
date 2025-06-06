@@ -114,12 +114,13 @@ void Dialogue::print() const {
             if(dialogueSegments[i] == "+chooseSuspect{"){
                 ++i;
                 while (dialogueSegments[i] != "+end}"){
-                    suspects.push_back(line);
+                    suspects.push_back(dialogueSegments[i]);
                     ++i;
                 }
                 //we're at +end}
                 ++i;
                 interface->viewSuspectList(suspects);
+                cout << endl << endl;
                 //we dont want to cout +end
             }
 
@@ -156,12 +157,11 @@ void Dialogue::print() const {
             string NumDay = dialogueSegments[i];
             //convert to numDay variable to an int 
             int dayNum = stoi(NumDay);
-            
             ++i;
             string currentTime = dialogueSegments[i];
             gameFunctions->changeDayTime(dayNum, currentTime);
 
-            cout << "Moving on to Day " + NumDay + ": " << endl << endl;
+            cout << "Moving on from Day " + NumDay + ": " << currentTime << endl << endl;
             return;
         }else if(line == "+search{"){
             //keep reading 
