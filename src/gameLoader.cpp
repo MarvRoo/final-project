@@ -104,6 +104,7 @@ vector<unique_ptr<Clue>> GameLoader::loadClues(const string& fileItems, const st
         // Convert required values
         try {
         clueID = stoi(itemID);
+        //cout << "GameLoader found item id " << itemID << "this is the string : " << clueID <<" <- passed in for " << name << endl;
         } catch (const invalid_argument& e) {
             throw runtime_error("Invalid CLUEID value in ending file: [" + itemID + "] is not a number. Found in reading items.");
         }

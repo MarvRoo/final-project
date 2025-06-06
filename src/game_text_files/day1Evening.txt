@@ -36,7 +36,7 @@ Me: "Did you see the Gardener?"
 Pool Boy: "N-no, but Angie said he be coming in late. His truck broke down and he couldn't get all his equipment to mow the lawn like usual."
 Pool Boy: "He said he'd be here around 1 pm, Angie was suppose to call you guys."
 +InterviewClues{
-Pool Boy:
+Pool Boy's Interview
 +end}
 
     As you finish up talking to Pool Boy the Gardener comes inside the house looking pale.*
@@ -71,7 +71,7 @@ isItLegal?
 +mappingName
 eveningContinues2
 +InterviewClues{
-Gardener:
+Gardener's Interview
 +end}
     The Gardener seems to think about it for a moment before shaking his head and begrudingly taking a seat.
 
@@ -101,9 +101,8 @@ Dr. Lou: "If you start complaining I'll let them take you. I'm just as stressed 
     Dr. Lou rubs her temples and heads to her room for her tools.*
 
 With not much to do you think about any of the other places you can inspect. Might be a good idea to take a look for more clues...
-+goToLocation
-+CheckBranch{
-Continue to search for clues or continue?
++search{
+Continue to search for clues or continue to Night time?
 +end}
 +doneReading
 1

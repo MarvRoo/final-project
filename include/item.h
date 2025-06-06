@@ -21,7 +21,7 @@ public:
     Item();
     Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, 
         const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, 
-        bool itemFound, int clueID);
+        bool itemFound, int numID);
 
     bool isItemFound() const;
     void print() const;

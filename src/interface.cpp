@@ -1,5 +1,6 @@
 #include "interface.h"
 #include "player.h"
+#include "printer.h"
 
 #include <iostream>
 #include <vector>
@@ -10,6 +11,9 @@ void Interface::setPrinter(Printer* printerPtr) {
     this->printer = printerPtr;
 }
 
+void Interface::showAutopsies(string deadNpc){
+    printer->printAutopsy(deadNpc);
+}
 //repetative pop up that gives player review the clues
 void Interface::viewClueInterface() {
     //calls printer to print all clues 
@@ -107,4 +111,31 @@ string Interface::viewSuspectList(vector<string>&suspectList) {
 
 void Interface::gameOver() {
     printer->printEnd(); // Now printer handles the logic internally
+}
+
+void Interface::clueReview() {
+    cout << "\nGame: Remember, all you have to do is match some of the clues you've collected to your thinking process...\n";
+    cout << "This will summarize your investigation for the day and help you pick a suspect to interview tomorrow.\n" << endl;
+
+    cout << "Game: You will not be allowed to move on until you've correctly matched the clues to the thought process.\n" << endl;
+
+    cout << "Game: These are the clues you've collected so far.\nYou can pick which ones to view more in depth, like items or interviews.\n\n";
+    viewClueInterface();
+
+    int choice = 0;
+    while (true) {
+        cout << "\n\nWould you like to continue reviewing your clues?\nEnter 1 for 'No' or 2 for 'Yes': ";
+        cin >> choice;
+
+        if (cin.fail() || (choice != 1 && choice != 2)) {
+            cin.clear(); // clear error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard bad input
+            cout << "Invalid input. Please enter 1 or 2." << endl;
+            continue;
+        }
+
+        if (choice == 1) break;
+
+        viewClueInterface();
+    }
 }

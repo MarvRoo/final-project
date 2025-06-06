@@ -25,13 +25,15 @@ string Printer::printAccessibleLocations() const{
         cout << i + 1 << ". " << accessibleLocs[i] << endl;
     }
 
-    cout << "Select a location by number: ";
+    cout << "\nSelect a location by number: ";
     int choice;
     cin >> choice;
 
-    if (choice < 1 || static_cast<size_t>(choice) > accessibleLocs.size()) {
-        cout << "Invalid choice." << endl;
-        return "";
+    while (choice < 1 || static_cast<size_t>(choice) > accessibleLocs.size()) {
+        cout << "Invalid choice. Please choose within the list: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> choice;
     }
     //okay but now we need to call the location they went to 
     printLocation(accessibleLocs[choice - 1]);
@@ -51,13 +53,12 @@ void Printer::printLocation(string locName) const {
 
     // Check if the location is already in the player's room list
     const vector<string>* visitedRooms = playerPtr->shareRoomListPtr();
-    bool alreadyVisited = find(visitedRooms->begin(), visitedRooms->end(), locName) != visitedRooms->end();
 
     for (auto& loc : gameLibraryPtr->locationLibrary) {
         if (loc.getName() == locName) {
-            if (alreadyVisited) {
+            if (loc.isKeyFound()) {
                 // Player already visited
-                cout << "[You’ve already searched this location. Nothing new was found.]" << endl;
+                cout << "[You've already searched this location. Nothing new was found.]" << endl;
             } else {
                 // First-time visit: show description and give clues
                 loc.printDescript();
@@ -70,9 +71,8 @@ void Printer::printLocation(string locName) const {
                 } else {
                     playerPtr->addNewClues(loc.getKeyClue());
                 }
-
-                // Mark as visited by adding to room list
-                playerPtr->addUnlockedRoom(locName);
+                //no repeated visits
+                loc.markClueFound();
             }
             return;
         }
@@ -239,6 +239,6 @@ void Printer::printSelectedClueByIndex(int index) const {
     if (selected->getType() == "Interview") {
         selected->print(); // Implement this in Interview subclass
     } else {
-        selected->print();          // Implement this in Clue class
+        selected->print();
     }
 }

@@ -37,14 +37,11 @@ void Dialogue::print() const {
 
             //check returning string matches 
             returnedString = interface->viewLocationInterface();
-            cout << "Came back from 1st wave interface with " << returnedString << endl;
 
             //move by one to see get branch
             ++i;
-            cout << "Check point: " << dialogueSegments[i] << endl;
             //reads the +checkBranch check point
             if (i < dialogueSegments.size() && dialogueSegments[i] == "+CheckBranch{") {
-                cout <<"The i is: " << dialogueSegments[i] << ". CheckBranch detected...we got " << returnedString << endl;
                 //first word is name
                 ++i;
                 string requiredLocation = dialogueSegments[i];
@@ -56,10 +53,7 @@ void Dialogue::print() const {
                 //Loop until player chooses the correct location
                 while (returnedString != requiredLocation) {
                     cout << endl << gameHint << endl << endl;
-                    cout << "Infinite loop called and returned" << returnedString; 
-                    //function loops calling locations
-                    //CHECK: why is it loop when required location found???
-                    //CHECK: why is it not telling the player they already went there?
+                    
                     returnedString = interface->viewLocationInterface();
                 }
                 //read +end block
@@ -68,8 +62,7 @@ void Dialogue::print() const {
                 //Skip over +end} by increasing index
                 //This function catches that last line clean up
                 if (dialogueSegments[i] == "+end}") {
-                    //blank line read
-                    cout << "Player picked the destained route" << endl;
+                    //blank line addition
                     ++i;
                 }else{
                     throw runtime_error("+goToLocation has failed");
@@ -79,7 +72,7 @@ void Dialogue::print() const {
 
         // Handle clue blocks like interviews or dialogue clues
         else if (line == "+stringClues{" || line == "+InterviewClues{") {
-            cout << "[New clues discovered...]" << endl;
+            cout << endl << "[New clues discovered...]" << endl;
             //check next string after starting collection loop
             ++i;
             while (i < dialogueSegments.size() && dialogueSegments[i] != "+end}") {
@@ -90,25 +83,37 @@ void Dialogue::print() const {
                 ++i;
             }
             //prev line is +end} get rid of it 
+            cout << endl;
             ++i;
             
         }
-        /*
-        +callNightInterface
-        +chooseSuspect{
-        Gardener
-        Pool Boy
-        +end}
-        */
+        
        else if(line  == "+callNightInterface"){
-            throw runtime_error("+callNightInterface spotted and reached day 3");
             vector<string> suspects;
+            //CODE TO READ THE SUMMARY WALKTHROUGH
+            cout << "\nGame: It's that time of day again...who will it be?\n" << endl;
+            cout << "Complete the statement or answer the question with the corresponding clue your found\n" << endl;
+            //Call interface Night Summary 
+            interface->clueReview();
+            cout << endl << endl;
 
+            
+            string statement;
+            string clueAnswer;
+            //call Suspect run down
+            ++i; 
+            while(dialogueSegments[i] != "+end"){
+                statement = dialogueSegments[i];
+                ++i;
+                clueAnswer = dialogueSegments[i];
+                gameFunctions->suspectRunDown(statement, clueAnswer);
+                ++i;
+            }
             //collect suspect list
             ++i;
-            if(line  == "+chooseSuspect{"){
+            if(dialogueSegments[i] == "+chooseSuspect{"){
                 ++i;
-                while (line != "+end}"){
+                while (dialogueSegments[i] != "+end}"){
                     suspects.push_back(line);
                     ++i;
                 }
@@ -117,28 +122,78 @@ void Dialogue::print() const {
                 interface->viewSuspectList(suspects);
                 //we dont want to cout +end
             }
-            throw runtime_error("END OF DAY CLUE REVIEW NOT DONE");
-            //call interface for end of the day summarization of 
-            //this function should take in the following
-            // function(suspects) and return the string name of the suspect the player choose in interface
-            //Gameloop will then call changeSuspect or whatever the function is called in player to set the name of the selected suspect   
+
+        }else if(line == "+allDayCluesFound"){
+            //call gameloop to match players clues to their respective clue ids then match that list to day clues
+            //check if we're a match to move on
+            ++i;
+            string day = dialogueSegments[i];
+            int dayNum = stoi(day);
+            int choice = 0;
+            //while not true
+            while (!gameFunctions->cluesMatch(dayNum)){
+                //loop the go to location interface
+                string prevLoc = interface->viewLocationInterface();
+                cout << "\nEnter 1 for 'Yes' and 2 for 'No' to continue going to locations: \n";
+                cin >> choice;
+
+                if (cin.fail() || choice < 1 || choice > 2) {
+                    cin.clear();
+                    cout << "Invalid input. Please try again." << endl;
+                    cin >> choice;
+                }
+
+            }
+            //do not print day number
+            ++i;
+            
         }
 
         // Handle end-of-reading marker
         else if (line == "+doneReading") {
-            throw runtime_error("+doneReading file is in progress for closing");
-            cout << "[End of this section. Time progresses.]" << endl;
-            string NumDay = dialogueSegments[i++];
+            cout << endl << "[End of this section. Time progresses.]" << endl;
+            ++i;
+            string NumDay = dialogueSegments[i];
             //convert to numDay variable to an int 
             int dayNum = stoi(NumDay);
-
-            string currentTime = dialogueSegments[i++];
+            
+            ++i;
+            string currentTime = dialogueSegments[i];
             gameFunctions->changeDayTime(dayNum, currentTime);
-            //Gameloop should search Days for a day with the dayNum int. So 1 is Day1 etc.
-            //Then check what currentTime string was passed in Morning or Evening or Night
-            //Fixing the bools in the day accordingly
 
-            //THE dialogue segment should end automatically now 
+            cout << "Moving on to Day " + NumDay + ": " << endl << endl;
+            return;
+        }else if(line == "+search{"){
+            //keep reading 
+            ++i;
+            string gameText = dialogueSegments[i];
+            //skip the +end
+            ++i;
+            int choice;
+            cout << endl << gameText << endl;
+            cout << "Enter 1 for 'Yes' and 2 for 'No': ";
+            cin >> choice;
+
+            if (cin.fail() || choice < 1 || choice > 2) {
+                cin.clear();
+                cout << "Invalid input. Please try again." << endl;
+                cin >> choice;
+            }
+            //loop until string "No" is given
+            while (choice != 2){
+                string prevLoc = interface->viewLocationInterface();
+                //player can collect clues until there choice changes
+                cout << endl << endl << gameText << endl;
+                cout << "Enter 1 for 'Yes' and 2 for 'No': ";
+                cin >> choice;
+
+                if (cin.fail() || choice < 1 || choice > 2) {
+                    cin.clear();
+                    cout << "Invalid input. Please try again." << endl;
+                    cin >> choice;
+                }
+            }
+
         }else{
             //Regular dialogue output
             //if all the branches dont get checked

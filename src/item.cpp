@@ -17,7 +17,7 @@ Item::Item() {
 }
 
 //initialize Item object
-Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int clueID) 
+Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fingerPrint, const string& whoseFingerprint, const string& itemLocation, const string& itemDescrip, bool itemFound, int numID) 
 {
     this->name = name;
     this->hasBlood = hasBlood;
@@ -27,7 +27,7 @@ Item::Item(const string& name, bool hasBlood, const string& bloodType,  bool fin
     this->itemLocation = itemLocation;
     itemDescription = itemDescrip;
     this->itemFound = itemFound;
-    this->ClueID = ClueID;
+    this->ClueID = numID;
 }
 
 Item::~Item() {

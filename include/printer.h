@@ -1,6 +1,9 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 
+class GameData; 
+//forward declaration
+
 #include "player.h"
 #include "gamedata.h"
 #include "ending.h"

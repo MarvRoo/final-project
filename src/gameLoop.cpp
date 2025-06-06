@@ -1,5 +1,6 @@
 #include "gameLoop.h"
 #include "gameLoader.h"
+#include <limits>
 using namespace std;
 
 void gameLoop::run(){
@@ -24,6 +25,7 @@ void gameLoop::run(){
 
     // Set player for other logic
     setPlayer(playerPtr);
+    setInterface(interface);
 
     // Loop through game dialogue using preserved order
     for (const string& key : gameData.dialogueKeyOrder) {
@@ -42,22 +44,15 @@ void gameLoop::run(){
                 }
             }
 
-            cout << "------------------------------" << endl;
+            cout << "------------------------------" << endl << endl;
         } else {
             cerr << "Warning: Key '" << key << "' not found in gameDialogue map!" << endl;
         }
     }
 
-    // Print the keys in gameDialogueLibrary
-    /*cout << "Dialogue Keys in Order:\n";
-    for (const auto& pair : gameData.gameDialogue) {
-        cout << "- " << pair.first << endl;
-    }
+    //call the endings 
+    //print the ending the player gets
 
-    cout << "Testing dialogue key order:" << endl;
-    for (const string& key : gameData.dialogueKeyOrder) {
-        cout << "- " << key << endl;
-    }*/
     
 }
 
@@ -85,12 +80,11 @@ void gameLoop::unlockNextLocation(const string& locationName){
     if (location) {
         // Unlock the location itself
         location->unlockLocation();
-        cout << "Unlocked new location: " << locationName << endl << endl;
 
         // Add location name to player's unlocked room list
         if (playerPtr) {
             playerPtr->addUnlockedRoom(locationName);
-            cout << "Added to player's unlocked room list: " << locationName << endl;
+            cout << endl << endl;
         } else {
             cerr << "Error: playerPtr is null in unlockNextLocation()." << endl;
         }
@@ -124,17 +118,65 @@ string gameLoop::goToLocation(const string& chosenLocationName) {
 }
 
 void gameLoop::acquireNewClue(const string& clueName){
-    //fixed the copy change
-    for(auto& clue : libraries->
-    clueLibrary){
-        if(clue->getName() == clueName){
-            playerPtr->addNewClues(clueName);
-            return; 
+    playerPtr->addNewClues(clueName);
+}
+
+void gameLoop::suspectRunDown(string statement, string answer) {
+    cout << "\n" << statement << "\n" << endl;
+
+    string playAnswer;
+    int choice;
+
+    while (playAnswer != answer) {
+        cout << endl << "Enter 1 to view your collected clues.\n";
+        cout << "Enter 2 to make a guess from your clue collection.\n";
+        cout << "Choice: ";
+        cin >> choice;
+
+        while (cin.fail() || choice < 1 || choice > 2) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter 1 or 2: ";
+            cin >> choice;
+        }
+
+        if (choice == 1) {
+            interfaces->viewClueInterface();  
+            //Display all types of clues
+        } else {
+            vector<string>* clues = playerPtr->shareClueListPtr();
+            //Assuming you have this method
+            if (clues->empty()) {
+                cout << "You have no clues to choose from.\n";
+                continue;
+            }
+
+            cout << "\nSelect a clue by number:\n";
+            for (size_t i = 0; i < clues->size(); ++i) {
+                cout << i + 1 << ". " << (*clues)[i] << endl;
+            }
+
+            int clueChoice;
+            cin >> clueChoice;
+            while (cin.fail() || clueChoice < 1 || static_cast<size_t>(clueChoice) > clues->size()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid choice. Try again: ";
+                cin >> clueChoice;
+            }
+
+            playAnswer = (*clues)[clueChoice - 1];
+        }
+
+        if (playAnswer != answer) {
+            cout << "That's not the right answer. Try again or review your clues.\n";
         }
     }
-    //shouldn't happen
-    cout << "Error: Clue " << clueName << " not found." << endl;
+
+    cout << "\nCorrect!\n";
+    cout << "Answer: " + playAnswer << endl << endl;
 }
+
 
 //revisit
 void gameLoop::changeDayTime(int dayNum, const string& currentTime){
@@ -161,4 +203,55 @@ void gameLoop::changeDayTime(int dayNum, const string& currentTime){
     }
 }
 
+void gameLoop::playerChoices(int hpUpdate, bool subtract){
+    if(subtract){
+        playerPtr->upDateHp(-hpUpdate);
+        return;
+    }
+    playerPtr->upDateHp(hpUpdate);
+}
 
+bool gameLoop::cluesMatch(int numDay){
+    vector<int> clueIDs;  // Final result to return
+
+    // Get the player's collected clue names
+    vector<string>* clueNames = playerPtr->shareClueListPtr();
+
+
+    // Loop through each clue name the player has
+    for (const auto& clueName : *clueNames) {
+        // Search the master clue library for a match
+        for (const auto& clue : libraries->clueLibrary) {
+            if (clue->getName() == clueName) {
+                clueIDs.push_back(clue->getID());  // Add matching clue ID
+                //cout << clue->getID() << clue->getName() << " : " << clue->getType() << " " <<endl;
+                break;  // Stop searching after the first match
+            }
+        }
+    }
+
+
+    //use clueIDs vector
+    //Iterate through day library for a day with a true in either morning, evening or night
+    // Use clueIDs vector to check days
+        // Search only for the specific day number
+    for (auto& day : libraries->dayLibrary) {
+        if (day.getDay() == numDay) {
+            if (day.isMorning() || day.isEvening() || day.isNight()) {
+                if (day.isDayComplete(clueIDs)) {
+                    cout << "\nDay " << day.getDay() << ": You found all the clues to move on!\n" << endl;
+                    return true;
+                } else {
+                    cout << "\nMmm... looks like you might have missed some clues. Visit locations you haven't been to...\n";
+                    return false;
+                }
+            }
+        }
+    }
+
+    // If day not found or not active
+    cout << "\nNo active time segment found for Day " << numDay << ".\n";
+    return false;
+
+
+}
