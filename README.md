@@ -95,7 +95,7 @@ responsibilities the dialogue class was responsible for before.
     cd build
     cmake ..
     make
-    ./FinalProjectC
+    ./FinalProject
 ```
 > Now, you can start solving the murder mystery!👻
  ## Testing
