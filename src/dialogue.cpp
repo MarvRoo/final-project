@@ -37,14 +37,11 @@ void Dialogue::print() const {
 
             //check returning string matches 
             returnedString = interface->viewLocationInterface();
-            cout << "Came back from 1st wave interface with " << returnedString << endl;
 
             //move by one to see get branch
             ++i;
-            cout << "Check point: " << dialogueSegments[i] << endl;
             //reads the +checkBranch check point
             if (i < dialogueSegments.size() && dialogueSegments[i] == "+CheckBranch{") {
-                cout <<"The i is: " << dialogueSegments[i] << ". CheckBranch detected...we got " << returnedString << endl;
                 //first word is name
                 ++i;
                 string requiredLocation = dialogueSegments[i];
@@ -56,7 +53,7 @@ void Dialogue::print() const {
                 //Loop until player chooses the correct location
                 while (returnedString != requiredLocation) {
                     cout << endl << gameHint << endl << endl;
-                    cout << "Infinite loop called and returned" << returnedString; 
+                    
                     returnedString = interface->viewLocationInterface();
                 }
                 //read +end block
@@ -65,8 +62,7 @@ void Dialogue::print() const {
                 //Skip over +end} by increasing index
                 //This function catches that last line clean up
                 if (dialogueSegments[i] == "+end}") {
-                    //blank line read
-                    cout << "Player picked the destained route" << endl;
+                    //blank line addition
                     ++i;
                 }else{
                     throw runtime_error("+goToLocation has failed");
@@ -115,9 +111,9 @@ void Dialogue::print() const {
             }
             //collect suspect list
             ++i;
-            if(line  == "+chooseSuspect{"){
+            if(dialogueSegments[i] == "+chooseSuspect{"){
                 ++i;
-                while (line != "+end}"){
+                while (dialogueSegments[i] != "+end}"){
                     suspects.push_back(line);
                     ++i;
                 }

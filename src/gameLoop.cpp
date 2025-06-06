@@ -44,22 +44,15 @@ void gameLoop::run(){
                 }
             }
 
-            cout << "------------------------------" << endl;
+            cout << "------------------------------" << endl << endl;
         } else {
             cerr << "Warning: Key '" << key << "' not found in gameDialogue map!" << endl;
         }
     }
 
-    // Print the keys in gameDialogueLibrary
-    /*cout << "Dialogue Keys in Order:\n";
-    for (const auto& pair : gameData.gameDialogue) {
-        cout << "- " << pair.first << endl;
-    }
+    //call the endings 
+    //print the ending the player gets
 
-    cout << "Testing dialogue key order:" << endl;
-    for (const string& key : gameData.dialogueKeyOrder) {
-        cout << "- " << key << endl;
-    }*/
     
 }
 
@@ -87,12 +80,11 @@ void gameLoop::unlockNextLocation(const string& locationName){
     if (location) {
         // Unlock the location itself
         location->unlockLocation();
-        cout << "Unlocked new location: " << locationName << endl << endl;
 
         // Add location name to player's unlocked room list
         if (playerPtr) {
             playerPtr->addUnlockedRoom(locationName);
-            cout << "Added to player's unlocked room list: " << locationName << endl;
+            cout << endl << endl;
         } else {
             cerr << "Error: playerPtr is null in unlockNextLocation()." << endl;
         }
@@ -127,7 +119,6 @@ string gameLoop::goToLocation(const string& chosenLocationName) {
 
 void gameLoop::acquireNewClue(const string& clueName){
     playerPtr->addNewClues(clueName);
-    cout << "\nFound the clue: " << clueName << endl;
 }
 
 void gameLoop::suspectRunDown(string statement, string answer) {
@@ -137,7 +128,7 @@ void gameLoop::suspectRunDown(string statement, string answer) {
     int choice;
 
     while (playAnswer != answer) {
-        cout << "Enter 1 to view your collected clues.\n";
+        cout << endl << "Enter 1 to view your collected clues.\n";
         cout << "Enter 2 to make a guess from your clue collection.\n";
         cout << "Choice: ";
         cin >> choice;

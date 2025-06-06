@@ -58,7 +58,7 @@ void Printer::printLocation(string locName) const {
         if (loc.getName() == locName) {
             if (loc.isKeyFound()) {
                 // Player already visited
-                cout << "[You’ve already searched this location. Nothing new was found.]" << endl;
+                cout << "[You've already searched this location. Nothing new was found.]" << endl;
             } else {
                 // First-time visit: show description and give clues
                 loc.printDescript();
@@ -239,6 +239,6 @@ void Printer::printSelectedClueByIndex(int index) const {
     if (selected->getType() == "Interview") {
         selected->print(); // Implement this in Interview subclass
     } else {
-        selected->print();          // Implement this in Clue class
+        selected->print();
     }
 }

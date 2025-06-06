@@ -119,12 +119,12 @@ void Interface::clueReview() {
 
     cout << "Game: You will not be allowed to move on until you've correctly matched the clues to the thought process.\n" << endl;
 
-    cout << "Game: These are the clues you've collected so far.\nYou can pick which ones to view more in depth, like items or interviews.\n";
+    cout << "Game: These are the clues you've collected so far.\nYou can pick which ones to view more in depth, like items or interviews.\n\n";
     viewClueInterface();
 
     int choice = 0;
     while (true) {
-        cout << "\nWould you like to continue reviewing your clues?\nEnter 1 for 'No' or 2 for 'Yes': ";
+        cout << "\n\nWould you like to continue reviewing your clues?\nEnter 1 for 'No' or 2 for 'Yes': ";
         cin >> choice;
 
         if (cin.fail() || (choice != 1 && choice != 2)) {
