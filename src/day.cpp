@@ -1,5 +1,9 @@
 #include "day.h"
 
+//Used for testing
+#include <stdexcept>
+#include <iostream>
+
 Day::Day(int numDay, bool Night, bool Evening, bool Morning, bool cluesFound, bool lockedDay, const vector<int>& unlockClues){
     this->numDay = numDay;
     this->Night = Night;
@@ -24,6 +28,19 @@ bool Day::isEvening(){
 }
 
 bool Day::isDayComplete(const vector<int>& playerClueList) {
+    if(playerClueList.empty()){throw runtime_error("empty player list...");}
+    cout << "Player's Clue List: ";
+    for (int clue : playerClueList) {
+        cout << clue << " ";
+    }
+    cout << endl;
+
+    cout << "Required Clues for Day " << numDay << ": ";
+    for (int required : allDayClues) {
+        cout << required << " ";
+    }
+    cout << endl;
+
     for (int requiredClue : allDayClues) {
         bool found = false;
         for (int playerClue : playerClueList) {

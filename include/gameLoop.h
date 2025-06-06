@@ -18,14 +18,19 @@ class gameLoop{
 private:
     Player* playerPtr;
     GameData* libraries;
+    shared_ptr<Interface> interfaces;
 public:
     gameLoop(){}
     ~gameLoop(){}
 
     void setInternalData(GameData* gameData){ this->libraries = gameData;}
+    void setPlayer(Player* playerPtr){this->playerPtr = playerPtr;}
+    void setInterface(std::shared_ptr<Interface> interface) {
+        this->interfaces = interface;
+    }
+
     void run();
     void unlockNextLocation(const string& locationName);
-    void setPlayer(Player* playerPtr){this->playerPtr = playerPtr;}
     void acquireNewClue(const string& clueName);
     void changeDayTime(int dayNum, const string& currentTime);
     void playerChoices(int hpUpdate, bool subtract);
@@ -34,6 +39,7 @@ public:
     Location* findLocation(string locationName);
     Day* findDay(int numDay);
     bool cluesMatch(int numDay);
+    void suspectRunDown(string statement, string answerKey);
 
 };
 #endif

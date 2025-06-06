@@ -25,13 +25,15 @@ string Printer::printAccessibleLocations() const{
         cout << i + 1 << ". " << accessibleLocs[i] << endl;
     }
 
-    cout << "Select a location by number: ";
+    cout << "\nSelect a location by number: ";
     int choice;
     cin >> choice;
 
-    if (choice < 1 || static_cast<size_t>(choice) > accessibleLocs.size()) {
-        cout << "Invalid choice." << endl;
-        return "";
+    while (choice < 1 || static_cast<size_t>(choice) > accessibleLocs.size()) {
+        cout << "Invalid choice. Please choose within the list: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> choice;
     }
     //okay but now we need to call the location they went to 
     printLocation(accessibleLocs[choice - 1]);

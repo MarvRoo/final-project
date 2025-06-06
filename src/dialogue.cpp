@@ -57,9 +57,6 @@ void Dialogue::print() const {
                 while (returnedString != requiredLocation) {
                     cout << endl << gameHint << endl << endl;
                     cout << "Infinite loop called and returned" << returnedString; 
-                    //function loops calling locations
-                    //CHECK: why is it loop when required location found???
-                    //CHECK: why is it not telling the player they already went there?
                     returnedString = interface->viewLocationInterface();
                 }
                 //read +end block
@@ -99,12 +96,23 @@ void Dialogue::print() const {
             vector<string> suspects;
             //CODE TO READ THE SUMMARY WALKTHROUGH
             cout << "\nGame: It's that time of day again...who will it be?\n" << endl;
+            cout << "Complete the statement or answer the question with the corresponding clue your found\n" << endl;
             //Call interface Night Summary 
             interface->clueReview();
+            cout << endl << endl;
 
-            //call night game
-            throw runtime_error("Night summary almost done..");
-
+            
+            string statement;
+            string clueAnswer;
+            //call Suspect run down
+            ++i; 
+            while(dialogueSegments[i] != "+end"){
+                statement = dialogueSegments[i];
+                ++i;
+                clueAnswer = dialogueSegments[i];
+                gameFunctions->suspectRunDown(statement, clueAnswer);
+                ++i;
+            }
             //collect suspect list
             ++i;
             if(line  == "+chooseSuspect{"){
@@ -118,7 +126,6 @@ void Dialogue::print() const {
                 interface->viewSuspectList(suspects);
                 //we dont want to cout +end
             }
-            throw runtime_error("END OF DAY CLUE REVIEW NOT DONE");
 
         }else if(line == "+allDayCluesFound"){
             //call gameloop to match players clues to their respective clue ids then match that list to day clues
@@ -141,6 +148,8 @@ void Dialogue::print() const {
                 }
 
             }
+            //do not print day number
+            ++i;
             
         }
 

@@ -8,6 +8,16 @@ A gold bracelet that Angie almost never took off.
 false
 1106
 
+Angie's Phone
+false
+N/A
+false
+N/A
+Living Room
+Found on the coffee table with the battery drained dead.
+false
+1108
+
 Tarp
 true
 A-
@@ -18,7 +28,17 @@ Angie's dead body was found on top of the tarp.
 false
 1101
 
-Gun
+Mallet
+true
+A-
+false
+N/A
+Shed
+Mallet found in shed near Angie.
+false
+1109
+
+Jacobs's Gun
 false
 N/A
 true
@@ -28,7 +48,7 @@ Glock 19 purchased 2 weeks ago.
 false
 1102
 
-Uncut Grass
+"Uncut Grass"
 true
 A-
 false
@@ -37,6 +57,16 @@ Backyard
 Bloody trail left in the grass leading to the shed.
 false
 1103
+
+Bloody tissue
+true
+B+
+true
+Jacob
+Downstairs Bathroom
+In the trashcan.
+false
+1110
 
 Pool Noodle
 true
@@ -48,7 +78,7 @@ Pink pool noodle that looks to have been touched while Angie's body was dragged
 false
 1104
 
-Hair Brush
+Sitter Hair Brush
 false
 N/A
 true 
@@ -87,3 +117,13 @@ Dr. Lou's Room
 Used in Angie's autopsy.
 false
 1113
+
+Dr. Lou's Phone
+false
+N/A
+true
+Dr. Lou
+Dr. Lou's Room
+Dr. Lou forgot her personal phone at home over vacation.
+false
+1111
