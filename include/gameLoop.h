@@ -33,6 +33,7 @@ public:
     string goToLocation(const string& requiredLocation);
     Location* findLocation(string locationName);
     Day* findDay(int numDay);
+    bool cluesMatch(int numDay);
 
 };
 #endif

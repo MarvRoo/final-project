@@ -94,18 +94,16 @@ void Dialogue::print() const {
             ++i;
             
         }
-        /*
-        +callNightInterface
-        +chooseSuspect{
-        Gardener
-        Pool Boy
-        +end}
-        */
+        
        else if(line  == "+callNightInterface"){
-            throw runtime_error("CODE made it to day 3 Night interface");
             vector<string> suspects;
             //CODE TO READ THE SUMMARY WALKTHROUGH
+            cout << "\nGame: It's that time of day again...who will it be?\n" << endl;
+            //Call interface Night Summary 
+            interface->clueReview();
 
+            //call night game
+            throw runtime_error("Night summary almost done..");
 
             //collect suspect list
             ++i;
@@ -121,12 +119,41 @@ void Dialogue::print() const {
                 //we dont want to cout +end
             }
             throw runtime_error("END OF DAY CLUE REVIEW NOT DONE");
-            //call interface for end of the day summarization of 
-            //this function should take in the following
-            // function(suspects) and return the string name of the suspect the player choose in interface
-            //printer is the one doing the work
-            //Gameloop will then call changeSuspect or whatever the function is called in player to set the name of the selected suspect   
 
+        }else if(line == "+allDayCluesFound"){
+            //call gameloop to match players clues to their respective clue ids then match that list to day clues
+            //check if we're a match to move on
+            ++i;
+            string day = dialogueSegments[i];
+            int dayNum = stoi(day);
+            int choice = 0;
+            //while not true
+            while (!gameFunctions->cluesMatch(dayNum)){
+                //loop the go to location interface
+                string prevLoc = interface->viewLocationInterface();
+                cout << "Enter 1 for 'Yes' and 2 for 'No' to continue going to locations: ";
+                cin >> choice;
+
+                if (cin.fail() || choice < 1 || choice > 2) {
+                    cin.clear();
+                    cout << "Invalid input. Please try again." << endl;
+                    cin >> choice;
+                }
+                //loop until string "No" is given
+                while (choice != 2){
+                    string prevLoc = interface->viewLocationInterface();
+                    cout << "Enter 1 for 'Yes' and 2 for 'No' to continue going to locations: ";
+                    cin >> choice;
+
+                    if (cin.fail() || choice < 1 || choice > 2) {
+                        cin.clear();
+                        cout << "Invalid input. Please try again." << endl;
+                        cin >> choice;
+                    }
+                }
+
+            }
+            
         }
 
         // Handle end-of-reading marker

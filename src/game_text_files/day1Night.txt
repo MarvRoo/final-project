@@ -21,7 +21,31 @@ Me: "...too soon for jokes."
 
     I wasn't joking.*
 
++allDayCluesFound
+1
 +callNightInterface
+Me: What was Angie laying on top of?
+Tarp
+Me: What might be the murder weapon?
+Mallet
+Me: What makes me think the Mallet is the murder weapon?
+"Blood behind her head"
+Me: I don't think she died outside because...
+"Body appears to be dragged on grass by blood pattern"
+Me: If she was killed inside..someone cleaned up. There was something missing from the kitchen...
+"Missing Mop"
+Me: Yep and the floor looked like it was freshly...
+"The floor was freshly mopped..."
+Me: What was Angie laying on top of?
+"Body found on tarp in the shed"
+Me: Then outside in the pool I saw...
+"Blood found on the pool noodle"
+Me: Between the two interviews Pool Boy and Gardener...which do I believe more?
+Pool Boy's Interview
+Me: He came back so naturally, I know what they say about killers returning to the scene of the crime but I just don't think it's him. Whose interview is too strong?
+"Blood found on the pool noodle"
+Gardener's Interview
++end
 +chooseSuspect{
 Gardener
 Pool Boy

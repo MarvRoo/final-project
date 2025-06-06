@@ -19,6 +19,7 @@ public:
     string viewSuspectList(vector<string>& suspectList);
     void showAutopsies(string deadNpc);
     void gameOver();
+    void clueReview();
 
     /*we still need to add accessors to printer for 
 

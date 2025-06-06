@@ -23,6 +23,7 @@ public:
 
     string getName() const;
     void setInspected(bool inspection) { inspected = inspection; }
+    int getID(){return ClueID;}
 
     // Identify type of clue (default is "Clue")
     virtual string getType() const { return "Clue"; }

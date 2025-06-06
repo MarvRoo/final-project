@@ -125,8 +125,7 @@ string gameLoop::goToLocation(const string& chosenLocationName) {
 
 void gameLoop::acquireNewClue(const string& clueName){
     //fixed the copy change
-    for(auto& clue : libraries->
-    clueLibrary){
+    for(auto& clue : libraries->clueLibrary){
         if(clue->getName() == clueName){
             playerPtr->addNewClues(clueName);
             return; 
@@ -167,4 +166,46 @@ void gameLoop::playerChoices(int hpUpdate, bool subtract){
         return;
     }
     playerPtr->upDateHp(hpUpdate);
+}
+
+bool gameLoop::cluesMatch(int numDay){
+    vector<int> clueIDs;  // Final result to return
+
+    // Get the player's collected clue names
+    vector<string>* clueNames = playerPtr->shareClueListPtr();
+
+    // Loop through each clue name the player has
+    for (const auto& clueName : *clueNames) {
+        // Search the master clue library for a match
+        for (const auto& clue : libraries->clueLibrary) {
+            if (clue->getName() == clueName) {
+                clueIDs.push_back(clue->getID());  // Add matching clue ID
+                break;  // Stop searching after the first match
+            }
+        }
+    }
+
+    //use clueIDs vector
+    //Iterate through day library for a day with a true in either morning, evening or night
+    // Use clueIDs vector to check days
+        // Search only for the specific day number
+    for (auto& day : libraries->dayLibrary) {
+        if (day.getDay() == numDay) {
+            if (day.isMorning() || day.isEvening() || day.isNight()) {
+                if (day.isDayComplete(clueIDs)) {
+                    cout << "\nDay " << day.getDay() << ": You found all the clues to move on!\n" << endl;
+                    return true;
+                } else {
+                    cout << "\nMmm... looks like you might have missed some clues. Visit locations you haven't been to...\n";
+                    return false;
+                }
+            }
+        }
+    }
+
+    // If day not found or not active
+    cout << "\nNo active time segment found for Day " << numDay << ".\n";
+    return false;
+
+
 }
