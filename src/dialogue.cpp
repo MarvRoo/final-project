@@ -102,7 +102,7 @@ void Dialogue::print() const {
         +end}
         */
        else if(line  == "+callNightInterface"){
-            throw runtime_error("CODE made it to day 3");
+            throw runtime_error("CODE made it to day 3 Night interface");
             vector<string> suspects;
             //CODE TO READ THE SUMMARY WALKTHROUGH
 
@@ -157,6 +157,7 @@ void Dialogue::print() const {
             if (cin.fail() || choice < 1 || choice > 2) {
                 cin.clear();
                 cout << "Invalid input. Please try again." << endl;
+                cin >> choice;
             }
             //loop until string "No" is given
             while (choice != 2){
@@ -169,6 +170,7 @@ void Dialogue::print() const {
                 if (cin.fail() || choice < 1 || choice > 2) {
                     cin.clear();
                     cout << "Invalid input. Please try again." << endl;
+                    cin >> choice;
                 }
             }
 

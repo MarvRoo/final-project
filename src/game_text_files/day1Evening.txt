@@ -101,7 +101,6 @@ Dr. Lou: "If you start complaining I'll let them take you. I'm just as stressed 
     Dr. Lou rubs her temples and heads to her room for her tools.*
 
 With not much to do you think about any of the other places you can inspect. Might be a good idea to take a look for more clues...
-+goToLocation
 +search{
 Continue to search for clues or continue to Night time?
 +end}
