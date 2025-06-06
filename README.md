@@ -83,9 +83,10 @@ responsibilities the dialogue class was responsible for before.
     cd build
     cmake ..
     make
-    ./FinalProject
+    ./FinalProjectC
 ```
 > Now, you can start solving the murder mystery!👻
  ## Testing
-> This project was tested and validated using google test. To run these tests, run the command ./run_tests. 
+> This project was tested and validated using Google Test. To run these tests, run the command ./run_tests. 
+ We implemented tests for our main classes, including: Location, Item, Interview, Player, Autopsy, Clue, GameLoader, and Person. For each of these classes, we tested the functions they implemented, such as constructors. We used a variation of different assertions such as EXPECT_EQ, EXPECT_FALSE, EXPECT_TRUE, and EXPECT_NO_THROW.
  
