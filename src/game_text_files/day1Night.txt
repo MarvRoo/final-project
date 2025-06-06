@@ -36,14 +36,13 @@ Me: If she was killed inside..someone cleaned up. There was something missing fr
 "Missing Mop"
 Me: Yep and the floor looked like it was freshly...
 "The floor was freshly mopped..."
-Me: What was Angie laying on top of?
+Me: Where was Angie found?
 "Body found on tarp in the shed"
 Me: Then outside in the pool I saw...
 "Blood found on the pool noodle"
 Me: Between the two interviews Pool Boy and Gardener...which do I believe more?
 Pool Boy's Interview
 Me: He came back so naturally, I know what they say about killers returning to the scene of the crime but I just don't think it's him. Whose interview is too strong?
-"Blood found on the pool noodle"
 Gardener's Interview
 +end
 +chooseSuspect{
