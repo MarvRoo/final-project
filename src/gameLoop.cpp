@@ -7,6 +7,7 @@ void gameLoop::run(){
     if (gameData.playerLibrary.empty()) {
         throw runtime_error("No player...");
     }
+    setInternalData(&gameData);
 
     Player* playerPtr = &gameData.playerLibrary[0];
 
@@ -36,6 +37,7 @@ void gameLoop::run(){
                 if (dialogueUnitPtr) {
                     dialogueUnitPtr->setInterface(interface);
                     //shared pointer passed safer
+                    dialogueUnitPtr->setGameLoop(this);
                     dialogueUnitPtr->print();
                 }
             }
@@ -60,16 +62,16 @@ void gameLoop::run(){
 }
 
 Location* gameLoop::findLocation(string locationName){
-    for (Location& loc : gameData.locationLibrary) {
+    for (Location& loc : libraries->locationLibrary) {
         if (loc.getName() == locationName) {
             return &loc;
         }
     }
-    return nullptr; // Not found
+    throw runtime_error("findLocation failed to return a proper pointer");
 }
 
 Day* gameLoop::findDay(int numDay){
-    for (Day& day : gameData.dayLibrary) {
+    for (Day& day : libraries->dayLibrary) {
         if (day.getDay() == numDay) {
             return &day;
         }
@@ -79,20 +81,28 @@ Day* gameLoop::findDay(int numDay){
 
 void gameLoop::unlockNextLocation(const string& locationName){
     Location* location = findLocation(locationName);
-    if(location){
-        //set to true so unlocked
-        //needs a helper because a private variable can not be modified by force
+
+    if (location) {
+        // Unlock the location itself
         location->unlockLocation();
-    }
-    else{
-        //shouldnt happen but heres the error
-        cout << "Error: Location " << locationName << " not found." << endl;
+        cout << "Unlocked new location: " << locationName << endl << endl;
+
+        // Add location name to player's unlocked room list
+        if (playerPtr) {
+            playerPtr->addUnlockedRoom(locationName);
+            cout << "Added to player's unlocked room list: " << locationName << endl;
+        } else {
+            cerr << "Error: playerPtr is null in unlockNextLocation()." << endl;
+        }
+
+    } else {
+        cerr << "Error: Location " << locationName << " not found. Failed in gameLoop." << endl;
     }
 }
 
 string gameLoop::goToLocation(const string& chosenLocationName) {
     // Only job here: validate the location, give clues if not already collected
-    for (Location& loc : gameData.locationLibrary) {
+    for (Location& loc : libraries->locationLibrary) {
         if (loc.getName() == chosenLocationName) {
             if (!loc.checkkeyClueFound()) {
                 vector<string> clues = loc.getClues();
@@ -115,7 +125,8 @@ string gameLoop::goToLocation(const string& chosenLocationName) {
 
 void gameLoop::acquireNewClue(const string& clueName){
     //fixed the copy change
-    for(auto& clue : gameData.clueLibrary){
+    for(auto& clue : libraries->
+    clueLibrary){
         if(clue->getName() == clueName){
             playerPtr->addNewClues(clueName);
             return; 

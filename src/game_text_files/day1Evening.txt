@@ -36,9 +36,7 @@ Me: "Did you see the Gardener?"
 Pool Boy: "N-no, but Angie said he be coming in late. His truck broke down and he couldn't get all his equipment to mow the lawn like usual."
 Pool Boy: "He said he'd be here around 1 pm, Angie was suppose to call you guys."
 +InterviewClues{
-“Pool boy left before 11 am on a lunch break."
-“Angie was supposed to call us about the gardener”
-“Alibi is Angie”
+Pool Boy:
 +end}
 
     As you finish up talking to Pool Boy the Gardener comes inside the house looking pale.*
@@ -73,9 +71,7 @@ isItLegal?
 +mappingName
 eveningContinues2
 +InterviewClues{
-"Gardener arrives during the interviews in a different truck."
-"Called Angie from the Mechanic shop."
-"Alibi is his nephew"
+Gardener:
 +end}
     The Gardener seems to think about it for a moment before shaking his head and begrudingly taking a seat.
 

@@ -4,42 +4,48 @@
 #include "player.h"
 #include "gamedata.h"
 #include "ending.h"
+
 #include <vector>
+#include <string>
+#include <iostream>
+
 
 using namespace std;
 
 class Printer {
-    private:
-        //printer should already have access
-        GameData* gameLibraryPtr;
-        Player* playerPtr;
-        // Stores the last displayed selectable items and clues for index-based selection
-        vector<const Item*> lastItemList;
-        vector<const Clue*> lastClueList;
+private:
+    GameData* gameLibraryPtr;
+    Player* playerPtr;
 
+public:
+    void setGameData(GameData* gameDataPtr) { this->gameLibraryPtr = gameDataPtr; }
+    void setplayer(Player* player) { playerPtr = player; }
 
-    public:
-        void setGameData(GameData* gameDataPtr){this->gameLibraryPtr = gameDataPtr;}
-        void setplayer(Player* player){playerPtr = player;}
-        int printAccessibleLocations();
-        vector<string> getAccessibleLocationList() const;
-        string printLocation(int choosenindex);
+    // Prints only accessible locations and returns the one chosen
+    string printAccessibleLocations() const;
+    //repetative pop up that gives player review the location they want go
+    void printLocation(string locName) const;
 
-        void printClues();
-        void printSearchItems();
+    // Prints details about a person by name
+    void printPersonDetails(const std::string& personName);
 
-        void printPersonDetails(const std::string& personName);
-        void printEnd(const Ending& ending);
-        void printAutopsy(const std::string& characterName) const;
+    // Prints the ending scene
+    void printEnd();
 
+    // Prints autopsy information for a character
+    void printAutopsy(const std::string& characterName) const;
 
-        // Print grouped and numbered selectable items and clues
-        int printSelectableItems();         // Displays acquired items and stores them
-        int printSelectableClues();         // Displays acquired clues and stores them
+    // Print the list of player-collected items, numbered; returns the count
+    int printSelectableItems() const;
 
-        // Print selected item/clue based on index (1-based)
-        void printSelectedItemByIndex(int index);
-        void printSelectedClueByIndex(int index);
+    // Print the list of player-collected clues/interviews; returns the count
+    int printSelectableClues() const;
+
+    // Prints the name of the selected item based on its index
+    void printSelectedItemByIndex(int index) const;
+
+    // Prints the full details of a selected clue/interview by index
+    void printSelectedClueByIndex(int index) const;
 };
 
 #endif

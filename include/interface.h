@@ -13,10 +13,17 @@ private:
 
 public:
     void setPrinter(Printer* printerPtr);  // Setter
-
     void viewClueInterface();
     string viewLocationInterface();
     string viewSuspectList(vector<string>& suspectList);
+    void showAutopsies(string deadNpc){printer->printAutopsy(deadNpc);}
+    void gameOver();
+
+    /*we still need to add accessors to printer for 
+
+        // Prints the ending scene
+        void printEnd(const Ending& ending);
+    */
 };
 
 #endif

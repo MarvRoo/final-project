@@ -3,8 +3,9 @@
 #include <cassert>
 
 using namespace std;
+void printOutGameDataLibraries(GameData* data);
 
-/*int test() {
+int test() {
     //turn into a google test when all days are ready
     try {
         GameData data = LoadFiles();
@@ -31,6 +32,8 @@ using namespace std;
         }
 
         cout << "All files loaded and validated successfully!" << endl;
+        //call printer
+        printOutGameDataLibraries(&data);
 
     } catch (const std::bad_alloc& e) {
         cerr << "Memory allocation failed during file loading: " << e.what() << endl;
@@ -44,67 +47,63 @@ using namespace std;
     }
 
     return 0;
-}*/
+}
 
-int test() {
-    try {
-        GameData data = LoadFiles();
-
-        cout << "=== Load Report ===" << endl;
-
-        // LOCATIONS
-        cout << "\nLocations Loaded: " << data.locationLibrary.size() << endl;
-        for (const auto& loc : data.locationLibrary) {
-            cout << " - " << loc.getName() << endl;
+void printOutGameDataLibraries(GameData* data){
+    cout << "\n=== LOCATIONS ===\n";
+    for (const auto& loc : data->locationLibrary) {
+        cout << "- Name: " << loc.getName() << "\n";
+        cout << "  Unlocked: " << (loc.checkUnlock() ? "Yes" : "No") << "\n";
+        cout << "  Clues: ";
+        for (const auto& clue : loc.getClues()) {
+            cout << clue << ", ";
         }
-
-        // DIALOGUE
-        cout << "\nDialogue Groups Loaded: " << data.gameDialogue.size() << endl;
-        for (const auto& pair : data.gameDialogue) {
-            cout << " - Key: " << pair.first << " | Entries: " << pair.second.size() << endl;
-            for (size_t i = 0; i < pair.second.size(); ++i) {
-                cout << "   [" << i + 1 << "] ";
-                if (pair.second[i]) {
-                    pair.second[i]->print();
-                } else {
-                    cout << "(null DialogueUnit)" << endl;
-                }
-            }
-        }
-
-        // PEOPLE
-        cout << "\nPeople Loaded: " << data.personLibrary.size() << endl;
-        for (const auto& p : data.personLibrary) {
-            cout << " - " << p.getPersonName() << endl;
-        }
-
-        // PLAYERS
-        cout << "\nPlayers Loaded: " << data.playerLibrary.size() << endl;
-        for (const auto& p : data.playerLibrary) {
-            cout << " - " << p.getPersonName() << endl;
-        }
-
-        // Optional: Add assertions
-        assert(!data.locationLibrary.empty());
-        assert(!data.clueLibrary.empty());
-        assert(!data.dayLibrary.empty());
-        for (const auto& pair : data.gameDialogue) {
-            assert(!pair.second.empty());
-        }
-
-        cout << "\nAll files loaded and validated successfully!" << endl;
-
-    } catch (const std::bad_alloc& e) {
-        cerr << " Memory allocation failed: " << e.what() << endl;
-        return 1;
-    } catch (const exception& e) {
-        cerr << "Exception during load: " << e.what() << endl;
-        return 1;
-    } catch (...) {
-        cerr << "Unknown error during file loading." << endl;
-        return 1;
+        cout << "\n";
+        cout << "  Key Clue: " << loc.getKeyClue() << "\n\n";
     }
 
-    return 0;
+    cout << "\n=== CLUES ===\n";
+    for (const auto& clue : data->clueLibrary) {
+        cout << "- Name: " << clue->getName();
+        cout << " | Type: " << clue->getType() << "\n";
+        clue->print();
+        cout << "\n";
+    }
+
+    cout << "\n=== PEOPLE ===\n";
+    for (const auto& person : data->personLibrary) {
+        cout << "- Name: " << person.getPersonName() << "\n";
+        cout << "  Description: " << person.grabDescription() << "\n";
+    }
+
+    cout << "\n=== PLAYERS ===\n";
+    for (const auto& player : data->playerLibrary) {
+        cout << "- Name: " << player.getPersonName() << "\n";
+    }
+
+    cout << "\n=== AUTOPSIES ===\n";
+    for (const auto& autopsy : data->autopsyLibrary) {
+        cout << "- Name: " << autopsy.getCharacterName() << "\n";
+    }
+
+    cout << "\n=== ENDINGS ===\n";
+    for (const auto& ending : data->endingsLibrary) {
+        cout << "- Scene: " << ending.getSceneName() << "\n";
+        cout << "  Description: " << ending.getStoryDescription() << "\n";
+    }
+
+    cout << "\n=== DAYS ===\n";
+    int count;
+    for (const auto& day : data->dayLibrary) {
+        ++count;
+    }
+    cout << "NumofDays: " << count << endl;
+
+    cout << "\n=== DIALOGUE ===\n";
+    for (const auto& [key, list] : data->gameDialogue) {
+        cout << "Key: " << key << ", Entries: " << list.size() << "\n";
+    }
+
+    cout << "\n=== DONE ===\n";
 }
 

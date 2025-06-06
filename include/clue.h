@@ -15,13 +15,17 @@ public:
     Clue();
     Clue(int id, const string& name);
 
-    virtual void print(){ cout << name;}
+    virtual void print() { cout << name; }
     virtual ~Clue();
 
     Clue(const Clue&) = delete; //delete copy constructor
     Clue& operator=(const Clue&) = delete; //delete copy assignment operator
+
     string getName() const;
-    void setInspected(bool inspection){inspected = inspection;}
+    void setInspected(bool inspection) { inspected = inspection; }
+
+    // Identify type of clue (default is "Clue")
+    virtual string getType() const { return "Clue"; }
 };
 
 #endif

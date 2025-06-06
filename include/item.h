@@ -28,6 +28,8 @@ public:
     Item(const Item&) = delete; //delete copy constructor
     Item& operator=(const Item&) = delete; //delete copy assignment operator
     ~Item() override;
+
+    string getType() const override { return "Item"; }
 };
 
 #endif

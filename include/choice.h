@@ -11,6 +11,7 @@ private:
     vector<pair<string, int>> options;
     bool negHp;
     shared_ptr<Interface> interface;
+    gameLoop* gameFunctions = nullptr;
 public: 
     Choice();
     Choice(const vector<pair<string, int>>& choices, bool isChoiceNeg);
@@ -19,6 +20,10 @@ public:
 
     void setInterface(std::shared_ptr<Interface> visuals) override {
         interface = visuals;
+    }
+    
+    void setGameLoop(gameLoop* ptr) override {
+        gameFunctions = ptr;
     }
 
 };
