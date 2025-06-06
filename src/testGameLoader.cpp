@@ -1,5 +1,4 @@
-/*#include "gameLoader.h"
-#include "gtest/gtest.h"
+#include "gameLoader.h"
 #include <iostream>
 #include <cassert>
 
@@ -22,13 +21,13 @@ int test() {
         cout << "Endings loaded: " << data.endingsLibrary.size() << endl;
 
         // Optional: Add basic assertions
-        ASSERT_TRUE(!data.locationLibrary.empty());
-        ASSERT_TRUE(!data.clueLibrary.empty());
-        ASSERT_TRUE(!data.dayLibrary.empty());
-        ASSERT_TRUE(!data.autopsyLibrary.size());
-        ASSERT_TRUE(!data.personLibrary.size());
-        ASSERT_TRUE(!data.playerLibrary.size());
-        ASSERT_TRUE(!data.endingsLibrary.size());
+        assert(!data.locationLibrary.empty());
+        assert(!data.clueLibrary.empty());
+        assert(!data.dayLibrary.empty());
+        assert(!data.autopsyLibrary.empty());
+        assert(!data.personLibrary.empty());
+        assert(!data.playerLibrary.empty());
+        assert(!data.endingsLibrary.empty());
 
         // Check if gameDialogue has any entries and that their values aren't empty
         for (const auto& pair : data.gameDialogue) {
@@ -111,5 +110,3 @@ void printOutGameDataLibraries(GameData* data){
 
     cout << "\n=== DONE ===\n";
 }
-
-*/
