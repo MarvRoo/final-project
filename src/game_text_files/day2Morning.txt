@@ -1,0 +1,85 @@
++mappingName
+Day 2 Morning
+
+You wake up to the smell of toast and eggs. A familiar smell and comfort until it dawns on you what lays in the shed. You really slept so soundly didn't you? Only a small hint of guilt before you shake it off and get up.
+
+    As you walk downstairs your head start to get lighter and your vision dims...or is it getting darker outside?*
+        
+        Your vision clears and from the bottom of the steps you realize now it's completely dark...am I sleep walking?*
+
+Adjacent to the living room, your house has a small hallway to another bedroom, your brother's Room, and a bathroom across from it. Very convient for him, since he was the oldest he got the first pick.
++unlockNextLocation
+Jacob's room
++CheckBranch{
+Jacob's room
+Game: Mmm..might be a dream but maybe Jacob's room is worth checking out...
++end}
+
+    BANG!*
+        CRACK!
+
+You wake up startled hands to your heart almost falling off the bed as you look around your room frantically. Listening for any signs that what you heard was a part of the dream...
+
+    Rushed footsteps from down the hall*
+    
+    Chatter in the Downstairs Bathroom*
+
+    You don't head downstairs until you hear Dr. Lou's voice boom*
+
++unlockNextLocation
+Downstairs Bathroom
++CheckBranch{
+Downstairs Bathroom
+Game: it's probably not a good time to wander off from everybody else...
++end}
+Dr. Lou: "Are you serious!!"
+Sheriff: "The bastard done, done himself in...well shit."
+Dr. Low: "I don't know this doesn't look like it was on purpose."
+
+    Dr.Lou starts to inspect the Gardener putting her ear up to his mouth and checking his pulse*
+
+    You feel a precense behind your back and a shiver runs up you’re spice*
+
+Jacob: "Is that my gun!"
+
+Dr. Lou cocks her head*
+
+Dr. Lou: “Your right it is…”
+
+Jacob: “He was in my room! I was looking for it right now thinking we’re getting robbed-“
+
+Dr. Lou: “I’m more shocked he knew what it was…we were all sleeping like the dead.”
+
+Jacob: “I don’t know I’ve never told anyone where I keep it-“
+
+Me: “In the closet in a box that’s where you keep it.”
+
+Jacob: “…Have you been in my room?”
+
+
+
++Choice2{
+“Sorta, you could say spiritually.”
+5
+“No just a guess, your not very creative.”
+10
++end}
++mappingName
+inMyRoom?
++mappingName
+morning2Continues
+
+
+Jacob: “…Well I didn’t hear him come in I was knocked out asleep.”
+
+Me: “what time is it?”
+
+Sheriff: “Hey is that my badge!!!”
+
+    He touches his uniform to make sure and snatches it up from the Gardener’s grasp.*
+
+Dr. Lou: "It's barely morning the sunny isn't fully out. 6:30 am."
+
++doneReading
+2
+Morning

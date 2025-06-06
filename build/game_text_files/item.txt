@@ -1,0 +1,129 @@
+Sitter Bracelet
+false
+N/A
+false
+N/A
+Kitchen Counter
+A gold bracelet that Angie almost never took off.
+false
+1106
+
+Angie's Phone
+false
+N/A
+false
+N/A
+Living Room
+Found on the coffee table with the battery drained dead.
+false
+1108
+
+Tarp
+true
+A-
+true
+Jacob
+Shed
+Angie's dead body was found on top of the tarp.
+false
+1101
+
+Mallet
+true
+A-
+false
+N/A
+Shed
+Mallet found in shed near Angie.
+false
+1109
+
+Jacobs's Gun
+false
+N/A
+true
+Jacob
+Jacob's room
+Glock 19 purchased 2 weeks ago.
+false
+1102
+
+"Uncut Grass"
+true
+A-
+false
+N/A
+Backyard
+Bloody trail left in the grass leading to the shed.
+false
+1103
+
+Bloody tissue
+true
+B+
+true
+Jacob
+Downstairs Bathroom
+In the trashcan.
+false
+1110
+
+Pool Noodle
+true
+A-
+false
+N/A
+Near the pool and shed
+Pink pool noodle that looks to have been touched while Angie's body was dragged
+false
+1104
+
+Sitter Hair Brush
+false
+N/A
+true 
+Angie
+Ally's room
+Angie's hair brush. She usually brushed her hair in Ally's room because she likes her mirror.
+false
+1105
+
+Brother’s keys
+false
+N/A
+true
+Jacob
+Kitchen
+Belong to Jacob, he used them to drive from the airport to home.
+false
+1107
+
+Badge
+false
+N/A
+false
+N/A
+Downstairs Bathroom
+An important form of identification as a Sheriff.
+false
+1112
+
+Scalpel
+true
+A-
+false
+N/A
+Dr. Lou's Room
+Used in Angie's autopsy.
+false
+1113
+
+Dr. Lou's Phone
+false
+N/A
+true
+Dr. Lou
+Dr. Lou's Room
+Dr. Lou forgot her personal phone at home over vacation.
+false
+1111

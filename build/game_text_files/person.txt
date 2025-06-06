@@ -1,0 +1,48 @@
+Angie
+A-
+Hairbrush
+true
+true
+The house sitter for the Lou family while they vacationed in Barbados. A close friend of Ally.
+
+Jacob
+B+
+Gun
+false
+false
+The only boy in the Lou family and just returned from Barbados. He is 6'2 and always looks nervous.
+
+Gardener
+B-
+Tarp
+true
+true
+Has loyally worked 15 years for the family. He is 5'6 and always appears to be in a hurry.
+
+Pool Cleaner
+B-
+Pool Noodle
+false
+false
+Just started working for the family. He is 6'3 and always has a smile on his face.
+
+Sheriff
+A+
+Badge
+false
+false
+Close friends with the Lou family. He is a hard worker and has been in the police force for 30+ years.
+
+Dr. Lou
+O-
+Scalpel
+false
+false
+Mother to both Ally and Jacob. Well-known pathologist and always appears serious.
+
++player
+Ally
+A+
+Phone
+Just returned from Barbados. She has long brown hair and is 5'3. She is a smart, independent person.
++end
