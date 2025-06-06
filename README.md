@@ -71,7 +71,17 @@ responsibilities the dialogue class was responsible for before.
  ## Screenshots
  > Screenshots of the input/output after running your application
  ## Installation/Usage
- > Instructions on installing and running your application
+ > Instructions on installing and running the application
+> 1. Copy and paste the link below to clone this repository in your terminal.
+>    git clone --recursive https://github.com/cs100/final-project-sec21-proj-group-5.git
+> 2. Run the following commands in order to run the game.
+>    mkdir build
+>    cd build
+>    cmake ..
+>    make
+>    ./FinalProject
+>
+> Now, you can start solving the murder mystery!👻
  ## Testing
- > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
+> This project was tested and validated using google test. To run these tests, run the command ./run_tests. 
  
