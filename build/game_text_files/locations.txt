@@ -63,6 +63,8 @@ false
 Bloody tissue
 Jacobs's Gun
 "Gun is missing 2 bullets now."
+"Revolver can hold 6 bullets"
+"Revolver has 5 out of 6 bullets"
 Badge
 +end
 The bathroom floor becomes messier by the second as you peer from behind the sheriff's back. The gun shot fired woke you up so now you stand in the dimly lit downstairs bathroom. Usually messier since it's closer to jacobs room but now slumped against the tub is the gardener with a gun in his right hand.
@@ -70,15 +72,11 @@ Downstairs Bathroom
 false
 "Gun is missing 2 bullets now."
 
-+multi-item
 "Jacob has a gun"
-"Revolver can hold 6 bullets"
-"Revolver has 5 out of 6 bullets"
-+end
 Posters from bands my brother likes plastered on almost ever inch of the wall. Nothing particularly out of place..then you notice the wooden chest inside the top shelf in the closet. After Dad died Jacob got to keep his revolver. He always says in case of an intruder it's better to keep it within reach...He might have been right. Poor Angie.
 Jacob's room
 false
-"Revolver has 5 out of 6 bullets"
+"Jacob has a gun"
 
 Sitter Hair Brush
 My room as usual spotless, Angie usually sleeps in my room when she house sits...her hair brush still on my dresser next to a bag of clothes on the ground.

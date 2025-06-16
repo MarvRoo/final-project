@@ -1,0 +1,20 @@
++mappingName
+Day 2 Night
+
+
+
+
+
+
++allDayCluesFound
+1
++callNightInterface
+
++end
++chooseSuspect{
+Jacob
+Pool Boy
++end}
++doneReading
+2
+Night

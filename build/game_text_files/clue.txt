@@ -93,6 +93,21 @@
 2219
 +end
 
++Clue
+“Jacob has a gun”
+2205
++end
+
++Clue
+“Revolver can hold 6 bullets”
+2206
++end
+
++Clue
+“Revolver has 5 out of 6 bullets”
+2207
++end
+
 +Interview
 Pool Boy
 "Pool boy left before 11 am on a lunch break."
